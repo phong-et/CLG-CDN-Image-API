@@ -8,3 +8,7 @@ obj/
 Web.Debug.config
 
 Web.Release.config
+
+.vs/cdn/v17/
+
+.vs/cdn/FileContentIndex/
