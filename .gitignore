@@ -1,0 +1,10 @@
+
+bin/
+
+cdn.csproj.user
+
+obj/
+
+Web.Debug.config
+
+Web.Release.config
