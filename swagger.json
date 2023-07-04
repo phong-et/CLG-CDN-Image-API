@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "version": "1.0.0",
-    "title": "CLG Images CDN API",
+    "title": "CLG Images CDN API for BO site",
     "description": "",
     "license": {
       "name": "MIT",
@@ -262,6 +262,9 @@
             "type": "boolean"
           },
           "message": {
+            "type": "string"
+          },
+          "imagePath": {
             "type": "string"
           }
         }

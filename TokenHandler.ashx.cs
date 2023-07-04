@@ -68,7 +68,7 @@ namespace cdn
                 origin = Request.UrlReferrer.Host;
             if (!Utils.IsAllowAccessOrigin((origin)))
             {
-                Response.Write(string.Format(responeJson, false.ToString().ToLower(), "Access Deined"));
+                Response.Write(string.Format(responeJson, "fasle", "Access Deined From:" + (origin == "" ?" Anonymous origin": origin), ""));
                 return;
             }
             using (var sr = new StreamReader(Request.InputStream))

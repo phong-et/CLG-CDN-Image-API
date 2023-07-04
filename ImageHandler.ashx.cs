@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Policy;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Script.Serialization;
 using System.Web.SessionState;
 
@@ -28,22 +29,27 @@ namespace cdn
                 origin = Request.UrlReferrer.Host;
             if (!Utils.IsAllowAccessOrigin((origin)))
             {
-                Response.Write(string.Format(responeJson, false.ToString().ToLower(), "Access Deined"));
+                Response.Write(string.Format(responeJson, "false", "Access Deined From: " + (origin == "" ? " Anonymous origin" : origin)));
                 return;
             }
             if (token != null)
             {
+                if(!token.Contains("Bearer"))
+                {
+                    Response.Write(string.Format(responeJson, "false", "Token missed out prefix 'Bearer'"));
+                    return;
+                }
                 // Split Bearer text from token
                 token = token.Substring(6);
                 if (Utils.isExpiredToken((token)))
                 {
-                    Response.Write(string.Format(responeJson, false.ToString().ToLower(), "Token is expired"));
+                    Response.Write(string.Format(responeJson, "false", "Token is expired"));
                     return;
                 }
             }
             else
             {
-                Response.Write(string.Format(responeJson, false.ToString().ToLower(), "Token is required at Header Authorization"));
+                Response.Write(string.Format(responeJson, "false", "Token is required at Header Authorization"));
                 return;
             }
             using (var sr = new StreamReader(Request.InputStream))
@@ -112,7 +118,10 @@ namespace cdn
                             }
                             break;
                     }
-                    Response.Write(string.Format(responeJson, true.ToString().ToLower(), message));
+                    responeJson = "{{ \"success\":{0}, \"message\":\"{1}\", \"imagePath\":\"{2}\" }}";
+                    string rootUrl = Request.Url.GetLeftPart(UriPartial.Authority) + Request.ApplicationPath.TrimEnd('/');
+                    string imagePath = rootUrl + "/" + gameFolder + "/" + fileName;
+                    Response.Write(string.Format(responeJson, "true", message, imagePath));
                 }
                 catch (Exception ex)
                 {
