@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -78,7 +79,7 @@ namespace cdn
                     var action = segments[segments.Length - 1];
                     string secretKey = (string)Request.Form["secretKey"];
                     string token = string.Empty;
-                    if (secretKey == "phillip")
+                    if (Utils.GetMd5Hash(secretKey) == (string)ConfigurationManager.AppSettings["secretKeyCreateToken"])
                     {
                         switch (action)
                         {

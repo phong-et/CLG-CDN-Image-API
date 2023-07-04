@@ -29,11 +29,11 @@
       "description": "Development server"
     },
     {
-      "url": "https://imgtest.clgcdn.com",
+      "url": "https://imgtest.playliga.com",
       "description": "Test server"
     },
     {
-      "url": "https://border-px1-api.xyz",
+      "url": "https://border-px1-api.herokuapp.com",
       "description": "Production server"
     }
   ],

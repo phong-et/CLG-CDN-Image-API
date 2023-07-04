@@ -5,6 +5,7 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web.Script.Serialization;
+using System.Configuration;
 
 namespace cdn
 {
@@ -16,13 +17,29 @@ namespace cdn
             if (origin == "") 
                 return false;
             // Only Allow Web Request and whitelist host
-            var allowedDomains = System.Configuration.ConfigurationManager.AppSettings["AllowedDomains"];
+            var allowedDomains = ConfigurationManager.AppSettings["AllowedDomains"];
             return allowedDomains.Contains(origin);
         }
         public static IPAddress[] IsAllowAccessIP(string origin)
         {
             IPAddress[] ips = Dns.GetHostAddresses("");
             return ips;
+        }
+        public static string GetMd5Hash(string input)
+        {
+            using (MD5 md5 = MD5.Create())
+            {
+                byte[] inputBytes = Encoding.UTF8.GetBytes(input);
+                byte[] hashBytes = md5.ComputeHash(inputBytes);
+
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < hashBytes.Length; i++)
+                {
+                    builder.Append(hashBytes[i].ToString("x2"));
+                }
+
+                return builder.ToString();
+            }
         }
         public static bool isRejectedToken(string token)
         {
@@ -39,7 +56,7 @@ namespace cdn
             Dictionary<string, object> objToken = new JavaScriptSerializer().Deserialize<Dictionary<string, object>>(decryptedToken);
             return ((long)objToken["expiredTime"] - Utils.GetTime()) < 0;
         }
-        private static string aseTokenSecretKey = "aA123Bb321@8*iPh";
+        private static string aseTokenSecretKey = (string)ConfigurationManager.AppSettings["secretKeyASE"];
         public static long GetTimeNow() => DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
         public static long GetTime(int dayQuantity = 0)
         {
