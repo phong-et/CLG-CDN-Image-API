@@ -18,15 +18,32 @@ namespace cdn
         public void ProcessRequest(HttpContext context)
         {
             string responeJson = "{{ \"success\":{0}, \"message\":\"{1}\" }}";
+            context.Response.AppendHeader("Access-Control-Allow-Headers", "Authorization");
             HttpResponse Response = context.Response;
             HttpRequest Request = context.Request;
             Response.ContentType = "application/json";
+            string token = Request.Headers["Authorization"];
             string origin = "";
             if (Request.UrlReferrer != null)
                 origin = Request.UrlReferrer.Host;
             if (!Utils.IsAllowAccessOrigin((origin)))
             {
                 Response.Write(string.Format(responeJson, false.ToString().ToLower(), "Access Deined"));
+                return;
+            }
+            if (token != null)
+            {
+                // Split Bearer text from token
+                token = token.Substring(6);
+                if (Utils.isExpiredToken((token)))
+                {
+                    Response.Write(string.Format(responeJson, false.ToString().ToLower(), "Token is expired"));
+                    return;
+                }
+            }
+            else
+            {
+                Response.Write(string.Format(responeJson, false.ToString().ToLower(), "Token is required at Header Authorization"));
                 return;
             }
             using (var sr = new StreamReader(Request.InputStream))
@@ -62,6 +79,7 @@ namespace cdn
                                     break;
                             }
                             break;
+
                         case "lobbygames":
                             fileName = (string)hashtable["CTId"] + "_" + (string)hashtable["GameLobbyId"] + "_" + (string)hashtable["GameCode"] + "." + (string)hashtable["ImageType"];
                             message = action + " " + gameFolder + " image successfully";

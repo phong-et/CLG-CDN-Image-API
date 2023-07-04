@@ -12,3 +12,7 @@ Web.Release.config
 .vs/cdn/v17/
 
 .vs/cdn/FileContentIndex/
+
+.vs/cdn/config/
+
+allgames/

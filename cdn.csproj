@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Default.aspx" />
+    <Content Include="log.txt" />
     <Content Include="Swagger.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -92,6 +93,8 @@
   <ItemGroup>
     <Content Include="ImageHandler.ashx" />
     <Content Include="TokenHandler.ashx" />
+    <Content Include="swagger.json" />
+    <Content Include="swagger_admin.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

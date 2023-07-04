@@ -17,7 +17,7 @@
     <script>
         window.onload = function () {
             const ui = SwaggerUIBundle({
-                url: "swagger<%=((string)Request.QueryString["Admin"] != null ? "_Admin":"")%>.json",
+                url: "swagger<%=((string)Request.QueryString["u"] == "ad" ? "_Admin":"")%>.json",
                 dom_id: "#swagger-ui",
                 deepLinking: true,
                 presets: [

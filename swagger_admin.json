@@ -79,6 +79,34 @@
           }
         }
       }
+    },
+    "/token/check": {
+      "post": {
+        "tags": [ "Admin" ],
+        "summary": "check a token",
+        "required": true,
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/tokenDecryption"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Send request successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/tokenCheckResponse"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -159,9 +187,28 @@
         "example": {
           "success": true,
           "token": {
-            "expiredDate":1688164667884
+            "expiredTime": 1688268760207,
+            "expiredDate": "Sunday, July 2, 2023 10:32 AM"
           },
           "message": "create token success"
+        }
+      },
+      "tokenCheckResponse": {
+        "type": "object",
+        "required": [
+          "success"
+        ],
+        "properties": {
+          "isExpired": {
+            "type": "bolean"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "isExpried": true,
+          "message": "token has expired yet"
         }
       },
       "decrytedToken": {
@@ -178,6 +225,6 @@
           }
         }
       }
-      }
+    }
   }
 }

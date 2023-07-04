@@ -24,12 +24,6 @@ namespace cdn
             IPAddress[] ips = Dns.GetHostAddresses("");
             return ips;
         }
-        public static bool isValidToken(string token)
-        {
-
-            return true;
-        }
-
         public static bool isRejectedToken(string token)
         {
             switch (token)
@@ -39,34 +33,13 @@ namespace cdn
             }
             return false;
         }
-
+        public static bool isExpiredToken(string token)
+        {
+            string decryptedToken = TokenHandler.decrypt(token);
+            Dictionary<string, object> objToken = new JavaScriptSerializer().Deserialize<Dictionary<string, object>>(decryptedToken);
+            return ((long)objToken["expiredTime"] - Utils.GetTime()) < 0;
+        }
         private static string aseTokenSecretKey = "aA123Bb321@8*iPh";
-        #region Utility Funtions
-        public static string GetFileContent(string fileName, string token)
-        {
-            var fileContent = "";
-            if (token == "" || token == null)
-                fileContent = "Token not found";
-            else if (!isExpiredToken(token))
-                if (File.Exists(fileName))
-                    fileContent = File.ReadAllText(fileName, Encoding.UTF8);
-                else fileContent = "File Not Found";
-            else fileContent = "Token is expired";
-            return fileContent;
-        }
-        private static bool isExpiredToken(string token)
-        {
-            try
-            {
-                var decryptedToken = DecryptStringFromBytes_Aes(Convert.FromBase64String(token));
-                var o = Serialize(decryptedToken);
-                return ((long)o["expiredDate"] - GetTimeNow() < 0);
-            }
-            catch (Exception e)
-            {
-                return true;
-            }
-        }
         public static long GetTimeNow() => DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
         public static long GetTime(int dayQuantity = 0)
         {
@@ -78,8 +51,6 @@ namespace cdn
             DateTimeOffset utcDateTimeOffset = new DateTimeOffset(nextDays, localTimeZone.GetUtcOffset(nextDays));
             return utcDateTimeOffset.ToUnixTimeMilliseconds();
         }
-        #endregion
-
         public static Dictionary<string, object> Serialize(string json) => (Dictionary<string, object>)new JavaScriptSerializer().DeserializeObject(json);
         #region ASE Members
         public static string EncryptStringToStrings_Aes(string plainText)
