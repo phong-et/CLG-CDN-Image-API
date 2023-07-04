@@ -6,13 +6,12 @@
     <!-- Add Swagger UI CSS -->
     <link rel="icon" type="image/png" href="swagger-ui/favicon-32x32.png" sizes="32x32" />
     <link rel="icon" type="image/png" href="swagger-ui/favicon-16x16.png" sizes="16x16" />
-    <link rel="stylesheet" type="text/css" href="swagger-ui/swagger-ui.css">
+    <link rel="stylesheet" type="text/css" href="swagger-ui/swagger-ui.css" />
     <title></title>
 </head>
 <body>
     <div id="swagger-ui"></div>
     <script src="swagger-ui/swagger-ui-bundle.js"></script>
-    <%--<script src="swagger-ui/swagger-ui-init.js"></script>--%>
     <script src="swagger-ui/swagger-ui-standalone-preset.js"> </script>
     <script>
         window.onload = function () {

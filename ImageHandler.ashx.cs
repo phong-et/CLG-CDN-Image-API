@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Security.Policy;
 using System.Web;
-using System.Web.Configuration;
 using System.Web.Script.Serialization;
 using System.Web.SessionState;
 
@@ -24,14 +20,14 @@ namespace cdn
             HttpRequest Request = context.Request;
             Response.ContentType = "application/json";
             string token = Request.Headers["Authorization"];
-            string origin = "";
-            if (Request.UrlReferrer != null)
-                origin = Request.UrlReferrer.Host;
-            if (!Utils.IsAllowAccessOrigin((origin)))
-            {
-                Response.Write(string.Format(responeJson, "false", "Access Deined From: " + (origin == "" ? " Anonymous origin" : origin)));
-                return;
-            }
+            //string origin = "";
+            //if (Request.UrlReferrer != null)
+            //    origin = Request.UrlReferrer.Host;
+            //if (!Utils.IsAllowAccessOrigin((origin)))
+            //{
+            //    Response.Write(string.Format(responeJson, "false", "Access Deined From: " + (origin == "" ? " Anonymous origin" : origin)));
+            //    return;
+            //}
             if (token != null)
             {
                 if(!token.Contains("Bearer"))

@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using System.Linq;
 using System.Web;
-using System.Web.Script.Serialization;
 using System.Web.SessionState;
 
 namespace cdn
@@ -14,29 +10,8 @@ namespace cdn
     /// Summary description for TokenHandler
     /// </summary>
     /// 
-    class Logger
-    {
-        private string logFilePath;
-
-        public Logger(string filePath)
-        {
-            logFilePath = filePath;
-        }
-
-        public void Log(string token)
-        {
-            string logLine = $"{DateTime.Now} : {token}";
-
-            using (StreamWriter writer = File.AppendText(logFilePath))
-            {
-                writer.WriteLine(logLine);
-            }
-        }
-    }
-
     public class TokenHandler : IHttpHandler, IReadOnlySessionState
     {
-
         public static string decrypt(string token)
         {
             return Utils.DecryptStringFromBytes_Aes(Convert.FromBase64String(token));
@@ -63,14 +38,14 @@ namespace cdn
             HttpResponse Response = context.Response;
             HttpRequest Request = context.Request;
             Response.ContentType = "application/json";
-            string origin = "";
-            if (Request.UrlReferrer != null)
-                origin = Request.UrlReferrer.Host;
-            if (!Utils.IsAllowAccessOrigin((origin)))
-            {
-                Response.Write(string.Format(responeJson, "fasle", "Access Deined From:" + (origin == "" ?" Anonymous origin": origin), ""));
-                return;
-            }
+            //string origin = "";
+            //if (Request.UrlReferrer != null)
+            //    origin = Request.UrlReferrer.Host;
+            //if (!Utils.IsAllowAccessOrigin((origin)))
+            //{
+            //    Response.Write(string.Format(responeJson, "fasle", "Access Deined From:" + (origin == "" ?" Anonymous origin": origin), ""));
+            //    return;
+            //}
             using (var sr = new StreamReader(Request.InputStream))
             {
                 try
