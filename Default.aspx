@@ -11,8 +11,6 @@
     <div>
         <h1>Welcome CDN API</h1>
     </div>
-    <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" />
-    <asp:Literal ID="Literal1" runat="server"></asp:Literal>
     </form>
 </body>
 </html>

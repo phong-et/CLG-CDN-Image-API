@@ -85,6 +85,9 @@
     <Compile Include="Swagger.aspx.designer.cs">
       <DependentUpon>Swagger.aspx</DependentUpon>
     </Compile>
+    <Compile Include="SyncHandler.ashx.cs">
+      <DependentUpon>SyncHandler.ashx</DependentUpon>
+    </Compile>
     <Compile Include="TokenHandler.ashx.cs">
       <DependentUpon>TokenHandler.ashx</DependentUpon>
     </Compile>
@@ -95,6 +98,8 @@
     <Content Include="TokenHandler.ashx" />
     <Content Include="swagger.json" />
     <Content Include="swagger_admin.json" />
+    <Content Include="swagger_support.json" />
+    <Content Include="SyncHandler.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

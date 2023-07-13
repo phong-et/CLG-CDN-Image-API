@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web.Script.Serialization;
 using System.Configuration;
+using System.Web;
 
 namespace cdn
 {
@@ -41,7 +42,7 @@ namespace cdn
                 return builder.ToString();
             }
         }
-        public static bool isRejectedToken(string token)
+        public static bool IsRejectedToken(string token)
         {
             switch (token)
             {
@@ -50,13 +51,19 @@ namespace cdn
             }
             return false;
         }
-        public static bool isExpiredToken(string token)
+        public static bool IsExpiredToken(string token)
         {
             string decryptedToken = TokenHandler.decrypt(token);
             Dictionary<string, object> objToken = new JavaScriptSerializer().Deserialize<Dictionary<string, object>>(decryptedToken);
             return ((long)objToken["expiredTime"] - Utils.GetTime()) < 0;
         }
-        private static string aseTokenSecretKey = (string)ConfigurationManager.AppSettings["secretKeyASE"];
+        public static bool IsExpiredTokenSync(string token)
+        {
+            string decryptedToken = TokenHandler.decrypt(token);
+            Dictionary<string, object> objToken = new JavaScriptSerializer().Deserialize<Dictionary<string, object>>(decryptedToken);
+            return ((long)objToken["expiredTime"] - Utils.GetTime()) < 0;
+        }
+        public static string aseTokenSecretKey = (string)ConfigurationManager.AppSettings["secretKeyASE"];
         public static long GetTimeNow() => DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
         public static long GetTime(int dayQuantity = 0)
         {
@@ -70,7 +77,7 @@ namespace cdn
         }
         public static Dictionary<string, object> Serialize(string json) => (Dictionary<string, object>)new JavaScriptSerializer().DeserializeObject(json);
         #region ASE Members
-        public static string EncryptStringToStrings_Aes(string plainText)
+        public static string EncryptStringToStrings_Aes(string plainText, string aseTokenSecretKey)
         {
             byte[] Key = Encoding.UTF8.GetBytes(aseTokenSecretKey);
             byte[] IV = Encoding.UTF8.GetBytes(aseTokenSecretKey);
@@ -116,7 +123,7 @@ namespace cdn
             return Convert.ToBase64String(encrypted);
             //return Convert.ToString(encrypted);
         }
-        public static string DecryptStringFromBytes_Aes(byte[] cipherText)
+        public static string DecryptStringFromBytes_Aes(byte[] cipherText, string aseTokenSecretKey)
         {
             byte[] Key = Encoding.UTF8.GetBytes(aseTokenSecretKey);
             byte[] IV = Encoding.UTF8.GetBytes(aseTokenSecretKey);
@@ -164,5 +171,27 @@ namespace cdn
             return plaintext;
         }
         #endregion
+        public static void SaveImage(string folderPath, string fileName, string strBase64)
+        {
+            if (!Directory.Exists(folderPath))
+                Directory.CreateDirectory(folderPath);
+            File.WriteAllBytes(folderPath + "/" + fileName, Convert.FromBase64String(strBase64));
+        }
+        public static string convetTimeStampToString(long timeStamp)
+        {
+            DateTimeOffset dateTimeOffset = DateTimeOffset.FromUnixTimeMilliseconds(timeStamp);
+            DateTime dateTime = dateTimeOffset.LocalDateTime;
+            string strDate = dateTime.ToString("dddd, MMMM d, yyyy h:mm tt");
+            return strDate;
+        }
+        public static void writeLogs(string message, string fileName = "log.txt")
+        {
+            string logLine = $"{convetTimeStampToString(Utils.GetTimeNow())} : {message}";
+
+            using (StreamWriter writer = File.AppendText(HttpContext.Current.Server.MapPath("~") + "/" + fileName))
+            {
+                writer.WriteLine(logLine);
+            }
+        }
     }
 }

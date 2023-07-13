@@ -14,9 +14,18 @@
     <script src="swagger-ui/swagger-ui-bundle.js"></script>
     <script src="swagger-ui/swagger-ui-standalone-preset.js"> </script>
     <script>
+        <%
+        var swaggerFile = "swagger.json?v=2";
+        var user = (string)Request.QueryString["u"];
+        switch (user)
+        {
+            case "ad": swaggerFile = "swagger_admin.json"; break;
+            case "su": swaggerFile = "swagger_support.json"; break;
+        }
+        %>
         window.onload = function () {
             const ui = SwaggerUIBundle({
-                url: "swagger<%=((string)Request.QueryString["u"] == "ad" ? "_Admin":"")%>.json",
+                url: "<%=swaggerFile%>",
                 dom_id: "#swagger-ui",
                 deepLinking: true,
                 presets: [

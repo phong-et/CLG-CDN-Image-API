@@ -37,7 +37,7 @@ namespace cdn
                 }
                 // Split Bearer text from token
                 token = token.Substring(6);
-                if (Utils.isExpiredToken((token)))
+                if (Utils.IsExpiredToken((token)))
                 {
                     Response.Write(string.Format(responeJson, "false", "Token is expired"));
                     return;
@@ -74,7 +74,7 @@ namespace cdn
                             {
                                 case "create":
                                 case "update":
-                                    SaveImage(folderPath, fileName, strBase64);
+                                    Utils.SaveImage(folderPath, fileName, strBase64);
                                     break;
                                 case "delete":
                                     File.Delete(folderPath + "/" + fileName);
@@ -89,7 +89,7 @@ namespace cdn
                             {
                                 case "create":
                                 case "update":
-                                    SaveImage(folderPath, fileName, strBase64);
+                                    Utils.SaveImage(folderPath, fileName, strBase64);
                                     break;
                                 case "delete":
                                     File.Delete(folderPath + "/" + fileName);
@@ -98,15 +98,31 @@ namespace cdn
                             break;
 
                         case "headergames":
-                            fileName = (string)hashtable["Id"] + "." + (string)hashtable["ImageType"];
-                            bool isSharedIcon = (bool)hashtable["IsSharedIcon"];
-                            if (isSharedIcon) folderPath += "/" + (string)hashtable["CTId"];
+                            fileName = (string)hashtable["HGameId"] + "." + (string)hashtable["ImageType"];
+                            if ((bool)hashtable["IsHeaderSubMenuImage"])
+                            {
+                                fileName = "SubMenuIcon_" + fileName;
+                                if ((bool)hashtable["IsShareHeaderSubMenuImage"])
+                                    fileName = "SubMenuIcon_" + (string)hashtable["GameName"] + "." + (string)hashtable["ImageType"];
+                                else
+                                {
+                                    folderPath += "/" + (string)hashtable["CTId"];
+                                    gameFolder += "/" + (string)hashtable["CTId"];
+                                }
+                                   
+                            }
+                            else
+                            {
+                                fileName = "MenuIcon_" + fileName;
+                                folderPath += "/" + (string)hashtable["CTId"];
+                                gameFolder += "/" + (string)hashtable["CTId"];
+                            }
                             message = action + " " + gameFolder + " image successfully";
                             switch (action)
                             {
                                 case "create":
                                 case "update":
-                                    SaveImage(folderPath, fileName, strBase64);
+                                    Utils.SaveImage(folderPath, fileName, strBase64);
                                     break;
                                 case "delete":
                                     File.Delete (folderPath + "/" + fileName);
@@ -124,12 +140,6 @@ namespace cdn
                     Response.Write(string.Format(responeJson, false.ToString().ToLower(), ex.ToString()));
                 }
             }
-        }
-        private void SaveImage(string folderPath, string fileName, string strBase64)
-        {
-            if (!Directory.Exists(folderPath))
-                Directory.CreateDirectory(folderPath);
-            File.WriteAllBytes(folderPath + "/" + fileName, Convert.FromBase64String(strBase64));
         }
         public bool IsReusable
         {

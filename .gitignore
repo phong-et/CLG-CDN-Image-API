@@ -16,3 +16,13 @@ Web.Release.config
 .vs/cdn/config/
 
 allgames/
+
+lobbygames/
+
+headergames/
+
+headergames.json
+
+*.json
+
+log.txt

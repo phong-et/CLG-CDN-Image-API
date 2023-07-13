@@ -14,24 +14,9 @@ namespace cdn
     {
         public static string decrypt(string token)
         {
-            return Utils.DecryptStringFromBytes_Aes(Convert.FromBase64String(token));
+            return Utils.DecryptStringFromBytes_Aes(Convert.FromBase64String(token), Utils.aseTokenSecretKey);
         }
-        public static string convetTimeStampToString(long timeStamp)
-        {
-            DateTimeOffset dateTimeOffset = DateTimeOffset.FromUnixTimeMilliseconds(timeStamp);
-            DateTime dateTime = dateTimeOffset.LocalDateTime;
-            string strDate = dateTime.ToString("dddd, MMMM d, yyyy h:mm tt");
-            return strDate;
-        }
-        public static void writeLogToken(string token)
-        {
-            string logLine = $"{convetTimeStampToString(Utils.GetTimeNow())} : {token}";
-
-            using (StreamWriter writer = File.AppendText(HttpContext.Current.Server.MapPath("~") + "/log.txt"))
-            {
-                writer.WriteLine(logLine);
-            }
-        }
+        
         public void ProcessRequest(HttpContext context)
         {
             string responeJson = "{{ \"success\":{0}, \"message\":\"{1}\", \"token\":\"{2}\" }}";
@@ -62,10 +47,10 @@ namespace cdn
                                 int dayQuantity = int.TryParse(Request.Form["days"], out int parsedResult) ? parsedResult : 1;
                                 string tokenTemplate = "{{ \"expiredTime\":{0}, \"expiredDate\":\"{1}\" }}";
                                 long expiredTime = Utils.GetTime(dayQuantity);
-                                string expiredDate = convetTimeStampToString(expiredTime);
+                                string expiredDate = Utils.convetTimeStampToString(expiredTime);
                                 var plainToken = string.Format(tokenTemplate, expiredTime, expiredDate);
-                                token = Utils.EncryptStringToStrings_Aes(plainToken);
-                                writeLogToken(token);
+                                token = Utils.EncryptStringToStrings_Aes(plainToken, Utils.aseTokenSecretKey);
+                                Utils.writeLogs(token);
                                 Response.Write(string.Format(responeJson, "true", "create token successfully", token));
                                 break;
                             case "decrypt":
@@ -76,7 +61,7 @@ namespace cdn
                                 break;
                             case "check":
                                 token = (string)Request.Form["token"];
-                                bool isExpired = Utils.isExpiredToken(token);
+                                bool isExpired = Utils.IsExpiredToken(token);
                                 responeJson = "{{ \"expired\":{0}, \"message\":\"{1}\" }}";
                                 Response.Write(string.Format(responeJson, isExpired.ToString().ToLower(), "token has " + (isExpired ? "": "not ") + "expried yet"));
                                 break;
