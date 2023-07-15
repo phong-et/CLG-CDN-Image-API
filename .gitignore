@@ -26,3 +26,9 @@ headergames.json
 *.json
 
 log.txt
+
+.vs/cdn/DesignTimeBuild/
+
+.vs/ProjectEvaluation/
+
+apiimagecdn.zip

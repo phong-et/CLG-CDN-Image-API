@@ -62,11 +62,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Default.aspx" />
-    <Content Include="log.txt" />
     <Content Include="Swagger.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common.cs" />
+    <Compile Include="Cryptography.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -74,6 +75,7 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="GameGen.cs" />
     <Compile Include="ImageHandler.ashx.cs">
       <DependentUpon>ImageHandler.ashx</DependentUpon>
     </Compile>
@@ -96,9 +98,6 @@
   <ItemGroup>
     <Content Include="ImageHandler.ashx" />
     <Content Include="TokenHandler.ashx" />
-    <Content Include="swagger.json" />
-    <Content Include="swagger_admin.json" />
-    <Content Include="swagger_support.json" />
     <Content Include="SyncHandler.ashx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -107,7 +106,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

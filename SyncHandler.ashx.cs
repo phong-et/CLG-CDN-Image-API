@@ -15,71 +15,35 @@ namespace cdn
 
         public void ProcessRequest(HttpContext context)
         {
-            string responeJson = "{{ \"success\":{0}, \"message\":\"{1}\" }}";
+            string responseJson = "{{ \"success\":{0}, \"message\":\"{1}\" }}";
             context.Response.AppendHeader("Access-Control-Allow-Headers", "Authorization");
             HttpResponse Response = context.Response;
             HttpRequest Request = context.Request;
             Response.ContentType = "application/json";
             string token = Request.Headers["Authorization"];
-            if (token != null)
-            {
-                if (!token.Contains("Basic"))
-                {
-                    Response.Write(string.Format(responeJson, "false", "Token missed out prefix 'Basic'"));
-                    return;
-                }
-                // Split Basic from Support page
-                token = token.Substring(5);
-                if (IsExpiredToken((token)))
-                {
-                    Response.Write(string.Format(responeJson, "false", "Token is expired"));
-                    return;
-                }
-            }
-            else
-            {
-                Response.Write(string.Format(responeJson, "false", "Token is required at Header Authorization"));
-                return;
-            }
+            //if(!IsValidToken(token, responseJson, Response)) return;
             string[] segments = new Uri(Request.Url.ToString()).AbsolutePath.Trim('/').Split('/');
             var gameFolder = segments[segments.Length - 1];
-            string mbUrl = string.Empty;
-            using (var sr = new StreamReader(Request.InputStream))
-            {
-                string body = sr.ReadToEnd();
-                JavaScriptSerializer serializer = new JavaScriptSerializer();
-                Hashtable hashtable = serializer.Deserialize<Hashtable>(body);
-                mbUrl = Uri.UnescapeDataString((string)hashtable["mbUrl"]);
-            }
-            
-            mbUrl += "/public/GameGen.ashx?cmd=GetLastDataJson" + gameFolder.ToUpper();
+            int CTId = int.TryParse(context.Request.QueryString["CTId"], out int result) ? result : 0;
             try
             {
-                sendRequest(mbUrl, gameFolder);
-                string message = $"create {gameFolder}.json successfully";
-                Response.Write(string.Format(responeJson, "true", message));
+                switch (gameFolder)
+                {
+                    case "allgames":
+                        Response.Write(GameGen.GetLastDataJsonALLGAMES());
+                        break;
+                    case "headergames":
+                        Response.Write(GameGen.GetLastDataJsonHEADERGAMES(CTId));
+                        break;
+                    case "lobbygames":
+                        Response.Write(GameGen.GetLastDataJsonLOBBYGAMES());
+                        break;
+                }
+                //Response.Write(string.Format(responeJson, "true", CTId));
             }
             catch (Exception ex)
             {
-                Response.Write(string.Format(responeJson, "false", ex.ToString()));
-            }
-        }
-        private void sendRequest(string mbUrl, string gameFolder)
-        {
-            //Utils.writeLogs(mbUrl, "synclog.txt");
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(mbUrl);
-            httpWebRequest.ContentType = "application/json";
-            httpWebRequest.Method = "GET";
-            // receive respose
-            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-            {
-                // return a json string
-                var jsonResult = streamReader.ReadToEnd();
-                using (StreamWriter writer = new StreamWriter(HttpContext.Current.Server.MapPath("~") + "/" + gameFolder + ".json"))
-                {
-                    writer.Write(jsonResult);
-                }
+                Response.Write(string.Format(responseJson, "false", ex.ToString()));
             }
         }
         public bool IsReusable
@@ -108,6 +72,30 @@ namespace cdn
             {
                 return false;
             }
+        }
+        private bool IsValidToken(string token, string responseJson, HttpResponse Response)
+        {
+            if (token != null)
+            {
+                if (!token.Contains("Basic"))
+                {
+                    Response.Write(string.Format(responseJson, "false", "Token missed out prefix 'Basic'"));
+                    return false;
+                }
+                // Split Basic from Support page
+                token = token.Substring(5);
+                if (IsExpiredToken((token)))
+                {
+                    Response.Write(string.Format(responseJson, "false", "Token is expired"));
+                    return false;
+                }
+            }
+            else
+            {
+                Response.Write(string.Format(responseJson, "false", "Token is required at Header Authorization"));
+                return false;
+            }
+            return true;
         }
     }
 }
