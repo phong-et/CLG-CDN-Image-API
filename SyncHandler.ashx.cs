@@ -30,7 +30,7 @@ namespace cdn
                 switch (gameFolder)
                 {
                     case "allgames":
-                        Response.Write(GameGen.GetLastDataJsonALLGAMES());
+                        Response.Write(GameGen.GetLastDataJsonALLGAMES(CTId));
                         break;
                     case "headergames":
                         Response.Write(GameGen.GetLastDataJsonHEADERGAMES(CTId));

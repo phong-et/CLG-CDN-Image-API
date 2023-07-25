@@ -98,24 +98,27 @@ namespace cdn
                             break;
 
                         case "headergames":
-                            fileName = (string)hashtable["HGameId"] + "." + (string)hashtable["ImageType"];
-                            if ((bool)hashtable["IsHeaderSubMenuImage"])
+                            string HGameId = (string)hashtable["HGameId"];
+                            string GameName = (string)hashtable["GameName"];
+                            string GameType = (string)hashtable["GameType"];
+                            string ImageType = (string)hashtable["ImageType"];
+                            bool isHeaderSubMenuImage = (bool)hashtable["IsHeaderSubMenuImage"];
+                            string CTId = (string)hashtable["CTId"];
+                            bool isSharedHeaderSubMenuImage = GetIsSharedSubMenuIcon(CTId);
+                            if (isHeaderSubMenuImage)
                             {
-                                fileName = "SubMenuIcon_" + fileName;
-                                if ((bool)hashtable["IsShareHeaderSubMenuImage"])
-                                    fileName = "SubMenuIcon_" + (string)hashtable["GameName"] + "." + (string)hashtable["ImageType"];
-                                else
+                                fileName = "SubMenuIcon_" + HGameId + "_" + GameName + "." + ImageType;
+                                if(!isSharedHeaderSubMenuImage)
                                 {
-                                    folderPath += "/" + (string)hashtable["CTId"];
-                                    gameFolder += "/" + (string)hashtable["CTId"];
+                                    folderPath += "/" + CTId;
+                                    gameFolder += "/" + CTId;
                                 }
-                                   
                             }
                             else
                             {
-                                fileName = "MenuIcon_" + fileName;
-                                folderPath += "/" + (string)hashtable["CTId"];
-                                gameFolder += "/" + (string)hashtable["CTId"];
+                                fileName = "MenuIcon_" + GameType + "." + ImageType; ;
+                                folderPath += "/" + CTId;
+                                gameFolder += "/" + CTId;
                             }
                             message = action + " " + gameFolder + " image successfully";
                             switch (action)
@@ -146,6 +149,16 @@ namespace cdn
             get
             {
                 return false;
+            }
+        }
+        private bool GetIsSharedSubMenuIcon(string CTId)
+        {
+            switch (CTId)
+            {
+                case "137":
+                case "262":
+                    return false;
+                default: return true;
             }
         }
     }

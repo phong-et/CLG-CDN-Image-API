@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Web.DynamicData;
 using System.Web.Script.Serialization;
 
 namespace cdn
@@ -43,7 +44,7 @@ namespace cdn
                 string jsonStrSubMenuIcons = "";
                 ds = Common.GetDataSetCache("_cmListHeaderGame_sw",
                     CTId == 0 ? null : new List<SqlParameter> { new SqlParameter("@CTId", SqlDbType.Int) { Value = CTId } },
-                    "LisMenutHeaderGames", Common.ConnStr, 1000);
+                    "LisMenutHeaderGames_" + CTId, Common.ConnStr);
                 dt = ds.Tables[0];
                 Dictionary<string, string> subMenuIconMap = new Dictionary<string, string>();
                 if (dt.Rows.Count > 0)
@@ -68,27 +69,43 @@ namespace cdn
                 return ("{\"success\":" + "false" + ", \"text\":\"" + ex.Message.Replace("\n", " ") + "\"}");
             }
         }
-        public static string GetLastDataJsonALLGAMES()
+        public static string GetLastDataJsonALLGAMES(int CTId = 0)
         {
+            DataSet ds;
+            DataTable dt;
+            string jsonTemplate = "{{'success':{0}, 'games':{1}, 'images':{2} }}";
             try
             {
-                DataSet ds;
-                DataTable dt;
-                string jsonTemplate = "{{'success':{0},'data':{1}}}";
-                string jsonStr = "";
-                ds = Common.GetDataSetCache("_cmListAllGameImage_sw", null, "_cmListAllGameImage_sw", Common.ConnStr, cacheTime);
+                string jsonStrGames = "";
+                string jsonStrImages = "[]";
+                ds = Common.GetDataSetCache("_cmListHomePageGameByCT_sw", 
+                    CTId == 0 ? null : new List<SqlParameter> { new SqlParameter("@CTId", SqlDbType.Int) { Value = CTId }}, "cmListHomePageGameByCT_sw" + CTId, 
+                    Common.ConnStr,
+                    3600);
                 dt = ds.Tables[0];
                 if (dt.Rows.Count > 0)
-                    jsonStr = Common.ConvertDataTableToJson(dt);
-                else
                 {
-                    return (String.Format(jsonTemplate, "false", "_cmListHeaderGame_sw sp has not data").Replace("'", "\""));
+                    jsonStrGames = Common.ConvertDataTableToJson(dt);
+                    var gameListIDs = dt.AsEnumerable().Select(row => row.Field<int>("GameListID"));
+
+                    Dictionary<string, string> whiteLabelMapImages = new Dictionary<string, string>();
+                    Dictionary<string, string> globalMapImages = new Dictionary<string, string>();
+                    ds = Common.GetDataSetCache("_cmListAllGameImage_sw", null, "cmListAllGameImage_sw", Common.ConnStr, 3600);
+                    foreach (DataRow dr in ds.Tables[0].Rows)
+                        globalMapImages.Add(dr["GameListID"].ToString(), dr["imgBase64Str"].ToString());
+                    JavaScriptSerializer serializer = new JavaScriptSerializer();
+                    serializer.MaxJsonLength = Int32.MaxValue;
+                    foreach (var id in gameListIDs)
+                        whiteLabelMapImages[id.ToString()] = globalMapImages[id.ToString()].ToString();
+                    jsonStrImages = serializer.Serialize(whiteLabelMapImages);
+                    return string.Format(jsonTemplate, "true", jsonStrGames, jsonStrImages).Replace("'", "\"");
                 }
-                return (string.Format(jsonTemplate, "true", jsonStr).Replace("'", "\""));
+                else
+                    return String.Format(jsonTemplate, "false", "_cmListHomePageGameByCT_sw sp has not data").Replace("'", "\"");
             }
             catch (Exception ex)
             {
-                return ("{\"success\":" + "false" + ", \"text\":\"" + ex.Message.Replace("\n", " ") + "\"}");
+                return string.Format("{{'success':{0}, 'message':{1} }}", "false", ex.Message.Replace("\n", " ")).Replace("'", "\"");
             }
         }
     }
