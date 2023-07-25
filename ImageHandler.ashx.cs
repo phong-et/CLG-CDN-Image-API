@@ -60,14 +60,14 @@ namespace cdn
                 {
                     string rootPath = context.Server.MapPath("~");
                     string strBase64 = (string)hashtable["strBase64"];
-                    string imageType = (string)hashtable["imageType"];
+                    string imageType = (string)hashtable["ImageType"];
                     string folderPath = rootPath + "/" + gameFolder;
                     string fileName = string.Empty;
                     string message = string.Empty;
                     switch (gameFolder)
                     {
                         case "allgames":
-                            string gameListID = (string)hashtable["gameListID"];
+                            string gameListID = (string)hashtable["GameListID"];
                             fileName = gameListID + "." + imageType;
                             message = action + " image successfully";
                             switch (action)

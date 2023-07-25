@@ -36,10 +36,9 @@ namespace cdn
                         Response.Write(GameGen.GetLastDataJsonHEADERGAMES(CTId));
                         break;
                     case "lobbygames":
-                        Response.Write(GameGen.GetLastDataJsonLOBBYGAMES());
+                        Response.Write(GameGen.GetLastDataJsonLOBBYGAMES(CTId));
                         break;
                 }
-                //Response.Write(string.Format(responeJson, "true", CTId));
             }
             catch (Exception ex)
             {

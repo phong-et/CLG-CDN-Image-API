@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
-using System.Web.DynamicData;
 using System.Web.Script.Serialization;
 
 namespace cdn
@@ -12,7 +10,7 @@ namespace cdn
     public class GameGen
     {
         private static int cacheTime = 60;
-        public static string GetLastDataJsonLOBBYGAMES()
+        public static string GetLastDataJsonLOBBYGAMES(int CTId = 0)
         {
             try
             {
@@ -20,7 +18,9 @@ namespace cdn
                 DataTable dt;
                 string jsonTemplate = "{{'success':{0}, 'text':'{1}', 'games':{2}}}";
                 string jsonStr = "";
-                ds = Common.GetDataSetCache("_cmListGameLobby_sw", null, "ListLobbyGame", Common.ConnStr, cacheTime);
+                ds = Common.GetDataSetCache("_cmListGameLobby_sw", 
+                    CTId == 0 ? null : new List<SqlParameter> { new SqlParameter("@CTId", SqlDbType.Int) { Value = CTId } }, 
+                    "ListLobbyGame" + CTId, Common.ConnStr, cacheTime);
                 dt = ds.Tables[0];
                 if (dt.Rows.Count > 0)
                     jsonStr = Common.ConvertDataTableToJson(dt);
