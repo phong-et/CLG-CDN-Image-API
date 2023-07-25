@@ -1,0 +1,226 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "CLG Images CDN API for Admin",
+    "description": "",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost/cdn",
+      "description": "Development server"
+    },
+    {
+      "url": "https://imgtest.playliga.com",
+      "description": "Test server"
+    }
+  ],
+  "paths": {
+    "/token/create": {
+      "post": {
+        "tags": [ "Admin" ],
+        "summary": "create a token for bo site use ",
+        "required": true,
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/tokenCreation"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Send request successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/tokenResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/token/decrypt": {
+      "post": {
+        "tags": [ "Admin" ],
+        "summary": "decrypt a token",
+        "required": true,
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/tokenDecryption"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Send request successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/tokenDecrytionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/token/check": {
+      "post": {
+        "tags": [ "Admin" ],
+        "summary": "check a token",
+        "required": true,
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/tokenDecryption"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Send request successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/tokenCheckResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "tokenCreation": {
+        "type": "object",
+        "required": [
+          "secretKey"
+        ],
+        "properties": {
+          "secretKey": {
+            "type": "string"
+          },
+          "days": {
+            "type": "number"
+          }
+        }
+      },
+      "tokenDecryption": {
+        "type": "object",
+        "required": [
+          "secretKey",
+          "token"
+        ],
+        "properties": {
+          "secretKey": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string"
+          }
+        }
+      },
+      "tokenResponse": {
+        "type": "object",
+        "required": [
+          "success"
+        ],
+        "properties": {
+          "success": {
+            "type": "bolean"
+          },
+          "token": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "success": true,
+          "token": "paUDVA4xbMMX6XL8XaimKbOCZG1uCjNkgH74mk5sdFI=",
+          "message": "create token success"
+        }
+      },
+      "tokenDecrytionResponse": {
+        "type": "object",
+        "required": [
+          "success"
+        ],
+        "properties": {
+          "success": {
+            "type": "bolean"
+          },
+          "token": {
+            "type": "object",
+            "description": "a decrypted string by ASE algorithm",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/decrytedToken"
+              }
+            ]
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "success": true,
+          "token": {
+            "expiredTime": 1688268760207,
+            "expiredDate": "Sunday, July 2, 2023 10:32 AM"
+          },
+          "message": "create token success"
+        }
+      },
+      "tokenCheckResponse": {
+        "type": "object",
+        "required": [
+          "success"
+        ],
+        "properties": {
+          "isExpired": {
+            "type": "bolean"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "isExpried": true,
+          "message": "token has expired yet"
+        }
+      },
+      "decrytedToken": {
+        "required": [
+          "expiredTime",
+          "expiredDate"
+        ],
+        "properties": {
+          "expiredTime": {
+            "type": "number"
+          },
+          "expiredDate": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

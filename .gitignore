@@ -23,8 +23,6 @@ headergames/
 
 headergames.json
 
-*.json
-
 log.txt
 
 .vs/cdn/DesignTimeBuild/

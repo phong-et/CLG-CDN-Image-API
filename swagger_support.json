@@ -1,0 +1,145 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "CLG Images CDN API for Support",
+    "description": "",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost/cdn",
+      "description": "Development server"
+    },
+    {
+      "url": "https://imgtest.playliga.com",
+      "description": "Test server"
+    }
+  ],
+  "paths": {
+    "/sync/allgames": {
+      "post": {
+        "tags": [ "Support" ],
+        "summary": "sync allgames images ",
+        "responses": {
+          "200": {
+            "description": "Send request successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/syncResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sync/lobbygames": {
+      "post": {
+        "tags": [ "Support" ],
+        "summary": "sync lobbygames images ",
+        "required": true,
+        "responses": {
+          "200": {
+            "description": "Send request successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/syncResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sync/headergames": {
+      "post": {
+        "tags": [ "Support" ],
+        "required": true,
+        "parameters": [
+          {
+            "name": "CTId",
+            "in": "query",
+            "description": "Comptye Id",
+            "required": true,
+            "type": "interger"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Send request successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/syncResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "syncParams": {
+        "type": "object",
+        "required": [
+          "mbUrl"
+        ],
+        "properties": {
+          "mbUrl": {
+            "type": "string"
+          },
+          "comptype": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "mbUrl": "http://localhost/LIGA_New_v8_Live",
+          "comptype": null
+        }
+      },
+      "syncResponse": {
+        "type": "object",
+        "required": [
+          "success"
+        ],
+        "properties": {
+          "success": {
+            "type": "bolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "jsonFilePath": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "success": true,
+          "message": "sync allgames success",
+          "jsonFilePath": "https://imgtest.playliga.com/allgames.json"
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "apiKey",
+        "description": "Type into the textbox: Bearer {your token}.",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ]
+}
