@@ -21,7 +21,7 @@ namespace cdn
             HttpRequest Request = context.Request;
             Response.ContentType = "application/json";
             string token = Request.Headers["Authorization"];
-            //if(!IsValidToken(token, responseJson, Response)) return;
+            if(!IsValidToken(token, responseJson, Response)) return;
             string[] segments = new Uri(Request.Url.ToString()).AbsolutePath.Trim('/').Split('/');
             var gameFolder = segments[segments.Length - 1];
             int CTId = int.TryParse(context.Request.QueryString["CTId"], out int result) ? result : 0;

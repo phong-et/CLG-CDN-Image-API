@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace cdn
 {
     public class GameGen
     {
-        private static int cacheTime = 60;
+        private static int cacheTime = int.TryParse(ConfigurationManager.AppSettings["cacheTime"], out int result) ? result: 60;
         public static string GetLastDataJsonLOBBYGAMES(int CTId = 0)
         {
             try
@@ -46,8 +47,11 @@ namespace cdn
                 string jsonStrMainMenu = "";
                 string jsonStrSubMenuIcons = "";
                 ds = Common.GetDataSetCache("_cmListHeaderGame_sw",
-                    CTId == 0 ? null : new List<SqlParameter> { new SqlParameter("@CTId", SqlDbType.Int) { Value = CTId } },
-                    "LisMenutHeaderGames_" + CTId, Common.ConnStr);
+                    CTId == 0 ? null : new List<SqlParameter> { 
+                        new SqlParameter("@CTId", SqlDbType.Int) { Value = CTId },
+                        new SqlParameter("@ShowImageData", SqlDbType.Bit) { Value = true }
+                    },
+                    "LisMenutHeaderGames_" + CTId, Common.ConnStr, cacheTime);
                 dt = ds.Tables[0];
                 Dictionary<string, string> subMenuIconMap = new Dictionary<string, string>();
                 if (dt.Rows.Count > 0)
@@ -84,7 +88,7 @@ namespace cdn
                 ds = Common.GetDataSetCache("_cmListHomePageGameByCT_sw", 
                     CTId == 0 ? null : new List<SqlParameter> { new SqlParameter("@CTId", SqlDbType.Int) { Value = CTId }}, "cmListHomePageGameByCT_sw" + CTId, 
                     Common.ConnStr,
-                    3600);
+                    cacheTime);
                 dt = ds.Tables[0];
                 if (dt.Rows.Count > 0)
                 {
@@ -93,7 +97,7 @@ namespace cdn
 
                     Dictionary<string, string> whiteLabelMapImages = new Dictionary<string, string>();
                     Dictionary<string, string> globalMapImages = new Dictionary<string, string>();
-                    ds = Common.GetDataSetCache("_cmListAllGameImage_sw", null, "cmListAllGameImage_sw", Common.ConnStr, 3600);
+                    ds = Common.GetDataSetCache("_cmListAllGameImage_sw", null, "cmListAllGameImage_sw", Common.ConnStr, cacheTime);
                     foreach (DataRow dr in ds.Tables[0].Rows)
                         globalMapImages.Add(dr["GameListID"].ToString(), dr["imgBase64Str"].ToString());
                     JavaScriptSerializer serializer = new JavaScriptSerializer();
