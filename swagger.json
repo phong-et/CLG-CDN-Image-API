@@ -311,9 +311,6 @@
       "lobbygamesRequestBody": {
         "required": true,
         "properties": {
-          "CTId": {
-            "type": "string"
-          },
           "GameLobbyId": {
             "type": "string"
           },
@@ -328,7 +325,6 @@
           }
         },
         "example": {
-          "CTId": "890710",
           "GameLobbyId": "1234",
           "GameCode": "4321",
           "ImageType": "png",

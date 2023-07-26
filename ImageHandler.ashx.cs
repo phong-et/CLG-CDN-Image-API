@@ -83,7 +83,7 @@ namespace cdn
                             break;
 
                         case "lobbygames":
-                            fileName = (string)hashtable["CTId"] + "_" + (string)hashtable["GameLobbyId"] + "_" + (string)hashtable["GameCode"] + "." + (string)hashtable["ImageType"];
+                            fileName = (string)hashtable["GameLobbyId"] + "_" + (string)hashtable["GameCode"] + "." + (string)hashtable["ImageType"];
                             message = action + " " + gameFolder + " image successfully";
                             switch (action)
                             {

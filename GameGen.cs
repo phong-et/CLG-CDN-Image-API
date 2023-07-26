@@ -19,7 +19,10 @@ namespace cdn
                 string jsonTemplate = "{{'success':{0}, 'text':'{1}', 'games':{2}}}";
                 string jsonStr = "";
                 ds = Common.GetDataSetCache("_cmListGameLobby_sw", 
-                    CTId == 0 ? null : new List<SqlParameter> { new SqlParameter("@CTId", SqlDbType.Int) { Value = CTId } }, 
+                    CTId == 0 ? null : new List<SqlParameter> { 
+                        new SqlParameter("@CTId", SqlDbType.Int) { Value = CTId }, 
+                        new SqlParameter("@ShowImageData", SqlDbType.Bit) { Value = true } 
+                    }, 
                     "ListLobbyGame" + CTId, Common.ConnStr, cacheTime);
                 dt = ds.Tables[0];
                 if (dt.Rows.Count > 0)

@@ -24,6 +24,15 @@
       "post": {
         "tags": [ "Support" ],
         "summary": "sync allgames images ",
+        "parameters": [
+          {
+            "name": "CTId",
+            "in": "query",
+            "description": "Comptye Id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Send request successfully",
@@ -43,6 +52,15 @@
         "tags": [ "Support" ],
         "summary": "sync lobbygames images ",
         "required": true,
+        "parameters": [
+          {
+            "name": "CTId",
+            "in": "query",
+            "description": "Comptye Id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Send request successfully",
@@ -67,7 +85,7 @@
             "in": "query",
             "description": "Comptye Id",
             "required": true,
-            "type": "interger"
+            "type": "integer"
           }
         ],
         "responses": {
@@ -87,24 +105,6 @@
   },
   "components": {
     "schemas": {
-      "syncParams": {
-        "type": "object",
-        "required": [
-          "mbUrl"
-        ],
-        "properties": {
-          "mbUrl": {
-            "type": "string"
-          },
-          "comptype": {
-            "type": "string"
-          }
-        },
-        "example": {
-          "mbUrl": "http://localhost/LIGA_New_v8_Live",
-          "comptype": null
-        }
-      },
       "syncResponse": {
         "type": "object",
         "required": [
@@ -112,7 +112,7 @@
         ],
         "properties": {
           "success": {
-            "type": "bolean"
+            "type": "boolean"
           },
           "message": {
             "type": "string"
