@@ -1,0 +1,3209 @@
+    body {
+      text-align: left;
+      font-size: 13px;
+      background: #292A2E url('../img/kenobg.jpg') no-repeat fixed;
+      background-size: cover;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      -ms-overflow-style: none;
+      /* IE and Edge */
+      scrollbar-width: none;
+      /* Firefox */
+    }
+
+    html,
+    body {
+      width: 100% !important;
+      height: 100% !important;
+      overflow: hidden !important;
+      -ms-overflow-style: none !important;
+      /* IE and Edge */
+      scrollbar-width: none !important;
+      /* Firefox */
+    }
+
+
+    a:hover {
+      color: #EC9D3C;
+      text-decoration: underline;
+    }
+
+    .app {
+      padding-top: 0;
+      width: calc(100% + 30px);
+      height: calc(100vh + 30px);
+      overflow: scroll;
+      padding-right: 30px;
+      padding-bottom: 30px;
+      -ms-overflow-style: none;
+      /* IE and Edge */
+      scrollbar-width: none;
+      /* Firefox */
+    }
+
+    body::-webkit-scrollbar,
+    .app::-webkit-scrollbar {
+      display: none;
+    }
+
+
+    .app .products {
+      position: relative;
+      z-index: 5;
+    }
+
+    .nav {
+      background: #F9F9F9;
+    }
+
+    .nav-detail-btn {
+      float: left;
+      box-shadow: 0 .025rem .525rem rgba(0, 0, 0, .275) !important;
+      height: 50px;
+      line-height: 28px;
+      border-radius: 8px;
+      padding: 11px 0 11px 15px;
+      background: #fff;
+      margin-right: 25px;
+    }
+
+    .nav-detail-btn:last-child {
+      margin-right: 0;
+    }
+
+    .nav-detail-btn span {
+      display: block;
+      float: right;
+      margin-left: 15px;
+      height: 28px;
+      line-height: 28px;
+      border-radius: 8px 0 0 8px;
+      background: #8DACFF;
+      color: #387BFD;
+      font-weight: bold;
+      padding: 0 15px;
+    }
+
+    .game-cont {
+      width: 50%;
+      background: #fff;
+      padding: 10px;
+      float: left;
+    }
+
+    .leftbox-cont {
+      width: 184px;
+      float: left;
+    }
+
+    .rightbox-cont {
+      width: 70%;
+      float: right;
+    }
+
+    .summary-cont {
+      height: 38px;
+      width: 100%;
+      padding: 7px;
+    }
+
+    .summary-detail {
+      padding: 0 7px;
+    }
+
+    .summary-item {
+      padding: 2px;
+      background: rgb(37, 132, 254);
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      line-height: 20px;
+      display: block;
+      float: left;
+      margin-right: 5px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: bold;
+      transition: 0.3s all;
+      position: relative;
+    }
+
+    .summary-item span {
+      position: relative;
+    }
+
+    .summary-item:before {
+      position: absolute;
+      content: '';
+      width: 20px;
+      height: 20px;
+      background: #C6D5FF;
+      border-radius: 50%;
+      left: 2px;
+      top: 2px;
+    }
+
+    .summary-item.season:before {
+      width: 44px;
+      border-radius: 24px;
+    }
+
+    .summary-item.season {
+      border-radius: 24px;
+      width: 48px;
+    }
+
+    .draw-cont {
+      background: #19314D url(../img/squarebg.png) no-repeat;
+      width: 100%;
+      padding: 10px;
+      position: relative;
+    }
+
+    .draw-info {
+      height: 30px;
+      line-height: 30px;
+
+      background: rgb(62, 127, 253);
+      border-radius: 0 0 10px 10px;
+      color: #fff;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .numtiles-cont {
+      width: 100%;
+      height: auto;
+      min-height: 80px;
+      padding: 4px;
+      background: #284A71;
+      border-radius: 6px;
+      position: relative;
+      z-index: 9999;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+
+
+    .middlepanel {
+      height: 50px;
+      padding-left: 39px;
+    }
+
+    .numtiles-cont-space {
+      display: flex;
+    }
+
+    .numtiles-cont-space.placeholder {
+      display: none;
+    }
+
+    .numtiles-cont:after {
+      content: '';
+      clear: both;
+    }
+
+    .betspace {
+      padding: 5px 5px 0;
+    }
+
+    .betspace .grid-x:last-child {
+      padding-bottom: 5px;
+    }
+
+    .numtiles-cont-space>div {
+      width: 10%;
+    }
+
+
+
+    .tile {
+      width: 30px;
+      height: 30px;
+      line-height: 30px;
+      margin: 4px auto;
+      text-align: center;
+      font-weight: bold;
+      font-size: 14px;
+      position: relative;
+      border-radius: 30px;
+      font-family: 'Poppins', Arial;
+      flex-basis: 5%;
+    }
+
+    .tile>span {
+      display: block;
+      margin: 1px;
+      width: 28px;
+      height: 28px;
+      line-height: 28px;
+      border-radius: 28px;
+      color: #FFFFFF;
+      background: #19314D;
+    }
+
+    .tile.active>span {
+      background: #349DFF;
+      background: -moz-linear-gradient(top, #349DFF 0%, #105AA2 100%);
+      background: -webkit-linear-gradient(top, #349DFF 0%, #105AA2 100%);
+      background: linear-gradient(to bottom, #349DFF 0%, #105AA2 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#349DFF', endColorstr='#105AA2', GradientType=0);
+      animation: pop 0.3s linear 1;
+    }
+
+    @keyframes pop {
+      50% {
+        transform: scale(1.2);
+      }
+    }
+
+
+    .rowresult {
+      position: absolute;
+      left: 12px;
+      top: 12px;
+      text-align: right;
+      display: none;
+    }
+
+    .rowresult div {
+      border-radius: 0 5px 5px 0;
+      margin: 1px 0;
+      background: #EAEDFF;
+      width: 282px;
+      height: 30px;
+      line-height: 30px;
+    }
+
+    .timer {
+      width: 100%;
+      height: 35px;
+      border: 4px solid #242F4D;
+      border-radius: 5px;
+      background: #303E67;
+      color: #fff;
+      margin: 20px auto 0;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .container {
+      height: auto;
+      overflow: hidden;
+    }
+
+    .menu-username {
+      display: none !important;
+    }
+
+    .toppanel {
+      position: relative;
+      width: 100%;
+    }
+
+    .infobox {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      left: 0;
+      right: 0;
+      line-height: 21px;
+    }
+
+    .cell.betlot {
+      text-align: center;
+      color: #000;
+    }
+
+    .cell.betlot .oddtxt {
+      display: inline-block;
+      text-align: center;
+      font-size: 14px !important;
+      font-weight: bold;
+      width: 100%;
+      line-height: 21px;
+    }
+
+    .cell.betlot .rangetxt {
+      display: inline-block;
+      text-align: center;
+      position: absolute;
+      left: 0;
+    }
+
+    .cell.betlot .oddtxt,
+    .cell.betlot .rangetxt,
+    .cell.betlot .stake {
+      color: #999;
+      font-size: 11px;
+      padding: 0 5px;
+    }
+
+    .line3special .cell.betlot .rangetxt {
+      line-height: 16px;
+    }
+
+    .line3special .cell.betlot .oddtxt {
+      line-height: 21px;
+    }
+
+    .line3special .cell.betlot .rangetxt,
+    .line3special .cell.betlot .oddtxt {
+      display: block;
+      position: relative;
+    }
+
+    .line3special .infobox {
+      position: relative;
+    }
+
+    .cell.betlot .stake.active {
+      background: #235ac2;
+      color: #fff;
+      border-radius: 0 0 0 8px;
+      font-weight: bold;
+      max-height: 16px;
+      line-height: 16px;
+    }
+
+    .betlot:last-child .stake.active {
+      border-radius: 0 8px;
+    }
+
+    .cell.betlot .stake {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+
+    .betlot-types {
+      border-bottom: 2px solid #DCE5F8;
+      background: #FAFCFF;
+    }
+
+    .betlot-types .cell span {
+      text-align: center;
+      width: 100%;
+      display: block;
+    }
+
+    .app .products,
+    .app .menu {
+      max-width: 1400px;
+    }
+
+    .app .menu {
+      display: block;
+    }
+
+    .app .products .product,
+    .app .products .product.simple,
+    .app .products .product.trend {
+      height: auto;
+    }
+
+    .app .products .product .product-odds .odds .betlot {
+      height: 25px;
+      line-height: 25px
+    }
+
+    .rol>div>div {
+      line-height: 16px;
+      font-size: 8px;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .o1 div.type,
+    .o5 div.type,
+    .o20 div.type {
+      background: rgb(250, 89, 79) !important;
+    }
+
+
+    .o2 div.type,
+    .o6 div.type,
+    .o19 div.type {
+      background: rgb(62, 127, 253) !important;
+    }
+
+    .o13 div.type {
+      background: rgb(250, 89, 79) !important;
+    }
+
+    .o14 div.type {
+      background: rgb(80, 173, 116) !important;
+    }
+
+
+    .o3 div.type,
+    .o21 div.type {
+      background: rgb(111, 65, 24) !important;
+    }
+
+
+    .o7 div.type {
+      background: rgb(66, 74, 82) !important;
+    }
+
+    .o4 div.type,
+    .o17 div.type {
+      background: rgb(246, 201, 100) !important;
+    }
+
+    .o8 div.type {
+      background: rgb(92, 182, 164) !important;
+    }
+
+
+    .o9 div.type,
+    .o18 div.type {
+      background: rgb(47, 106, 93) !important;
+    }
+
+
+
+
+    .o10 div.type {
+      background: rgb(187, 55, 178) !important;
+    }
+
+
+    .o11 div.type {
+      background: rgb(38, 46, 75) !important;
+    }
+
+
+    .o12 div.type {
+      background: rgb(216, 176, 87) !important;
+    }
+
+
+    .o13 div.type {
+      background: rgb(179, 64, 62) !important;
+    }
+
+    .o12 div.type {
+      background: rgb(179, 64, 62) !important;
+    }
+
+
+
+    .app .products .product .betlot-types .cell span {
+      height: 38px;
+      line-height: 38px;
+    }
+
+    .betlot {
+      padding-top: 5px;
+    }
+
+
+    .betlot a {
+      background: #fff;
+      width: 100%;
+      height: 40px;
+      display: block;
+      font-size: 14px;
+      border-right: 1px solid #F4F4F4;
+    }
+
+    .line3special .betlot a {
+      height: 60px;
+    }
+
+    .betlot:first-child a {
+      border-radius: 8px 0 0 8px;
+    }
+
+    .betlot:last-child a {
+      border-radius: 0 8px 8px 0;
+      border-right: none;
+    }
+
+
+    .app .products .product .product-trendlot .trendlot-types .cell span,
+    .app .products .product .trendlot-types .cell span,
+    .app .products .product .product-trendlot .betlot-types .cell span,
+    .app .products .product .betlot-types .cell span {
+      color: #A0A7D3;
+      font-weight: bold;
+      border-radius: 4px 4px 0 0;
+    }
+
+    .app .products .product .product-trendlot .trendlot-types .cell span,
+    .app .products .product .trendlot-types .cell span,
+    .app .products .product .product-trendlot .betlot-types .cell span,
+    .app .products .product .betlot-types .cell span {
+      background: transparent;
+    }
+
+    .app .products .product .product-trendlot .trendlot-types .cell span.selected,
+    .app .products .product .betlot-types .cell span.selected {
+      color: #4EBAF1;
+      position: relative;
+    }
+
+    .app .products .product .product-trendlot .trendlot-types .cell span.selected:after,
+    .app .products .product .betlot-types .cell span.selected:after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-bottom: 7px solid #4EBAF1;
+    }
+
+    .betspace,
+    .grid-trendlot,
+    .loading,
+    .product-trendlot .stats {
+      background: #e2e7f0;
+    }
+
+    .app .popper.trend {
+
+      background: #464243 url('../img/popoverbg.png') top center no-repeat;
+      border: 0;
+    }
+
+    .popper.trend .drawno {
+      float: left;
+    }
+
+    .popper.trend .drawtime {
+      float: right;
+    }
+
+    .popper.trend {
+      width: 320px;
+    }
+
+    .app .popper.trend a.close {
+      position: absolute;
+      right: 0;
+      top: 0;
+
+    }
+
+    .comingsoon {
+      text-align: center;
+      font-size: 40px;
+      color: #387BFD;
+      text-transform: uppercase;
+      width: 100%;
+      margin-top: 50px;
+
+    }
+
+    .popper.trend .trendsnumber {
+      display: flex;
+      width: 100%;
+      height: auto;
+      margin: 0 auto 10px;
+      position: relative;
+      background: #393535;
+      border-radius: 6px;
+      padding: 4px;
+    }
+
+    .trendsnumber .tile {
+      width: 26px;
+      height: 26px;
+      line-height: 26px;
+      margin: 4px 1px;
+      border-radius: 26px;
+    }
+
+    .trendsnumber .tile>span {
+      display: block;
+      margin: 2px;
+      width: 24px;
+      height: 24px;
+      line-height: 24px;
+      border-radius: 24px;
+      background: #105AA2;
+      color: #FFF;
+    }
+
+    .trendsnumber .tile>span.lighter {
+      background: #349DFF;
+    }
+
+    .trendtile.red {
+      color: #DF5865;
+      background: #443957;
+    }
+
+    .app .grid-trendlot {
+      min-height: 150px;
+      overflow-x: scroll;
+    }
+
+    .stop-betting .betspace,
+    .waiting-result .betspace,
+    .open-result .betspace {
+      position: relative;
+    }
+
+    div.nomorebets,
+    div.drawingresult {
+      display: none;
+      z-index: 10;
+    }
+
+    .stop-betting .betspace div.nomorebets {
+      display: block;
+      content: 'No More Bets';
+      background: rgba(0, 0, 0, 0.7);
+      width: 100%;
+      height: 100%;
+      line-height: 225px;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      color: #fff;
+      font-size: 20px;
+      text-align: center;
+    }
+
+
+    .waiting-result .betspace div.drawingresult {
+      display: block;
+      background: rgba(0, 0, 0, 0.7);
+      width: 100%;
+      height: 100%;
+      line-height: 155px;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      color: #fff;
+      font-size: 20px;
+      text-align: center;
+    }
+
+    .app .popper.trend .sum {
+      background: transparent url('../img/trendsumbg.png') center center no-repeat;
+      color: #fff;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+      line-height: 40px;
+      height: 40px;
+      padding: 0;
+    }
+
+    .gametitle {
+      color: #FFF;
+      font-size: 12px;
+    }
+
+    .trendstat {
+      font-size: 10px;
+      padding: 0;
+      border-radius: 16px;
+      height: 16px;
+      line-height: 16px;
+      text-align: center;
+      background: #105AA2;
+      color: #FFF;
+      display: inline-block;
+      margin: 5px 1% 5px 1%;
+      width: 31%;
+
+    }
+
+    .popper.trend .draw-cont {
+      transform: scale(0.8);
+    }
+
+    .trendstat.o1,
+    .trendstat.o2,
+    .trendstat.o3 {
+      top: 0;
+      left: -31px;
+    }
+
+    .trendstat.o4,
+    .trendstat.o5,
+    .trendstat.o6 {
+      top: 30px;
+      left: -31px;
+    }
+
+    .trendstat.o7,
+    .trendstat.o8,
+    .trendstat.o9 {
+      top: 60px;
+      left: -31px;
+    }
+
+    .trendstat.o10,
+    .trendstat.o11,
+    .trendstat.o12 {
+      top: 90px;
+      left: -31px;
+    }
+
+    .trendstat.o28,
+    .trendstat.o29,
+    .trendstat.o30,
+    .trendstat.o31 {
+      top: 120px;
+      left: -31px;
+    }
+
+    .trendstat.o13,
+    .trendstat.o14,
+    .trendstat.o15 {
+      top: 0px;
+      right: -31px;
+    }
+
+
+    .trendstat.o16,
+    .trendstat.o17,
+    .trendstat.o18 {
+      top: 30px;
+      right: -31px;
+    }
+
+    .trendstat.o19,
+    .trendstat.o20,
+    .trendstat.o21 {
+      top: 60px;
+      right: -31px;
+    }
+
+    .trendstat.o22,
+    .trendstat.o23,
+    .trendstat.o24 {
+      top: 90px;
+      right: -31px;
+    }
+
+    .trendstat.o25,
+    .trendstat.o26,
+    .trendstat.o27 {
+      top: 120px;
+      right: -31px;
+    }
+
+
+
+    .loading-icon {
+      display: inline-block;
+      position: relative;
+      width: 64px;
+      height: 64px;
+    }
+
+    .loading-icon:after {
+      content: " ";
+      display: block;
+      border-radius: 50%;
+      width: 0;
+      height: 0;
+      margin: 0;
+      box-sizing: border-box;
+      border: 20px solid #fff;
+      border-color: #242f4d transparent #283a69 transparent;
+      animation: loading-icon 1.8s infinite;
+    }
+
+    @keyframes loading-icon {
+      0% {
+        transform: rotate(0);
+        animation-timing-function: cubic-bezier(0.9, 0.5, 0.9, 0.9);
+      }
+
+      50% {
+        transform: rotate(900deg);
+        animation-timing-function: cubic-bezier(50, 50, 100, 50);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .summaryspace {
+      width: 100%;
+      height: 46px;
+      background: #0f2740 url('../img/trendsumbg.png') center center no-repeat;
+      background-size: contain;
+      border-radius: 6px 6px 0 0;
+      position: relative;
+    }
+
+    .sum-summary {
+      position: absolute;
+      right: -2px;
+      top: -2px;
+      bottom: -2px;
+      height: 50px;
+      line-height: 50px;
+      width: 35%;
+      background: #3A3636;
+      border-radius: 6px;
+      padding: 0;
+      z-index: 999;
+      border: solid 5px transparent;
+    }
+
+    .sum-summary:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: -1;
+      margin: -5px;
+      border-radius: inherit;
+      background: linear-gradient(to right, #009AD1, #5FF9DB);
+    }
+
+    .sum-summary .sum-cont {
+      width: 100%;
+      height: 40px;
+      line-height: 40px;
+      border-radius: 6px;
+      overflow: hidden;
+      z-index: 10;
+      transition: 0.3s all;
+      background-size: cover;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .sum-txt {
+      font-size: 16px;
+      color: #fff;
+      display: inline-block;
+      line-height: 40px;
+      max-width: 45px;
+      z-index: 10;
+      position: relative;
+      text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.5);
+    }
+
+    .sum-amt {
+      color: #fff;
+      font-size: 20px;
+      font-weight: bold;
+      display: inline-block;
+      line-height: 40px;
+      min-width: 44px;
+      z-index: 10;
+      position: relative;
+      text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.5);
+    }
+
+    .summary-detail {
+      color: #fff;
+      font-weight: bold;
+      font-size: 12px;
+      line-height: 26px;
+      border-radius: 4px;
+      padding: 5px 3px 5px 34px;
+      margin: 0 8px;
+      position: relative;
+    }
+
+    .summary-detail:before {
+      content: '';
+      position: absolute;
+      left: 4px;
+      top: 5px;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background-repeat: no-repeat;
+      background-size: cover;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+
+    .summary-detail.totalsum {
+      padding: 2px 3px;
+    }
+
+    .summary-detail.totalsum:before {
+      display: none;
+    }
+
+    .summary-detail.row1,
+    .summary-detail.row2,
+    .summary-detail.row3,
+    .summary-detail.row4,
+    .summary-detail.row5 {
+      background: #D9E8FB;
+      color: #3C62A7;
+      position: absolute;
+      top: 12px;
+      left: -50px;
+      margin: 0;
+      padding: 4px;
+      width: 270px;
+    }
+
+    .summary-detail.row1 .detailvalue,
+    .summary-detail.row2 .detailvalue,
+    .summary-detail.row3 .detailvalue,
+    .summary-detail.row4 .detailvalue,
+    .summary-detail.row5 .detailvalue {
+      margin-top: 1px;
+    }
+
+    .summary-detail.row1:before,
+    .summary-detail.row2:before,
+    .summary-detail.row3:before,
+    .summary-detail.row4:before,
+    .summary-detail.row5:before {
+      left: 14px;
+      top: 3px;
+      width: 24px;
+      height: 24px;
+    }
+
+    .summary-detail.row2 {
+      top: 45px;
+    }
+
+    .summary-detail.row3 {
+      top: 77px;
+    }
+
+    .summary-detail.row4 {
+      top: 109px;
+    }
+
+    .summary-detail.row5 {
+      top: 141px;
+    }
+
+
+    .summary-detail.row1:before {
+      background-image: url('../img/sumdet-2.svg')
+    }
+
+    .summary-detail.row2:before {
+      background-image: url('../img/sumdet-3.svg')
+    }
+
+    .summary-detail.row3:before {
+      background-image: url('../img/sumdet-4.svg')
+    }
+
+    .summary-detail.row4:before {
+      background-image: url('../img/sumdet-5.svg')
+    }
+
+    .summary-detail.row5:before {
+      background-image: url('../img/sumdet-6.svg')
+    }
+
+    .detailvalue {
+      color: #00499B;
+      float: right;
+      margin-top: 3px;
+      height: 20px;
+      line-height: 20px;
+      width: 30px;
+      text-align: center;
+      padding: 0 5px;
+    }
+
+
+    .totalsum .detailvalue {
+      color: #00FFF5;
+      float: right;
+      margin-top: 3px;
+      height: 20px;
+      line-height: 20px;
+      width: 50px;
+      text-align: center;
+      padding: 0 5px;
+      background: #00499B;
+      border-radius: 5px;
+    }
+
+    .summary-item>span>span {
+      width: 100%;
+      height: 100%;
+      display: block;
+      border-radius: 20px;
+      color: #fff;
+    }
+
+
+    .betlot-types .cell {
+      padding: 0 3px 0 0;
+    }
+
+
+    .sub-betlot-types {
+      padding: 5px 0 0 5px;
+      background: #EEE;
+    }
+
+    .sub-betlot-types .cell {}
+
+    .sub-betlot-types .cell span {
+      background-color: #E1E6F2;
+      color: #4D4A4A;
+      border-radius: 4px 4px 0 0;
+      font-size: 12px;
+      text-align: center;
+      padding: 2px 5px;
+    }
+
+    .sub-betlot-types .cell span.selected {
+      background: rgb(36, 47, 77);
+      color: #fff;
+    }
+
+    .popper-header .counter {
+      font-size: 12px;
+      font-weight: bold;
+      color: #B6CADE;
+    }
+
+    .app .popper .popper-header b {
+      color: #4EBAF1;
+      margin-bottom: 5px;
+    }
+
+    .app .betlot .popper {
+
+      background: #3E3838 url('../img/popoverbg.png') top center no-repeat;
+      color: #FFF;
+      border: none;
+    }
+
+    .app .betlot .popper[x-placement^="bottom"] .popper__arrow {
+      border-color: transparent transparent #3E3838 transparent;
+    }
+
+
+
+    .app .popper form .inputs .bet {
+      background: rgb(47, 117, 253);
+      border: 0;
+      width: 30%;
+      height: 34px;
+    }
+
+    .app .popper form .inputs .bet:hover {
+      background: rgb(36, 47, 77);
+      color: #fff;
+      ;
+    }
+
+    .bet-button {
+      background: #242F4D;
+      border: 0;
+      height: 34px;
+      line-height: 34px;
+      color: #fff;
+      font-weight: bold;
+      font-size: 12px;
+      width: 100%;
+    }
+
+    .bet-button:hover {
+      background: rgb(36, 47, 77);
+      color: #fff;
+      ;
+    }
+
+
+    .app .popper form .bet-odds {
+      color: #FFFFFF;
+      font-weight: bold;
+    }
+
+    .app .popper form .inputs .number-input[class^="input-stake"] {
+      width: 100%;
+    }
+
+    .app .popper form .inputs input[id^="input-stake"] {
+      font-weight: bold;
+      color: #FFFFFF;
+      border: none;
+      background: #342F2F;
+      height: 34px;
+      line-height: 34px;
+      padding: 0 37px 0 7px;
+    }
+
+    .app .popper form .inputs .number-input a {
+      height: 24px;
+      border-radius: 3px;
+      line-height: 24px;
+      border: none;
+      top: 5px;
+      bottom: 5px;
+      right: 8px;
+    }
+
+    .app .products .product .product-trendlot .trendlot-types {
+      border-bottom: 2px solid #DCE5F8;
+      background: #FAFCFF;
+    }
+
+    .app .products .product .product-trendlot .trendlot-types .cell span.selected {
+      font-size: 10px;
+      font-weight: bold;
+    }
+
+    .app .number-input a {
+      background: #413B3B;
+      color: #FFFFFF;
+    }
+
+    .app .number-input a:hover {
+      background: #413B3B;
+      color: #FED943;
+    }
+
+    .app .popper form .quickbet .cell {
+      padding-right: 2px;
+      padding-bottom: 2px;
+    }
+
+    .app .popper form .quickbet .cell a {
+      background: #342F2F;
+      color: #FFFFFF;
+      font-weight: bold;
+      line-height: 28px;
+      height: 28px;
+      border-right: none;
+      font-size: 10px;
+    }
+
+    .app .popper form .quickbet .cell a:hover {
+      background: #196CBB;
+      font-weight: bold;
+      color: #FFFFFF;
+    }
+
+    .app .popper form .quickbet .cell a.max {
+      background: rgb(2, 136, 85);
+      background: -moz-linear-gradient(45deg, #0D6193 0%, #62D6E6 100%);
+      background: -webkit-linear-gradient(45deg, #0D6193 0%, #62D6E6 100%);
+      background: linear-gradient(45deg, #0D6193 0%, #62D6E6 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0D6193', endColorstr='#62D6E6', GradientType=1);
+    }
+
+
+
+    .app .popper form .quickbet .cell a.max:hover {
+      background: rgb(209, 240, 108);
+      background: -moz-linear-gradient(45deg, #62D6E6 0%, #0D6193 100%);
+      background: -webkit-linear-gradient(45deg, #62D6E6 0%, #0D6193 100%);
+      background: linear-gradient(45deg, #62D6E6 0%, #0D6193 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#62D6E6', endColorstr='#0D6193', GradientType=1);
+    }
+
+    .app .popper form .summary {
+      border-radius: 3px;
+      font-weight: bold;
+      font-size: 12px;
+      line-height: 20px;
+      background: #342F2F;
+      color: #FFFFFF;
+    }
+
+    .app .popper form .summary .error {
+      color: #00C4DB;
+    }
+
+    .app .popper form .summary_value {
+      font-size: 12px;
+      font-weight: bold;
+      color: #4EBAF1;
+    }
+
+    .app .popper form .ok-button,
+    .app .popper form .cancel-button {
+      background: #235AC2;
+      color: #fff;
+      font-weight: bold;
+      line-height: 34px;
+      height: 34px;
+    }
+
+    .app .popper form .ok-button:hover,
+    .app .popper form .cancel-button:hover {
+      background: #235AC2;
+    }
+
+    .app .products .product .product-trendlot {
+      border-radius: 0 0 10px 10px;
+      overflow: hidden;
+    }
+
+    .app .products .product .product-trendlot .stats>span {
+      background: #eff2f8;
+      color: #4d4f5c;
+      font-weight: bold;
+    }
+
+    .app .products .product .product-trendlot .stats>span span {
+      color: #4EBAF1;
+      font-weight: bold;
+    }
+
+
+
+    .app .menu .links {
+      float: left;
+    }
+
+    .close {
+      position: absolute;
+
+      background: #51586b;
+      top: 25px;
+      width: 19px;
+      height: 19px;
+
+      padding: 3px;
+      border-radius: 5px;
+      opacity: 0.3;
+      margin-right: 14px;
+      margin-top: 15px;
+    }
+
+    .close:hover {
+      opacity: 1;
+    }
+
+    .close:before,
+    .close:after {
+      position: absolute;
+      left: 8px;
+      top: 3px;
+      content: ' ';
+      height: 13px;
+      width: 2px;
+      background-color: #fff;
+    }
+
+    .close:before {
+      transform: rotate(45deg);
+    }
+
+    .close:after {
+      transform: rotate(-45deg);
+    }
+
+    .gametitle {
+      font-size: 16px;
+      font-weight: bold;
+      padding-bottom: 8px;
+      padding-top: 7px;
+    }
+
+    .drawtime {
+      color: #89CBFF !important;
+    }
+
+    .drawno {
+      color: #89CBFF !important;
+    }
+
+    .gameheader {
+      cursor: all-scroll;
+      height: 45px;
+      line-height: 45px;
+      font-size: 15px;
+      font-weight: bold;
+      border-radius: 10px 10px 0px 0px;
+      padding-left: 10px;
+      padding-right: 10px;
+      margin: 0;
+      color: #FFF;
+      background: #302A2A url('../img/gamheaderbg.png') repeat-x center center;
+      background-size: contain;
+      box-shadow: 0 4px 4px 0px #00000015;
+      position: relative;
+    }
+
+    .gameheader-title {
+      display: block;
+      line-height: 20px;
+    }
+
+    .gameheader-drawno {
+      display: block;
+      font-size: 12px;
+      color: #89CBFF;
+      line-height: 14px;
+    }
+
+    .tablefullscreen .gameheader {
+      border-radius: 0;
+    }
+
+    .app .products .product {
+      background-color: #FFFFFF;
+      border: 0px;
+      border-radius: 10px;
+      margin: 5px;
+      display: block;
+      position: relative;
+    }
+
+    .combobet .betlot a {
+      font-size: 12px;
+    }
+
+    .app .menu .links a {
+      height: 50px;
+      line-height: 50px;
+      background: rgb(41, 93, 245);
+      margin-right: 10px;
+    }
+
+    .app .menu .links span {
+      color: #fff;
+    }
+
+    .app .menu .links select,
+    .app .menu .links span {
+      line-height: 50px;
+      height: 50px;
+
+    }
+
+    .app .products .product.open-result .product-betsection .betspace .betlot a.odd.winner {
+      color: #fff;
+    }
+
+    .app .products .product.open-result .product-betsection .betspace .cell.betlot a.odd.winner .oddtxt,
+    .app .products .product.open-result .product-betsection .betspace .cell.betlot a.odd.winner .rangetxt,
+    .app .products .product.open-result .product-betsection .betspace .cell.betlot a.odd.winner .stake {
+      color: #fff;
+    }
+
+    .app .products .product.open-result .product-betsection .betspace .odd.winner {
+      background: linear-gradient(to right, #1a6dbc, #52b2ff);
+      color: #fff;
+    }
+
+    .oddtxtbetname {
+      display: block;
+      text-align: center;
+      font-weight: 600;
+      font-size: 12px;
+      line-height: 18px;
+    }
+
+    .betspace .betlot a.odd {
+      text-align: left;
+      padding: 0;
+      position: relative;
+    }
+
+    .cell.betlot .stake {
+      display: none;
+    }
+
+    .cell.betlot .stake.active {
+      display: inline-block;
+    }
+
+    .cntdwncont {
+      padding: 0 5px;
+      height: 26px;
+      line-height: 26px;
+      font-size: 15px;
+      font-weight: bold;
+      border-radius: 5px;
+      background: #223b6e;
+      color: #ffffff;
+      text-align: center;
+      display: inline-block;
+      margin-top: 4px;
+    }
+
+    .thecolons {
+      color: #fff !important;
+      background: transparent !important;
+      text-align: center;
+      padding: 0;
+    }
+
+    .app .products .product .product-betsection .betspace .betlot a.odd.winner {
+      color: #3782d1
+        /*change 180427*/
+    }
+
+    .app .products .product .product-betsection .nextdraw {
+      top: 100px;
+    }
+
+    .app .grid-trendlot .rol>div div.type {
+      width: 15px;
+      height: 15px;
+      line-height: 15px;
+      border-radius: 15px;
+      font-size: 8px;
+    }
+
+    .app .grid-trendlot .rol {
+      flex-basis: 5%;
+    }
+
+
+    .bottompanel {
+      position: relative;
+      width: 100%;
+    }
+
+    .middlepanel>div.middlediv {
+      width: 25%;
+    }
+
+    .middlepanel .lr50>div {
+      line-height: 17px;
+      height: 17px;
+      background: #254B71;
+      color: #fff;
+
+    }
+
+    .middlepanel .lr50>div:nth-child(1) {
+      border-radius: 0 0 0 3px;
+      border-right: 1px solid #145DA4;
+    }
+
+    .middlepanel .lr50.frow>div {
+      color: #ffffff;
+      background: #3571AD;
+    }
+
+    .middlepanel .lr50.frow>div:nth-child(1) {
+      border-radius: 3px 0 0 0;
+    }
+
+    .middlepanel .lr50.frow>div:nth-child(2) {
+      border-radius: 0 3px 0 0;
+    }
+
+    .middlepanel .lr50>div:nth-child(2) {
+      border-radius: 0 0 3px 0;
+    }
+
+    .middlepanel .lr50>div.winner {
+      background: #2F94F2;
+      color: #fff;
+    }
+
+
+    .middlepanel .lr50>div {
+      width: 50%;
+      display: inline-block;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .middlepanel .middlediv {
+      border: 1px solid #145DA4;
+      border-radius: 4px;
+      height: 36px;
+      line-height: 17px;
+      display: inline-block;
+      margin: 5px;
+    }
+
+    .middlepanel .middlediv.totalsum {
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background: url('../img/summary-sum-bg.png');
+      background-size: cover;
+      padding: 8px 10px;
+      height: 100%;
+      border: 0;
+      width: 33%;
+    }
+
+    .middlepanel .middlediv.totalsum .lr50 {
+      border-radius: 5px;
+      border: 1px solid #70FCFD;
+      height: 40px;
+    }
+
+    .middlepanel .middlediv.totalsum .lr50>div:nth-child(1) {
+      border-radius: 4px 0 0 4px;
+      float: left;
+    }
+
+    .middlepanel .middlediv.totalsum .lr50>div:nth-child(2) {
+      float: right;
+      border-radius: 0 4px 4px 0;
+      background: #43aeff;
+      color: #fff;
+      font-size: 20px;
+      line-height: 38px;
+    }
+
+    .app .products .product.simple.waiting-result .rebetsection,
+    .app .products .product.simple.stop-betting .rebetsection,
+    .app .products .product.simple.open-result .rebetsection {
+      display: none;
+    }
+
+
+    .app .products .product.simple.waiting-result .betspace>div {
+      text-align: left;
+      padding-left: 10px;
+    }
+
+    .app .products .product.simple .rebetsection,
+    .app .products .product.trend .rebetsection {
+      top: 5px;
+      right: 10px;
+      left: auto;
+      border-top: none;
+      border-radius: 4px;
+      z-index: unset;
+    }
+
+    .app .products .product.simple .rebetsection:before,
+    .app .products .product.trend .rebetsection:before {
+      top: 2px;
+      border-radius: 4px;
+    }
+
+
+    .app .products .product.simple .rebetbutton div,
+    .app .products .product.trend .rebetbutton div {
+      margin-top: 7px;
+    }
+
+
+
+
+    .app .products .product.simple .viewhistorycont,
+    .app .products .product.trend .viewhistorycont {
+      position: absolute;
+      left: 10px;
+      top: 50px;
+      width: 105px;
+      border-radius: 4px;
+      border-bottom: none;
+    }
+
+    .app .products .product.simple .viewhistorycont .viewhistory,
+    .app .products .product.trend .viewhistorycont .viewhistory {
+      width: 100%;
+      padding-left: 19px;
+      background-position: 3px;
+    }
+
+    .app .products .product.simple .viewhistorycont:before,
+    .app .products .product.trend .viewhistorycont:before {
+      bottom: 2px;
+      border-radius: 4px;
+    }
+
+    .rebetsection .lastdrawno {
+      height: 45px;
+      line-height: 45px;
+      width: 70%;
+      display: block;
+      float: left;
+      padding-left: 10px;
+      color: #33457A;
+    }
+
+
+    .rebetsection .popper {
+      border: 0;
+      font-size: 12px;
+    }
+
+    .rebetsection .popper .result {
+      margin: 10px 0;
+      text-align: center;
+    }
+
+    .rebetsection .popper[x-placement^="bottom"] .popper__arrow {
+      border-bottom-color: #3E3838 !important;
+    }
+
+    .rebetsection .popper form>div {
+      margin: 0;
+    }
+
+    .rebetsection .popper {
+      background: #3E3838 url('../img/popoverbg.png') top center no-repeat;
+      color: #fff;
+    }
+
+    .rebetsection .popper .popper-header b {
+      color: #4EBAF1;
+    }
+
+    .rebetsection .popper form .summary {
+      color: #fff;
+      font-weight: normal;
+      border-radius: 4px;
+      padding: 12px;
+      margin: 10px 0;
+    }
+
+    .rebetsection .popper form .summary .error,
+    .rebetsection .popper form .summary .success {
+      padding: 0;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .rebetsection .popper {}
+
+    .rebetsection .popper .amt {
+      float: right;
+      color: #4EBAF1;
+      font-weight: bold;
+    }
+
+    .rebetsection .popper .gtotal {
+      color: #4EBAF1;
+      font-weight: bold;
+    }
+
+
+    .filter-options {
+      float: left;
+      color: #fff;
+      margin-top: 5px;
+    }
+
+    .filter-options label {
+      line-height: 50px;
+      height: 50px;
+      margin-left: 20px;
+      font-size: 14px;
+    }
+
+    .filter-options input {
+      padding: 0 5px;
+      display: inline-block;
+      margin: 0 10px 0 5px;
+    }
+
+    .app .products .product.simple .betspace .grid-x {
+      display: none;
+    }
+
+    .app .products .product.simple .toppanel,
+    .app .products .product.simple .middlepanel {
+      display: none;
+    }
+
+    .app .products .product.simple .betspace .quickbet {
+      display: -ms-flexbox;
+      display: flex;
+    }
+
+    .app .products .product.simple .betspace {
+      padding: 5px;
+    }
+
+    .app .products .product.simple.waiting-result .betspace>div {
+      line-height: 55px !important;
+    }
+
+    .app .products .product.simple.stop-betting .betspace>div {
+      line-height: 55px !important;
+    }
+
+    .app .products .product.simple .product-betsection .nextdraw {
+      top: 7px;
+      right: 0;
+    }
+
+    .app .products .product.simple .product-betsection .nextdraw a {
+      float: right;
+      margin-right: 10px;
+    }
+
+    .app .products .product.simple .betspace .grid-x.active {
+      display: flex;
+    }
+
+    .app .products .product.trend .toppanel,
+    .app .products .product.trend .betspace,
+    .app .products .product.trend .middlepanel {
+      display: none;
+    }
+
+    .countdowncont {
+      float: right;
+    }
+
+
+
+    .app .products>.cell.collapsed .product {
+      height: 45px;
+    }
+
+
+    .app .products>.cell.collapsed .product.open-result {
+      height: auto;
+    }
+
+    .app .products>.cell.collapsed .product .gameheader {
+      border-radius: 10px;
+    }
+
+    .app .products>.cell.collapsed .product.simple .rebetsection,
+    .app .products>.cell.collapsed .product .toppanel,
+    .app .products>.cell.collapsed .product .middlepanel,
+    .app .products>.cell.collapsed .product .bottompanel {
+      display: none;
+    }
+
+    .app .products>.cell.collapsed .product.open-result .toppanel {
+      display: block;
+    }
+
+
+
+    .app .products>.cell.collapsed>.open-result .countdowncont,
+    .app .products .product.open-result.simple .countdowncont,
+    .app .products .product.open-result.trend .countdowncont {
+      display: none;
+    }
+
+    .app .products>.cell.collapsed>.open-result .toppanel,
+    .app .products .product.open-result.simple .toppanel,
+    .app .products .product.open-result.trend .toppanel {
+      display: block;
+      position: absolute;
+      top: 0;
+      right: 10px;
+      width: 130px;
+      height: 45px;
+      margin: 0;
+      padding: 0;
+    }
+
+
+    .app .products>.cell.collapsed>.open-result .toppanel .draw-cont,
+    .app .products .product.open-result.simple .toppanel .draw-cont,
+    .app .products .product.open-result.trend .toppanel .draw-cont {
+      width: 100%;
+      padding: 0;
+      background: transparent;
+    }
+
+
+    .app .products>.cell.collapsed>.open-result .toppanel .numtiles-cont,
+    .app .products>.cell.collapsed>.open-result .toppanel .numtiles-cont-space,
+    .app .products .product.open-result.simple .toppanel .numtiles-cont,
+    .app .products .product.open-result.simple .toppanel .numtiles-cont-space,
+    .app .products .product.open-result.trend .toppanel .numtiles-cont,
+    .app .products .product.open-result.trend .toppanel .numtiles-cont-space {
+      padding: 0;
+      width: auto;
+      height: auto;
+      background: transparent;
+    }
+
+
+    .app .products>.cell.collapsed>.open-result .toppanel .summary-detail,
+    .app .products>.cell.collapsed>.open-result .toppanel .tile:after,
+    .app .products>.cell.collapsed>.open-result .toppanel .numtiles-cont:after,
+    .app .products>.cell.collapsed>.open-result .toppanel .numtiles-cont:before,
+    .app .products .product.open-result.simple .toppanel .summary-detail,
+    .app .products .product.open-result.simple .toppanel .tile:after,
+    .app .products .product.open-result.simple .toppanel .numtiles-cont:after,
+    .app .products .product.open-result.simple .toppanel .numtiles-cont:before,
+    .app .products .product.open-result.trend .toppanel .summary-detail,
+    .app .products .product.open-result.trend .toppanel .tile:after,
+    .app .products .product.open-result.trend .toppanel .numtiles-cont:after,
+    .app .products .product.open-result.trend .toppanel .numtiles-cont:before {
+      display: none;
+    }
+
+    .app .products>.cell.collapsed>.open-result .toppanel .tile,
+    .app .products .product.open-result.simple .toppanel .tile,
+    .app .products .product.open-result.trend .toppanel .tile {
+      height: 13px;
+      width: 13px;
+      margin: 6px 0 0 0;
+      line-height: 13px;
+      font-size: 8px;
+      transition: none;
+      border: 0;
+    }
+
+    .app .products>.cell.collapsed>.open-result .toppanel .tile>span,
+    .app .products .product.open-result.simple .toppanel .tile>span,
+    .app .products .product.open-result.trend .toppanel .tile>span {
+      display: block;
+      margin: 0 1px 0 0;
+      width: 12px;
+      height: 12px;
+      line-height: 13px;
+      border-radius: 10px;
+      background: #89CBFF;
+      color: #223b6e;
+    }
+
+    .minisum {
+      display: none;
+    }
+
+    .app .products>.cell.collapsed>.open-result .toppanel .viewhistory,
+    .app .products .product.open-result.simple .toppanel .viewhistory,
+    .app .products .product.open-result.trend .toppanel .viewhistory {
+      display: none;
+    }
+
+
+    .app .products>.cell.collapsed>.open-result .toppanel .fullscreen,
+    .app .products .product.open-result.simple .toppanel .fullscreen,
+    .app .products .product.open-result.trend .toppanel .fullscreen {
+      display: none;
+    }
+
+
+
+
+    .app .products .product.open-result.simple .viewhistorycont,
+    .app .products .product.open-result.trend .viewhistorycont,
+    .app .products .product.open-result.simple .summaryspace,
+    .app .products .product.open-result.trend .summaryspace {
+      display: none;
+    }
+
+    .app .products .product.simple .bottompanel,
+    .app .products .product.trend .bottompanel {
+      padding-top: 40px;
+    }
+
+    .app .products .product.open-result.simple .minirebet,
+    .app .products .product.open-result.trend .minirebet {}
+
+    .app .products>.cell.collapsed>.open-result .minisum,
+    .app .products .product.open-result.simple .minisum,
+    .app .products .product.open-result.trend .minisum {
+      display: block;
+      position: absolute;
+      right: 150px;
+      top: 35%;
+      text-align: right;
+      color: #FFF;
+      font-weight: bold;
+      font-size: 12px;
+      line-height: 12px;
+    }
+
+
+    .theproduct {
+      position: relative;
+    }
+
+    .ui-snackbar-container {
+      visibility: hidden;
+      display: none;
+      position: absolute;
+      overflow: hidden;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50%;
+      z-index: 9999;
+    }
+
+    .ui-snackbar {
+      display: inline-flex;
+      width: 100%;
+      min-height: 48px;
+      padding: 14px 24px;
+      margin: 0;
+      border-radius: 4px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+      overflow: hidden;
+      position: relative;
+      text-align: center;
+    }
+
+    .ui-snackbar-container.won .ui-snackbar {
+      background: #bce96c;
+      background: -moz-linear-gradient(top, #bce96c 0%, #48c36e 100%);
+      background: -webkit-linear-gradient(top, #bce96c 0%, #48c36e 100%);
+      background: linear-gradient(to bottom, #bce96c 0%, #48c36e 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#bce96c', endColorstr='#48c36e', GradientType=0);
+    }
+
+    .ui-snackbar-container.lose .ui-snackbar {
+      background: #f2524c;
+      background: -moz-linear-gradient(top, #f2524c 0%, #d23333 100%);
+      background: -webkit-linear-gradient(top, #f2524c 0%, #d23333 100%);
+      background: linear-gradient(to bottom, #f2524c 0%, #d23333 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f2524c', endColorstr='#d23333', GradientType=0);
+    }
+
+    .ui-snackbar:after {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background: url('../img/snack-bg.png') no-repeat center center;
+      background-size: cover;
+      content: '';
+    }
+
+    .ui-snackbar-text {
+      font-size: 14px;
+      color: #fff;
+      font-weight: bold;
+      text-align: center;
+      display: block;
+      width: 100%;
+    }
+
+    .ui-snackbar-action {
+      margin-left: auto;
+      padding-left: 48px;
+    }
+
+    .ui-snackbar-action button {
+      border: none;
+      background: none;
+      margin: 0;
+      padding: 0;
+      font-size: 14px;
+      text-transform: uppercase;
+      color: #ffeb3b;
+    }
+
+    .ui-snackbar-toggle-transition {
+      transition: transform 0.3s ease;
+    }
+
+    .ui-snackbar-toggle-transition .ui-snackbar-text,
+    .ui-snackbar-toggle-transition .ui-snackbar-action {
+      opacity: 1;
+      transition: opacity 0.3s ease;
+    }
+
+    .ui-snackbar-toggle-enter,
+    .ui-snackbar-toggle-leave {
+      transform: translateY(60px);
+    }
+
+    .ui-snackbar-toggle-enter .ui-snackbar-text,
+    .ui-snackbar-toggle-leave .ui-snackbar-text,
+    .ui-snackbar-toggle-enter .ui-snackbar-action,
+    .ui-snackbar-toggle-leave .ui-snackbar-action {
+      opacity: 0;
+    }
+
+    .ui-snackbar-container.show {
+      visibility: visible;
+      display: block;
+      -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+      animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    }
+
+
+    @-webkit-keyframes fadein {
+      from {
+        top: 0;
+        opacity: 0;
+      }
+
+      to {
+        top: 10%;
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadein {
+      from {
+        top: 0;
+        opacity: 0;
+      }
+
+      to {
+        top: 10%;
+        opacity: 1;
+      }
+    }
+
+    @-webkit-keyframes fadeout {
+      from {
+        top: 10%;
+        opacity: 1;
+      }
+
+      to {
+        top: 0;
+        opacity: 0;
+      }
+    }
+
+    @keyframes fadeout {
+      from {
+        top: 10%;
+        opacity: 1;
+      }
+
+      to {
+        top: 0;
+        opacity: 0;
+      }
+    }
+
+    .viewhistorycont {
+      background: linear-gradient(to bottom, #1D8AF2, #11487E);
+      width: 29px;
+      height: 29px;
+      position: absolute;
+      top: 140px;
+      left: 10px;
+      overflow: hidden;
+      z-index: 1;
+      transition: 0.3s all;
+      border-radius: 6px 6px 0 0;
+      border-bottom: 1px solid #1D8AF2;
+    }
+
+    .viewhistorycont:before {
+      content: '';
+      position: absolute;
+      top: 2px;
+      bottom: 0;
+      left: 2px;
+      right: 2px;
+      background: #254B71;
+      border-radius: 6px 6px 0 0;
+      z-index: 1;
+    }
+
+    .viewhistory {
+      width: 19px;
+      height: 19px;
+      line-height: 19px;
+      cursor: pointer;
+      background: url('../img/historybtn.png') no-repeat center center;
+      margin: 5px;
+      z-index: 5;
+      position: relative;
+      color: #fff;
+      padding-left: 19px;
+      overflow: hidden;
+    }
+
+    .rebetsection {
+      background: linear-gradient(to bottom, #11487E, #1D8AF2);
+      width: 29px;
+      height: 29px;
+      position: absolute;
+      top: -32px;
+      left: 10px;
+      transition: 0.3s all;
+      border-radius: 0 0 6px 6px;
+      border-top: 1px solid #11487E;
+    }
+
+    .rebetsection:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 2px;
+      left: 2px;
+      right: 2px;
+      background: #254B71;
+      border-radius: 0 0 6px 6px;
+      z-index: 1;
+    }
+
+
+    .rebetbutton div {
+      width: 15px;
+      height: 15px;
+      line-height: 15px;
+      cursor: pointer;
+
+      background: url('../img/rebeticon.png') no-repeat center center;
+      margin: 5px 7px 0;
+      z-index: 5;
+      position: relative;
+      background-size: contain;
+    }
+
+
+    .fullscreencont {
+      display: none;
+      background: #254B71;
+      width: 39px;
+      height: 39px;
+      position: absolute;
+      top: 0;
+      left: 11px;
+      overflow: hidden;
+      z-index: 10;
+      transition: 0.3s all;
+      border-radius: 0 0 10px 10px;
+      cursor: pointer;
+    }
+
+    .fullscreen {
+      width: 18px;
+      height: 18px;
+      line-height: 18px;
+      background: url('../img/fullscreenbtn.png') no-repeat center center;
+      margin: 10px 0 0 10px;
+      z-index: 5;
+    }
+
+    .tablefullscreen .fullscreen {
+      background: url('../img/fullscreenbtn-i.png') no-repeat center center;
+    }
+
+
+    .fullscreen:hover {
+      right: 0;
+    }
+
+    .app .products>.cell.active.hidden {
+      display: none;
+    }
+
+    .collapsed .normal .viewhistorycont,
+    .collapsed .normal .fullscreencont,
+    .collapsed .normal .summaryspace,
+    .collapsed .simple .viewhistorycont,
+    .collapsed .simple .fullscreencont,
+    .collapsed .simple .summaryspace {
+      display: none;
+    }
+
+    .app .popper form .bet-choices .cancel-button {
+
+      border: 1px solid #B9B9B9;
+      background: transparent;
+      color: #fff;
+      font-weight: bold;
+      line-height: 34px;
+      height: 34px;
+      width: 48%;
+      margin: 0 1%;
+      float: left;
+    }
+
+    .app .popper form .bet-choices .cancel-button:hover {
+      background: rgb(194, 35, 56);
+      border: 1px solid rgb(194, 35, 56);
+    }
+
+    .app .popper form .bet-choices .bet-button {
+      cursor: pointer;
+      border: 1px solid #347CEB;
+      background: #1D65AD;
+      color: #fff;
+      font-weight: bold;
+      line-height: 34px;
+      height: 34px;
+      width: 48%;
+      margin: 0 1%;
+      float: right;
+    }
+
+    .app .popper form .bet-choices .bet-button:hover {
+      background: #D5882A;
+      border: 1px solid #D5882A;
+      color: #fff;
+      ;
+    }
+
+    .app .popper form .rebet-choices .cancel-button {
+      background: transparent;
+      color: #fff;
+      border: 1px solid #B9B9B9;
+      font-weight: bold;
+      line-height: 34px;
+      height: 34px;
+      width: 48%;
+      margin: 0 1%;
+      float: left;
+    }
+
+
+    .app .popper form .rebet-choices .cancel-button:hover {
+      background: rgb(194, 35, 56);
+      color: #fff;
+      border: 1px solid transparent;
+    }
+
+    .app .popper form .rebet-choices .bet-button {
+      cursor: pointer;
+      background: #1D65AD;
+      border: 0;
+      color: #fff;
+      font-weight: bold;
+      line-height: 34px;
+      height: 34px;
+      width: 48%;
+      margin: 0 1%;
+      float: right;
+    }
+
+
+    .app .popper form .rebet-choices .bet-button:hover {
+      background: #D5882A;
+      color: #fff;
+    }
+
+
+    .app.tablefullscreen>.nav,
+    .app.tablefullscreen>.menu {
+      display: none;
+    }
+
+    .app.tablefullscreen .products,
+    .app.tablefullscreen .products .product {
+      padding: 0;
+      margin: 0;
+    }
+
+    .app.tablefullscreen .products .product {
+      border-radius: 0;
+    }
+
+    .popper.trend .summary-detail.row1,
+    .popper.trend .summary-detail.row2,
+    .popper.trend .summary-detail.row3,
+    .popper.trend .summary-detail.row4,
+    .popper.trend .summary-detail.row5 {
+      width: 244px;
+      left: -30px;
+    }
+
+    .popper.trend .summary-detail.row1:before,
+    .popper.trend .summary-detail.row2:before,
+    .popper.trend .summary-detail.row3:before,
+    .popper.trend .summary-detail.row4:before,
+    .popper.trend .summary-detail.row5:before {
+      left: 4px;
+    }
+
+    .popper.trend .detailvalue {
+      width: 22px;
+    }
+
+    .popper.trend .totalsum .detailvalue {
+      width: 50px;
+    }
+
+    .menutrend {
+      display: none;
+    }
+
+
+
+    @media print,
+    screen and (min-width: 88em) {
+      .grid-x>.large-4 {
+        width: 25%;
+      }
+
+    }
+
+    @media print,
+    screen and (max-width: 640px) {
+
+      .betspace .popper {
+        /*position: fixed !important;*/
+        /*bottom: 0 !important;*/
+        /*top: unset !important;*/
+        /*left: 0 !important;*/
+        /*right: 0 !important;*/
+        height: 215px;
+        width: 100% !important;
+        /*transform: none !important;*/
+        border-radius: 0 !important;
+      }
+
+      /*.betspace .quickbet{
+      display: none;
+    }*/
+      .betspace .popper .popper__arrow {
+        /*display: none;*/
+      }
+
+      .betspace .loading {
+        max-height: 30px;
+        overflow: hidden;
+      }
+
+      .betspace .loading .loading-icon {
+        height: 30px;
+        width: 30px;
+      }
+
+      .app .popper div.loading {
+        padding: 5px;
+      }
+
+      .loading-icon:after {
+        border: 10px solid #fff;
+        border-color: #242f4d transparent #283a69 transparent;
+      }
+
+      .betspace .popper .small-up-4>.cell {
+        width: 16%;
+      }
+
+      .betspace .popper form {
+        padding: 0 10px;
+      }
+
+      .betspace .popper .popper-header {
+        padding: 10px 10px 0;
+      }
+
+      .betspace .popper form .summary,
+      .betspace .popper form>div {
+        margin-top: 3px;
+      }
+
+      .betspace .popper form .summary {
+        line-height: 16px;
+        margin: 0 0 6px;
+      }
+
+      .betspace .summary {
+        display: flex;
+        justify-content: space-evenly;
+      }
+
+      .betspace .summary .error {
+        display: block;
+        width: 80%;
+        clear: both;
+        position: absolute;
+        top: 80px;
+        left: 10%;
+        background: rgba(250, 89, 79, 0.4);
+        padding: 5px;
+        border-radius: 6px;
+      }
+
+
+      .betspace .popper form>div:nth-child(1) {
+        display: inline-block;
+      }
+
+      .betspace .popper form>div:nth-child(1):after {
+        content: "-";
+        display: inline-block;
+        margin: 0 5px;
+      }
+
+      .betspace .summary>* {
+        display: inline-block;
+        float: none !important;
+
+      }
+
+      .betspace .summary>br {
+        display: none;
+      }
+
+      .betspace .popper form .quickbet {
+        margin-top: 3px;
+      }
+
+
+      .fullscreencont {
+        display: block;
+      }
+
+      .gameheader {
+        padding-left: 60px;
+      }
+
+      .app .products>.cell.collapsed .gameheader {
+        padding-left: 10px;
+      }
+
+      .app .products>.cell.collapsed .trend .gameheader {
+        padding-left: 60px;
+      }
+    }
+
+    @media print,
+    screen and (max-width: 480px) {
+
+      .menutrend {
+        display: inline-block;
+      }
+
+      .betlot {
+        padding-top: 2px;
+      }
+
+      .betspace {
+        padding-top: 0;
+      }
+
+      .betspace .grid-x:last-child {
+        padding-bottom: 2px;
+      }
+
+      .summary-detail {
+        padding: 2px 3px 2px 34px;
+      }
+
+      .summary-detail:before {
+        top: 2px;
+      }
+
+      .summary-detail.row1 {
+        top: 9px;
+      }
+
+      .summary-detail.row2 {
+        top: 41px;
+      }
+
+      .summary-detail.row3 {
+        top: 73px;
+      }
+
+      .summary-detail.row4 {
+        top: 105px;
+      }
+
+      .summary-detail.row5 {
+        top: 137px;
+      }
+
+      .rebetsection .lastdrawno {
+        height: 30px;
+        line-height: 30px;
+      }
+
+    }
+
+    @media screen and (max-width: 1400px) {
+      .menu-time {
+        display: none;
+      }
+
+      .menu-username {
+        font-size: 10px;
+      }
+    }
+
+    @media screen and (max-width: 1000px) {
+
+
+      .app .products>.cell.collapsed .product.trend {
+        height: auto;
+      }
+
+
+      .app .products>.cell.collapsed .product.trend .bottompanel,
+      .app .products>.cell.collapsed .product.trend .product-betsection,
+      .app .products>.cell.collapsed .product.trend .product-trendlot {
+        display: block;
+      }
+
+      .app .products>.cell .product.open-result .toppanel {
+        background: none;
+      }
+    }
+
+
+
+    .menu-item {
+      position: relative;
+    }
+
+    .topnav-cont {
+      width: 100%;
+      height: 70px;
+      line-height: 70px;
+      background: #292A2E;
+      position: relative;
+      z-index: 10;
+    }
+
+    .topnav-cont .left-menu {
+      float: left;
+    }
+
+    .topnav-cont .right-menu {
+      float: right;
+    }
+
+    .topnav-cont .left-menu .menu-item {
+      line-height: 50px;
+      padding: 10px 0 10px 5px;
+      float: left;
+      color: #fff;
+    }
+
+    .topnav-cont .right-menu .menu-item {
+      line-height: 50px;
+      padding: 10px 5px 10px 0;
+      float: right;
+      color: #fff;
+    }
+
+    .top-nav {
+      padding: 10px;
+      display: block;
+      border-right: 1px solid #000;
+      position: relative;
+      float: left;
+    }
+
+    .menu-dropdown {
+      background: #3C3D44;
+      border-radius: 5px;
+      color: #fff;
+      padding: 0 28px 0 8px;
+      font-weight: bold;
+      position: relative;
+    }
+
+    .menu-dropdown:hover {
+      background: #235ac2;
+    }
+
+    .menu-dropdown:hover>span {
+      /*background:#b0c4e8; */
+    }
+
+    .menu-dropdown>span {
+      display: block;
+      background: transparent;
+      height: 50px;
+      width: 30px;
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      border-radius: 5px;
+    }
+
+    .menu-dropdown>span:after {
+      content: '';
+      border-top: 6px solid #ffffff;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      position: absolute;
+      right: 10px;
+      top: 27px;
+    }
+
+    .menu-dropdown>span:before {
+      content: '';
+      border-bottom: 6px solid #ffffff;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      position: absolute;
+      right: 10px;
+      top: 17px;
+    }
+
+    .menu-toggle-item {
+      background: #45464E;
+      color: #fff;
+      border-radius: 5px;
+      text-align: center;
+      width: 46px;
+      height: 50px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .desktop-varcont.menu-toggle-item {
+      width: auto;
+    }
+
+    .toggle-tooltip {
+      display: none;
+      position: absolute;
+      height: 35px;
+      line-height: 35px;
+      min-width: 100px;
+      left: -25px;
+      right: -25px;
+      top: 55px;
+      border-radius: 5px;
+      background: #235ac2;
+      color: #fff;
+    }
+
+    .toggle-tooltip:before {
+      position: absolute;
+      left: 45px;
+      top: -5px;
+      content: '';
+      border-bottom: 6px solid #235ac2;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+    }
+
+
+    .menu-toggle-item:hover .toggle-tooltip {
+      display: block;
+    }
+
+    .dropdown-list {
+      position: absolute;
+      left: 0;
+      top: 50px;
+      width: 100%;
+      background: #3C3D44;
+      z-index: 999;
+      border-radius: 5px;
+      display: none;
+    }
+
+    .dropdown-item {
+      height: 40px;
+      line-height: 40px;
+      padding: 0 13px;
+      color: #C7CAD0;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .dropdown-item:hover {
+      background: #235ac2;
+      color: #fff;
+    }
+
+    .menu-dropdown:hover .dropdown-list {
+      display: block;
+    }
+
+
+    .filter-options,
+    .header-mobile {
+      display: none;
+    }
+
+    @media screen and (max-width: 1000px) {
+
+      .filter-options {
+        display: block;
+      }
+
+      .topnav-cont {
+        display: none;
+      }
+
+      .header-mobile {
+        display: block;
+        position: relative;
+        height: 52px;
+        width: 100%;
+        background-color: #292A2E;
+        text-align: center;
+
+        -webkit-box-shadow: 0px 1px 9px -3px rgba(0, 0, 0, 0.1);
+        box-shadow: 0px 1px 9px -3px rgba(0, 0, 0, 0.1);
+
+      }
+
+      .header-mobile .left-nav {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        box-sizing: border-box;
+        border: none;
+        border-radius: 4px;
+        color: #fff;
+        cursor: pointer;
+        display: inline-block;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        margin: 0;
+        padding: 5px 20px;
+        text-align: center;
+        -webkit-text-decoration: none;
+        text-decoration: none;
+        line-height: 1;
+        padding: 12px;
+        background-color: #3C3D44;
+
+        position: absolute;
+        top: 5px;
+        left: 10px;
+      }
+
+      .header-mobile .right-nav {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        box-sizing: border-box;
+        border: none;
+        border-radius: 4px;
+        color: #fff;
+        cursor: pointer;
+        display: inline-block;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        margin: 0;
+        padding: 5px 20px;
+        text-align: center;
+        -webkit-text-decoration: none;
+        text-decoration: none;
+        line-height: 1;
+        padding: 6px;
+        background-color: #3C3D44;
+
+        position: absolute;
+        top: 5px;
+        right: 10px;
+      }
+
+      .center-nav {
+        text-align: right;
+        margin-right: 5px;
+      }
+
+      .filter-options {
+        margin-top: 0;
+        float: none;
+        text-align: center;
+      }
+
+      .filter-options label {
+        margin: 0 10px;
+        display: inline-block;
+      }
+    }
+
+    @media screen and (max-width: 1400px) {
+      .topnav-cont .menu-item {
+        padding: 10px 2px;
+      }
+
+      .menu-item-time {
+        display: none;
+      }
+
+      .menu-dropdown,
+      .topnav-cont .left-menu .menu-item {
+        font-size: 10px;
+      }
+    }
+
+    .desktop-varcont {
+      cursor: pointer;
+      display: inline-block;
+      color: #fff;
+      line-height: 50px;
+      height: 50px;
+      background: #3C3D44;
+      border-radius: 4px;
+      padding: 0 3px;
+    }
+
+
+
+    .desktop-varcont>span {
+      height: 50px;
+      color: #fff;
+      font-weight: bold;
+      padding: 0 5px;
+      border-radius: 4px;
+    }
+
+
+    .desktop-varcont .loading-icon {
+      width: 12px;
+      height: 12px;
+    }
+
+    .desktop-varcont .loading-icon:after {
+      width: 10px;
+      height: 10px;
+      border: 5px solid #fff;
+      border-color: #FFF transparent #FFF transparent;
+      top: 2px;
+      position: absolute;
+    }
+
+    .mobile-varcont {
+      display: inline-block;
+      color: #fff;
+      line-height: 38px;
+      height: 38px;
+      margin: 5px 5px 0;
+      background: #3C3D44;
+      border-radius: 4px;
+      padding: 0 6px;
+    }
+
+    .mobile-varcont.username {
+      font-size: 10px;
+    }
+
+    .mobile-varcont .loading-icon {
+      width: 12px;
+      height: 12px;
+    }
+
+    .mobile-varcont .loading-icon:after {
+      width: 10px;
+      height: 10px;
+      border: 5px solid #fff;
+      border-color: #FFF transparent #FFF transparent;
+      top: 2px;
+      position: absolute;
+    }
+
+    .mobile-varcont>span {
+      height: 26px;
+      color: #fff;
+      font-weight: bold;
+      padding: 0 5px;
+      border-radius: 4px;
+    }
+
+    .wallet-icon {
+      width: 14px;
+      height: 14px;
+      background: transparent url('../img/icon_wallet.svg') no-repeat center center;
+      background-size: contain;
+      content: '';
+    }
+
+    .mobile-left-drawer {
+      width: 100%;
+      height: 1px;
+      position: fixed;
+      top: -1px;
+      bottom: 0;
+      left: 0;
+      background-color: rgba(51, 51, 51, 0);
+      z-index: 100;
+    }
+
+    .mobile-left-drawer.open {
+      min-height: 100%;
+      height: 100%;
+    }
+
+    .mobile-drawer-bg {
+      width: 0;
+      height: 0;
+      transition: 0.3s background-color;
+      background-color: rgba(51, 51, 51, 0);
+      z-index: 5;
+    }
+
+    .mobile-left-drawer.open .mobile-drawer-bg {
+      display: block;
+      width: 100%;
+      min-height: 100%;
+      height: 100%;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: rgba(51, 51, 51, 0.5);
+    }
+
+
+
+    .mobile-drawer {
+      min-height: 100%;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      background-color: #383535;
+      overflow-y: scroll;
+      width: 260px;
+      left: -260px;
+      transition: 0.3s all;
+    }
+
+    .open .mobile-drawer {
+      left: 0;
+      z-index: 10;
+    }
+
+    .mobile-drawer-rela {
+      position: relative;
+    }
+
+    .mobile-drawer-close {
+      position: absolute;
+      top: 2px;
+      right: 9px;
+      color: hsl(0, 0%, 100%);
+      padding: 10px;
+      font-size: 15px;
+    }
+
+    .game-logo {
+      height: 50px;
+      width: 100%:;
+      padding-left: 15px;
+      background: #2F2A2A;
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-align-items: center;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+    }
+
+    .drawer-link {
+      width: 100%;
+      height: 40px;
+      line-height: 40px;
+      padding: 0 25px;
+      color: #fff;
+      font-weight: bold;
+      display: block;
+      font-size: 13px;
+      text-decoration: none;
+      text-align: left;
+    }
+
+    .drawer-link:hover,
+    .drawer-link:active,
+    .drawer-link:focus {
+      text-decoration: none;
+      color: #fff;
+      background: #464343;
+    }
+
+    .drawer-link>span {
+      float: left;
+      width: 20px;
+      height: 40px;
+      line-height: 40px;
+      display: block;
+      text-align: center;
+      vertical-align: middle;
+      margin-right: 18px;
+    }
+
+    .multiplechoices .selected {
+      width: 100%;
+      height: 40px;
+      line-height: 40px;
+      padding: 0 25px;
+      color: #fff;
+      font-weight: bold;
+      display: block;
+      font-size: 13px;
+      text-decoration: none;
+      position: relative;
+      background: #2F2A2A;
+      text-align: left;
+    }
+
+    .multiplechoices .selected:before {
+      border-bottom: 4px solid #fff;
+      border-right: 4px solid transparent;
+      border-left: 4px solid transparent;
+      content: '';
+      position: absolute;
+      right: 26px;
+      top: 13px
+    }
+
+    .multiplechoices .selected:after {
+      border-top: 4px solid #fff;
+      border-right: 4px solid transparent;
+      border-left: 4px solid transparent;
+      content: '';
+      position: absolute;
+      right: 26px;
+      top: 21px
+    }
+
+    .multiplechoices .choice {
+      height: 40px;
+      line-height: 40px;
+      width: 50%;
+      float: left;
+      padding: 0 0 0 20px;
+      display: none;
+      background-size: #152240;
+      color: #C0C9DD;
+      text-align: left;
+    }
+
+    .multiplechoices.open .choice {
+      display: block;
+    }
+
+    .multiplechoices .choices {
+      position: absolute;
+      left: -260px;
+      transition: 0.3s left;
+    }
+
+    .multiplechoices.open .choices {
+      left: 0;
+    }
+
+
+    .mobile-drawer .bottom {
+      position: absolute;
+      top: 400px;
+      left: 0;
+      right: 0;
+    }
+
+
+    .drawer-toggle {
+      width: 100%;
+      height: 45px;
+      line-height: 45px;
+      padding: 0 25px;
+      color: #fff;
+      font-weight: bold;
+      display: block;
+      font-size: 13px;
+      text-decoration: none;
+      text-align: center;
+      background: #2F2A2A;
+      border-radius: 5px;
+    }
+
+    .drawer-toggle>span {
+      float: left;
+      width: 20px;
+      height: 45px;
+      line-height: 45px;
+      display: block;
+      text-align: center;
+      vertical-align: middle;
+      margin-right: 18px;
+    }
+
+
+    .drawer-toggle:hover,
+    .drawer-toggle:active,
+    .drawer-toggle:focus {
+      text-decoration: none;
+      color: #fff;
+      background: #464343;
+    }
+
+    .drawerlogout {
+      width: 100%;
+      height: 45px;
+      line-height: 45px;
+      padding: 0 25px;
+      color: #fff;
+      font-weight: bold;
+      display: block;
+      font-size: 13px;
+      text-decoration: none;
+      text-align: center;
+      background: #2F2A2A;
+      border-radius: 5px;
+    }
+
+    .soundon svg .stroke {
+      stroke-width: 0;
+    }
+
+    .soundoff svg .stroke {
+      stroke-width: 2;
+    }
+
+    .blackbg {
+      background: rgb(66, 74, 82) !important;
+      color: #fff !important;
+    }
+
+    .redbg {
+      background: rgb(250, 89, 79) !important;
+      color: #fff !important;
+    }
+
+    .tablefullscreen .filter-options,
+    .tablefullscreen .header-mobile {
+      display: none;
+    }
+
+    .app .popper form .result .failed {
+      color: #ef2511;
+    }
+
+    .logo-cont {
+      width: 160px;
+      height: 43px;
+      background: transparent url('../img/logo.png') center left no-repeat;
+    }
+
+    .app .popper form .inputs .number-input[class^="input-range"],
+    .app .popper form .inputs.index-game .title .range {
+      width: 40%;
+    }
+
+    .app .popper form .inputs input[id^="input-range"] {
+      font-weight: bold;
+      color: #FFFFFF;
+      border: none;
+      background: #EC9D3C;
+      height: 34px;
+      line-height: 34px;
+      padding: 0 7px 0 7px;
+    }
+
+
+    .app .popper form .inputs .number-input[class^="input-point"],
+    .app .popper form .inputs.index-game .title .point {
+      width: 60%;
+    }
+
+
+    .app .popper form .inputs input[id^="input-point"] {
+      font-weight: bold;
+      color: #FFFFFF;
+      border: none;
+      background: #342F2F;
+      height: 34px;
+      line-height: 34px;
+      padding: 0 37px 0 7px;
+
+    }
+
+
+
+    .remarks {
+      display: block;
+      clear: both;
+      font-size: 10px;
+    }

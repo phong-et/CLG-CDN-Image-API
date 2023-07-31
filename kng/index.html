@@ -1,0 +1,2524 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+  <title>Keno</title>
+  <script src="assets/js/jquery-3.6.0.min.js?v=1.0.100011690788418"></script>
+  <script src="assets/js/fastclick.min.js?1.0.100011690788418"></script>
+  <script type="text/javascript">
+    $(function () {
+      FastClick.attach(document.body);
+    });
+  </script>
+  <script type="text/javascript">
+    function GetURLParameter(sParam) {
+      var sPageURL = window.location.search.substring(1);
+      var sURLVariables = sPageURL.split('&');
+      for (var i = 0; i < sURLVariables.length; i++) {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam) {
+          return sParameterName[1];
+        }
+      }
+    }
+  </script>
+
+  <script src="assets/js/vue.js?1.0.100011690788418"></script>
+  <script src="assets/js/popper.min.js?1.0.100011690788418"></script>
+  <script src="assets/js/vue-popper.min.js?1.0.100011690788418"></script>
+  <script src="assets/js/axios.min.js"></script>
+  <script src="assets/js/Sortable.min.js"></script>
+
+  <script src="data/setting.js?1690788418"></script>
+  <script src="assets/js/config.js?1690788418"></script>
+
+
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <script src="assets/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+  <link href="assets/css/vue-popper.css?1.0.100011690788418" type="text/css" rel="stylesheet">
+  <link href="assets/css/style.css?1.0.100011690788418" type="text/css" rel="stylesheet">
+  <link href="assets/css/keno.css?1.0.100011690788418" type="text/css" rel="stylesheet">
+
+</head>
+
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="icon-close" viewBox="0 0 512 512">
+      <path
+        d="m438 387l-131-131 131-131c14-14 14-36 0-50-15-15-37-15-51 0l-131 130-131-130c-14-15-36-15-50 0-15 14-15 36 0 50l130 131-130 131c-15 14-15 36 0 51 14 14 36 14 50 0l131-131 131 131c14 14 36 14 51 0 14-15 14-37 0-51z">
+      </path>
+    </symbol>
+  </svg>
+  <link href="https://fonts.googleapis.com/css?family=Poppins:700" rel="stylesheet">
+ <link href="assets/css/style1.css" type="text/css" rel="stylesheet">
+ <link href="assets/css/style2.css" type="text/css" rel="stylesheet">
+  <div id="logo-wrapper">
+    <div id="logo-container" class="logo-container">
+      <img class="loading-logo" src="assets/img/loading-logo.png">
+      <div id="loader" class="background">
+        <div class="dots container">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="app" :class="['app', options.fullScreen? 'tablefullscreen':'']" v-cloak>
+    <div class="topnav-cont">
+      <div class="left-menu">
+        <div class="menu-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="85.8" height="19" viewBox="0 0 85.8 19">
+            <path
+              d="M13.3,6.1,17.9,0h7.4L18.1,9.2,20,19H15.5a3.221,3.221,0,0,1-2-.5,2.482,2.482,0,0,1-.8-1.7L11.5,9.5H6.3l-.4.9h.6a2.575,2.575,0,0,1,1.8.5,1.136,1.136,0,0,1,.3.8,4.487,4.487,0,0,1-.4,1.7L6.3,19H1.5c-.7,0-1.2-.2-1.4-.6a.749.749,0,0,1-.1-.5v-.1a6.757,6.757,0,0,1,.5-1.7l4-11.4h0L6.1,0h4.6q1.2,0,1.5.6a.749.749,0,0,1,.1.5A5.017,5.017,0,0,1,12,2.5L9.8,8.4h5.6l.3-.9H14.4c-.9,0-1.4-.1-1.5-.4C12.8,6.9,12.9,6.5,13.3,6.1Z"
+              fill="#fff" />
+            <path
+              d="M31.1,0H43.6c1.1,0,1.7.2,2,.6a1.445,1.445,0,0,1,.2.7v.1a3.346,3.346,0,0,1-.4,1.4l-.6,1.7H38.2a16.985,16.985,0,0,1,.6-1.8V2.4h0c0-.6-.3-.9-.9-1.1a2.22,2.22,0,0,0-.9-.1H31.9l-.3.9h.6a3.061,3.061,0,0,1,1.5.3,1.1,1.1,0,0,1,.5,1,2.958,2.958,0,0,1-.2,1l-1.4,4h8.7L41,9.6H29l-.3.9h.6a2.575,2.575,0,0,1,1.8.5,1.135,1.135,0,0,1,.3.8,4.487,4.487,0,0,1-.4,1.7l-1.6,4.4H32a3.557,3.557,0,0,0,1.9-.5,2.292,2.292,0,0,0,1.2-1.5,13.081,13.081,0,0,0,.5-1.5h6.1a14.5,14.5,0,0,1-.9,2.5,3.135,3.135,0,0,1-1.7,1.7,3.425,3.425,0,0,1-1.8.4h-13c-.7,0-1.2-.2-1.4-.6a.9.9,0,0,1-.1-.5v-.1a6.757,6.757,0,0,1,.5-1.7l5-14.2a4.053,4.053,0,0,1,.5-.9A2.644,2.644,0,0,1,31.1,0Z"
+              fill="#fff" />
+            <path
+              d="M56.7,0c1,0,1.6.3,1.9,1a4.636,4.636,0,0,1,.2,1.4V13.7L63.7,0H66L59.3,19H54.2a3.475,3.475,0,0,1-1.3-.2,1.871,1.871,0,0,1-1-1.9V4.8a3.083,3.083,0,0,1,.1-1,.764.764,0,0,1,.2-.5,1.562,1.562,0,0,1,.8-.8c.1-.1.3-.1.5-.2a3.75,3.75,0,0,1,1.1-.1l.3-.9H51.2L44.9,19H42.5L49.3,0Z"
+              fill="#fff" />
+            <path
+              d="M70.9,0H84.3a1.668,1.668,0,0,1,1.4.5.9.9,0,0,1,.1.5v.1a4.123,4.123,0,0,1-.4,1.5L80.2,17a4.053,4.053,0,0,1-.5.9A2.712,2.712,0,0,1,77.4,19H64c-1,0-1.5-.4-1.5-1.1v-.1a4.123,4.123,0,0,1,.4-1.5L68,2.2a9.292,9.292,0,0,1,.5-1,2.122,2.122,0,0,1,1.3-1A1.978,1.978,0,0,1,70.9,0Zm.9,1.1-.3.9h.6a2.649,2.649,0,0,1,1.4.3c.4.1.5.5.5.9a2.388,2.388,0,0,1-.2.9L69,17.8h2.2a2.75,2.75,0,0,0,2.7-1.5,16.709,16.709,0,0,0,.7-1.9l3.9-11a4.515,4.515,0,0,0,.3-1.3c0-.6-.4-1-1.2-1.1H71.8Z"
+              fill="#fff" />
+          </svg>
+        </div>
+        <div class="menu-item"><img src="assets/img/gli-certified.png" style="height: 20px;"></div>
+        <div class="menu-item">
+          <div class="desktop-varcont menu-toggle-item" @click="$root.checkBalance">
+            <span v-if="user.balance != ''">THB {{ formatPrice(user.balance) }} <div class="loading-icon"
+                v-if="$root.user.checking"></div></span>
+            <span v-else>0.00</span>
+            <div class="toggle-tooltip">{{ localization['WALLET'] }}</div>
+          </div>
+        </div>
+
+
+        <div class="menu-item">
+          <div class="menu-dropdown">
+            <template v-if="options.displayMode == 'normal'">{{ localization['menunormal'] }}</template>
+
+            <template v-if="options.displayMode == 'simple'">{{ localization['menusimple'] }}</template>
+
+            <template v-if="options.displayMode == 'trend'">{{ localization['menutrend'] }}</template>
+
+
+            <span></span>
+            <div class="dropdown-list">
+              <div class="dropdown-item" @click="options.displayMode = 'normal'">{{ localization['menunormal'] }}</div>
+              <div class="dropdown-item" @click="options.displayMode = 'simple'">{{ localization['menusimple'] }}</div>
+              <div class="dropdown-item menutrend" @click="options.displayMode = 'trend'">{{ localization['menutrend']
+                }}</div>
+            </div>
+
+          </div>
+        </div>
+
+
+
+
+        <div class="menu-item">
+          <div class="menu-dropdown">
+            {{ languages[lang_id] }}
+            <span></span>
+            <div class="dropdown-list" style="min-width: 130px;">
+              <div v-for="(lang, key) in languages" class="dropdown-item" @click="setLocale(key)">{{ lang }}</div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="menu-item menu-time">
+          {{ current_time }}
+        </div>
+      </div>
+
+
+      <div class="right-menu">
+        <div class="menu-item">
+          <div class="menu-dropdown menu-username">
+            {{ user.username }}
+            <span></span>
+            <div class="dropdown-list">
+              <a class="dropdown-item" href="logout.php">{{ localization['menulogout'] }}</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-item">
+          <div :class="['menu-toggle-item', soundOn ? 'soundon':'soundoff'] " href="javascript:void(0)"
+            @click="toggleSound">
+            <span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="21.928" height="21.927" viewBox="0 0 21.928 21.927">
+                <g transform="translate(-6534.5 -14643.5)">
+                  <g id="speaker" transform="translate(6535 14641.989)">
+                    <path
+                      d="M11.352,3.172a1.21,1.21,0,0,0-1.235.018.371.371,0,0,0-.052.037L4.65,7.808H.4a.4.4,0,0,0-.4.4V15.8a.4.4,0,0,0,.4.4l4.241,0,5.413,4.972a.39.39,0,0,0,.064.048,1.211,1.211,0,0,0,1.235.018,1.248,1.248,0,0,0,.638-1.1V4.273A1.249,1.249,0,0,0,11.352,3.172Zm-.161,16.964a.459.459,0,0,1-.231.406.419.419,0,0,1-.4.01L5.2,15.624V13.8a.4.4,0,1,0-.8,0v1.6l-3.6,0V8.607H4.4v1.6a.4.4,0,0,0,.8,0V8.393l5.358-4.532a.418.418,0,0,1,.406.007.458.458,0,0,1,.231.405Z"
+                      transform="translate(0 0)" fill="#fff" stroke="#fff" stroke-width="0.8" />
+                    <path
+                      d="M38,7.034a.4.4,0,0,0-.257.757,6.987,6.987,0,0,1,.009,13.232.4.4,0,0,0,.129.778.394.394,0,0,0,.129-.022A7.787,7.787,0,0,0,38,7.034Z"
+                      transform="translate(-22.497 -2.403)" fill="#fff" stroke="#fff" stroke-width="0.8" />
+                    <path
+                      d="M34.948,15.989a3.627,3.627,0,0,0-2.607-3.467.267.267,0,1,0-.148.514,3.073,3.073,0,0,1,0,5.905.267.267,0,0,0,.074.524.272.272,0,0,0,.074-.01A3.626,3.626,0,0,0,34.948,15.989Z"
+                      transform="translate(-18.21 -3.985)" fill="#fff" stroke="#fff" stroke-width="0.8" />
+                  </g>
+                  <path class="stroke" d="M9297.84,13967l-19.928,19.928" transform="translate(-2742.412 677.499)"
+                    fill="none" stroke="#00fdf3" stroke-linecap="round" stroke-width="2" />
+                </g>
+              </svg>
+            </span>
+            <div class="toggle-tooltip">{{ localization['menusfx'] }}: {{ soundOn ? localization['menuon']:
+              localization['menuoff']}}</div>
+          </div>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-toggle-item" href="javascript:void(0)" @click="$root.openWindow($root.rulesUrl)">
+            <span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                <g transform="translate(-1255 -25)">
+                  <g id="question-mark" transform="translate(1256.447 30.71)">
+                    <path
+                      d="M8.323,0c1.632,0,3.238.751,3.238,2.549,0,1.658-1.9,2.295-2.307,2.894-.306.446-.2,1.072-1.045,1.072a.811.811,0,0,1-.816-.854c0-1.518,2.23-1.861,2.23-3.111,0-.688-.458-1.1-1.223-1.1-1.632,0-.995,1.682-2.23,1.682a.763.763,0,0,1-.829-.777C5.34,1.108,6.767,0,8.323,0ZM8.259,7.342A1.046,1.046,0,1,1,7.214,8.387,1.05,1.05,0,0,1,8.259,7.342Z"
+                      transform="translate(0)" fill="#fff" />
+                  </g>
+                  <g id="Ellipse_907" data-name="Ellipse 907" transform="translate(1255 25)" fill="none" stroke="#fff"
+                    stroke-width="1.5">
+                    <circle cx="10" cy="10" r="10" stroke="none" />
+                    <circle cx="10" cy="10" r="9.25" fill="none" />
+                  </g>
+                </g>
+              </svg>
+            </span>
+            <div class="toggle-tooltip">{{ localization['menurules'] }}</div>
+          </div>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-toggle-item" href="javascript:void(0)" @click="$root.openWindow($root.gamehistoryUrl)">
+            <span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="14.004" viewBox="0 0 16 14.004">
+                <g transform="translate(-8578.002 -13913)">
+                  <g>
+                    <path d="M7186.263,15366.8s-4.946-.008-8.421,0" transform="translate(1406.739 -1452.799)"
+                      fill="none" stroke="#fff" stroke-linecap="round" stroke-width="2" />
+                    <path d="M7179.844,15366.8s-1.174,0-2,0" transform="translate(1401.158 -1452.798)" fill="none"
+                      stroke="#fff" stroke-linecap="round" stroke-width="2" />
+                  </g>
+                  <g transform="translate(0 12)">
+                    <path d="M7186.263,15366.8s-4.946-.008-8.421,0" transform="translate(1406.739 -1452.799)"
+                      fill="none" stroke="#fff" stroke-linecap="round" stroke-width="2" />
+                    <path d="M7179.844,15366.8s-1.174,0-2,0" transform="translate(1401.158 -1452.798)" fill="none"
+                      stroke="#fff" stroke-linecap="round" stroke-width="2" />
+                  </g>
+                  <g transform="translate(8579.002 13920)">
+                    <path d="M7177.842,15366.8s4.946-.008,8.421,0" transform="translate(-7177.842 -15366.799)"
+                      fill="none" stroke="#fff" stroke-linecap="round" stroke-width="2" />
+                    <path d="M7177.844,15366.8s1.174,0,2,0" transform="translate(-7165.844 -15366.798)" fill="none"
+                      stroke="#fff" stroke-linecap="round" stroke-width="2" />
+                  </g>
+                </g>
+              </svg>
+            </span>
+            <div class="toggle-tooltip">{{ localization['menuresult'] }}</div>
+          </div>
+        </div>
+
+        <div class="menu-item">
+          <div class="menu-toggle-item" href="javascript:void(0)" @click="$root.openWindow($root.statementUrl)">
+            <span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="20" viewBox="0 0 18 20">
+                <g id="writing" transform="translate(-26.57)">
+                  <g transform="translate(26.57)">
+                    <g>
+                      <path d="M116.328,200.8a.8.8,0,0,0-.8-.8h-8.264a.8.8,0,1,0,0,1.6h8.264A.8.8,0,0,0,116.328,200.8Z"
+                        transform="translate(-103.407 -192.205)" fill="#fff" />
+                      <path d="M107.261,280a.8.8,0,0,0,0,1.6h5.019a.8.8,0,0,0,0-1.6Z"
+                        transform="translate(-103.365 -269.087)" fill="#fff" />
+                      <path
+                        d="M32.315,18.438H29.7a1.565,1.565,0,0,1-1.564-1.562V3.125A1.565,1.565,0,0,1,29.7,1.563h9.617A1.565,1.565,0,0,1,40.88,3.125v4.8a.782.782,0,0,0,1.564,0v-4.8A3.131,3.131,0,0,0,39.316,0H29.7A3.131,3.131,0,0,0,26.57,3.125v13.75A3.131,3.131,0,0,0,29.7,20h2.616a.781.781,0,1,0,0-1.562Z"
+                        transform="translate(-26.57)" fill="#fff" />
+                      <path
+                        d="M252.46,272.728a2.41,2.41,0,0,0-3.4,0l-4.4,4.4a.8.8,0,0,0-.2.335l-.959,3.158a.8.8,0,0,0,.982,1.006l3.238-.9a.8.8,0,0,0,.353-.205l4.4-4.387A2.41,2.41,0,0,0,252.46,272.728Zm-5.38,6.507-1.629.451.477-1.57,2.972-2.966,1.135,1.135ZM251.326,275l-.155.155-1.135-1.135.155-.155A.8.8,0,0,1,251.326,275Z"
+                        transform="translate(-235.164 -261.651)" fill="#fff" />
+                      <path d="M115.526,120h-8.264a.8.8,0,1,0,0,1.6h8.264a.8.8,0,0,0,0-1.6Z"
+                        transform="translate(-103.407 -115.323)" fill="#fff" />
+                    </g>
+                  </g>
+                </g>
+              </svg>
+            </span>
+            <div class="toggle-tooltip">{{ localization['menustatement'] }}</div>
+          </div>
+        </div>
+
+
+
+
+        <div class="menu-item">
+          <div class="menu-toggle-item" href="javascript:void(0)" @click="$root.openWindow($root.notificationUrl)">
+            <span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" viewBox="0 0 16 20">
+                <path id="Icon"
+                  d="M1409,39a1,1,0,0,1-1-1V33a5.687,5.687,0,0,0-5-5.921V26a1,1,0,1,0-2,0v1.079A5.687,5.687,0,0,0,1396,33v5a1,1,0,0,1-1,1,1,1,0,0,0,0,2h4v1a3,3,0,1,0,6,0V41h4a1,1,0,0,0,0-2Zm-6,3a1,1,0,1,1-2,0V41h2Zm3-3h-8V33a3.843,3.843,0,0,1,4-4h0a3.843,3.843,0,0,1,4,4Z"
+                  transform="translate(-1394 -25)" fill="#fff" />
+              </svg>
+            </span>
+            <div class="toggle-tooltip">{{ localization['menunotification'] }}</div>
+          </div>
+        </div>
+
+
+      </div>
+
+
+
+
+    </div>
+
+    <div class="header-mobile">
+      <div class="left-nav">
+        <span @click="toggleMobDrawer" href="javascript:void(0)">
+          <svg fill="currentColor" preserveAspectRatio="xMidYMid meet" height="14" width="14" viewBox="0 0 512 512"
+            style="vertical-align:middle">
+            <title id="Hamburger">Hamburger</title>
+            <g>
+              <path
+                d="M49.6 123.2h411.9c25.2 0 45.8-16 45.8-35.5s-20.6-35.5-45.8-35.5H49.6c-25.1 0-45.8 16-45.8 35.5s20.7 35.5 45.8 35.5zm411.9 97.3H49.6c-25.1 0-45.8 16-45.8 35.5s20.7 35.5 45.8 35.5h411.9c25.2 0 45.8-16 45.8-35.5s-20.5-35.5-45.8-35.5zm0 168.3H49.6c-25.1 0-45.8 16-45.8 35.5s20.7 35.5 45.8 35.5h411.9c25.2 0 45.8-16 45.8-35.5s-20.5-35.5-45.8-35.5z">
+              </path>
+            </g>
+          </svg>
+        </span>
+      </div>
+      <div class="center-nav">
+        <div class="mobile-varcont" @click="$root.checkBalance">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18.771" height="15.4" viewBox="0 0 18.771 15.4">
+            <g id="wallet" transform="translate(0.25 -26.721)">
+              <g transform="translate(0 26.971)">
+                <path
+                  d="M17.4,32.063V29.69a2.693,2.693,0,0,0-2.719-2.719H2.719A2.693,2.693,0,0,0,0,29.69v9.462a2.693,2.693,0,0,0,2.719,2.719H14.682A2.693,2.693,0,0,0,17.4,39.152V36.888a1.89,1.89,0,0,0,.87-1.542v-1.74A1.888,1.888,0,0,0,17.4,32.063Zm-.218,3.282a.743.743,0,0,1-.761.761H10.876a.743.743,0,0,1-.761-.761v-1.74a.743.743,0,0,1,.761-.761h5.547a.743.743,0,0,1,.761.761Zm-2.5,5.438H2.719a1.673,1.673,0,0,1-1.631-1.631V29.69a1.673,1.673,0,0,1,1.631-1.631H14.682a1.673,1.673,0,0,1,1.631,1.631v2.066H10.876a1.906,1.906,0,0,0-1.849,1.849v1.74a1.906,1.906,0,0,0,1.849,1.849h5.438v1.958A1.673,1.673,0,0,1,14.682,40.783Z"
+                  transform="translate(0 -26.971)" fill="#fff" stroke="#fff" stroke-width="0.5" />
+                <path
+                  d="M174.121,137.632a.654.654,0,0,0-.109.435.4.4,0,0,0,.109.326.824.824,0,0,0,.435.217c.109,0,.217-.109.326-.217.109,0,.217-.218.217-.326a.565.565,0,0,0-.217-.435A.526.526,0,0,0,174.121,137.632Z"
+                  transform="translate(-162.136 -130.563)" fill="#fff" stroke="#fff" stroke-width="0.5" />
+              </g>
+            </g>
+          </svg> <span v-if="user.balance">THB {{ formatPrice(user.balance) }} <div class="loading-icon"
+              v-if="$root.user.checking"></div></span>
+          <span v-else>&nbsp;</span>
+        </div>
+
+        <div class="mobile-varcont username menu-username">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14.146" height="14.146" viewBox="0 0 14.146 14.146">
+            <path id="Union_1" data-name="Union 1"
+              d="M0,14.146V12.378c0-1.946,3.183-3.536,7.073-3.536s7.073,1.591,7.073,3.536v1.768ZM3.536,3.536A3.536,3.536,0,1,1,7.073,7.073,3.536,3.536,0,0,1,3.536,3.536Z"
+              transform="translate(0 0)" fill="#fff" />
+          </svg>
+          {{ user.username }}
+        </div>
+      </div>
+
+
+      <div :class="['mobile-left-drawer', openDrawer? 'open':'']">
+        <div class="mobile-drawer-bg" v-if="openDrawer" @click="toggleMobDrawer"></div>
+        <div class="mobile-drawer">
+          <div class="mobile-drawer-rela">
+            <a class="mobile-drawer-close" href="javascript:void(0)" @click="toggleMobDrawer">
+              <svg fill="currentColor" preserveAspectRatio="xMidYMid meet" height="14px" width="14px"
+                viewBox="0 0 10 10" style="vertical-align: middle;">
+                <title id="Close">Close</title>
+                <g>
+                  <path
+                    d="M9.888641,1.2053571 C9.962881,1.2797623 10,1.3690471 10,1.4732143 C10,1.5773815 9.962881,1.6666663 9.888641,1.7410714 L6.904232,4.7321429 C6.829992,4.806548 6.792873,4.8958328 6.792873,5 C6.792873,5.1041672 6.829992,5.193452 6.904232,5.2678571 L9.86637,8.2589286 C9.955457,8.3333337 10,8.4226185 10,8.5267857 C10,8.6309529 9.955457,8.7202377 9.86637,8.7946429 L8.797327,9.8883929 C8.723088,9.962798 8.63029,10 8.518931,10 C8.407572,10 8.314774,9.962798 8.240535,9.8883929 L5.278396,6.8973214 C5.204157,6.8229163 5.111359,6.7857143 5,6.7857143 C4.888641,6.7857143 4.795843,6.8229163 4.721604,6.8973214 L1.737194,9.8883929 C1.662954,9.962798 1.573868,10 1.469933,10 C1.365998,10 1.276912,9.962798 1.202673,9.8883929 L0.111359,8.7946429 C0.037119,8.7202377 0,8.6309529 0,8.5267857 C0,8.4226185 0.037119,8.3333337 0.111359,8.2589286 L3.095768,5.2678571 C3.170008,5.193452 3.207127,5.1041672 3.207127,5 C3.207127,4.8958328 3.170008,4.806548 3.095768,4.7321429 L0.111359,1.7410714 C0.037119,1.6666663 0,1.5736613 0,1.4620536 C0,1.3504459 0.037119,1.2574408 0.111359,1.1830357 L1.202673,0.1116071 C1.276912,0.037202 1.36971,0 1.481069,0 C1.592428,0 1.685226,0.037202 1.759465,0.1116071 L4.721604,3.1026786 C4.795843,3.1770837 4.888641,3.2142857 5,3.2142857 C5.111359,3.2142857 5.204157,3.1770837 5.278396,3.1026786 L8.262806,0.1116071 C8.337046,0.037202 8.426132,0 8.530067,0 C8.634002,0 8.723088,0.037202 8.797327,0.1116071 L9.888641,1.2053571 Z">
+                  </path>
+                </g>
+              </svg>
+            </a>
+
+            <div class="game-logo">
+              <a href="javascript:void(0)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="85.8" height="19" viewBox="0 0 85.8 19">
+                  <path
+                    d="M13.3,6.1,17.9,0h7.4L18.1,9.2,20,19H15.5a3.221,3.221,0,0,1-2-.5,2.482,2.482,0,0,1-.8-1.7L11.5,9.5H6.3l-.4.9h.6a2.575,2.575,0,0,1,1.8.5,1.136,1.136,0,0,1,.3.8,4.487,4.487,0,0,1-.4,1.7L6.3,19H1.5c-.7,0-1.2-.2-1.4-.6a.749.749,0,0,1-.1-.5v-.1a6.757,6.757,0,0,1,.5-1.7l4-11.4h0L6.1,0h4.6q1.2,0,1.5.6a.749.749,0,0,1,.1.5A5.017,5.017,0,0,1,12,2.5L9.8,8.4h5.6l.3-.9H14.4c-.9,0-1.4-.1-1.5-.4C12.8,6.9,12.9,6.5,13.3,6.1Z"
+                    fill="#fff" />
+                  <path
+                    d="M31.1,0H43.6c1.1,0,1.7.2,2,.6a1.445,1.445,0,0,1,.2.7v.1a3.346,3.346,0,0,1-.4,1.4l-.6,1.7H38.2a16.985,16.985,0,0,1,.6-1.8V2.4h0c0-.6-.3-.9-.9-1.1a2.22,2.22,0,0,0-.9-.1H31.9l-.3.9h.6a3.061,3.061,0,0,1,1.5.3,1.1,1.1,0,0,1,.5,1,2.958,2.958,0,0,1-.2,1l-1.4,4h8.7L41,9.6H29l-.3.9h.6a2.575,2.575,0,0,1,1.8.5,1.135,1.135,0,0,1,.3.8,4.487,4.487,0,0,1-.4,1.7l-1.6,4.4H32a3.557,3.557,0,0,0,1.9-.5,2.292,2.292,0,0,0,1.2-1.5,13.081,13.081,0,0,0,.5-1.5h6.1a14.5,14.5,0,0,1-.9,2.5,3.135,3.135,0,0,1-1.7,1.7,3.425,3.425,0,0,1-1.8.4h-13c-.7,0-1.2-.2-1.4-.6a.9.9,0,0,1-.1-.5v-.1a6.757,6.757,0,0,1,.5-1.7l5-14.2a4.053,4.053,0,0,1,.5-.9A2.644,2.644,0,0,1,31.1,0Z"
+                    fill="#fff" />
+                  <path
+                    d="M56.7,0c1,0,1.6.3,1.9,1a4.636,4.636,0,0,1,.2,1.4V13.7L63.7,0H66L59.3,19H54.2a3.475,3.475,0,0,1-1.3-.2,1.871,1.871,0,0,1-1-1.9V4.8a3.083,3.083,0,0,1,.1-1,.764.764,0,0,1,.2-.5,1.562,1.562,0,0,1,.8-.8c.1-.1.3-.1.5-.2a3.75,3.75,0,0,1,1.1-.1l.3-.9H51.2L44.9,19H42.5L49.3,0Z"
+                    fill="#fff" />
+                  <path
+                    d="M70.9,0H84.3a1.668,1.668,0,0,1,1.4.5.9.9,0,0,1,.1.5v.1a4.123,4.123,0,0,1-.4,1.5L80.2,17a4.053,4.053,0,0,1-.5.9A2.712,2.712,0,0,1,77.4,19H64c-1,0-1.5-.4-1.5-1.1v-.1a4.123,4.123,0,0,1,.4-1.5L68,2.2a9.292,9.292,0,0,1,.5-1,2.122,2.122,0,0,1,1.3-1A1.978,1.978,0,0,1,70.9,0Zm.9,1.1-.3.9h.6a2.649,2.649,0,0,1,1.4.3c.4.1.5.5.5.9a2.388,2.388,0,0,1-.2.9L69,17.8h2.2a2.75,2.75,0,0,0,2.7-1.5,16.709,16.709,0,0,0,.7-1.9l3.9-11a4.515,4.515,0,0,0,.3-1.3c0-.6-.4-1-1.2-1.1H71.8Z"
+                    fill="#fff" />
+                </svg>
+                <img src="assets/img/gli-certified.png" style="height: 20px; margin-left: 12px;">
+              </a>
+            </div>
+
+
+            <a class="drawer-link" href="javascript:void(0)" @click="$root.openWindow($root.gamehistoryUrl)">
+              <span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="14.004" viewBox="0 0 16 14.004">
+                  <g transform="translate(-8578.002 -13913)">
+                    <g>
+                      <path d="M7186.263,15366.8s-4.946-.008-8.421,0" transform="translate(1406.739 -1452.799)"
+                        fill="none" stroke="#fff" stroke-linecap="round" stroke-width="2" />
+                      <path d="M7179.844,15366.8s-1.174,0-2,0" transform="translate(1401.158 -1452.798)" fill="none"
+                        stroke="#fff" stroke-linecap="round" stroke-width="2" />
+                    </g>
+                    <g transform="translate(0 12)">
+                      <path d="M7186.263,15366.8s-4.946-.008-8.421,0" transform="translate(1406.739 -1452.799)"
+                        fill="none" stroke="#fff" stroke-linecap="round" stroke-width="2" />
+                      <path d="M7179.844,15366.8s-1.174,0-2,0" transform="translate(1401.158 -1452.798)" fill="none"
+                        stroke="#fff" stroke-linecap="round" stroke-width="2" />
+                    </g>
+                    <g transform="translate(8579.002 13920)">
+                      <path d="M7177.842,15366.8s4.946-.008,8.421,0" transform="translate(-7177.842 -15366.799)"
+                        fill="none" stroke="#fff" stroke-linecap="round" stroke-width="2" />
+                      <path d="M7177.844,15366.8s1.174,0,2,0" transform="translate(-7165.844 -15366.798)" fill="none"
+                        stroke="#fff" stroke-linecap="round" stroke-width="2" />
+                    </g>
+                  </g>
+                </svg>
+              </span> {{ localization['menuresult'] }}
+            </a>
+
+            <a class="drawer-link" href="javascript:void(0)" @click="$root.openWindow($root.statementUrl)">
+              <span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="20" viewBox="0 0 18 20">
+                  <g id="writing" transform="translate(-26.57)">
+                    <g transform="translate(26.57)">
+                      <g>
+                        <path
+                          d="M116.328,200.8a.8.8,0,0,0-.8-.8h-8.264a.8.8,0,1,0,0,1.6h8.264A.8.8,0,0,0,116.328,200.8Z"
+                          transform="translate(-103.407 -192.205)" fill="#fff" />
+                        <path d="M107.261,280a.8.8,0,0,0,0,1.6h5.019a.8.8,0,0,0,0-1.6Z"
+                          transform="translate(-103.365 -269.087)" fill="#fff" />
+                        <path
+                          d="M32.315,18.438H29.7a1.565,1.565,0,0,1-1.564-1.562V3.125A1.565,1.565,0,0,1,29.7,1.563h9.617A1.565,1.565,0,0,1,40.88,3.125v4.8a.782.782,0,0,0,1.564,0v-4.8A3.131,3.131,0,0,0,39.316,0H29.7A3.131,3.131,0,0,0,26.57,3.125v13.75A3.131,3.131,0,0,0,29.7,20h2.616a.781.781,0,1,0,0-1.562Z"
+                          transform="translate(-26.57)" fill="#fff" />
+                        <path
+                          d="M252.46,272.728a2.41,2.41,0,0,0-3.4,0l-4.4,4.4a.8.8,0,0,0-.2.335l-.959,3.158a.8.8,0,0,0,.982,1.006l3.238-.9a.8.8,0,0,0,.353-.205l4.4-4.387A2.41,2.41,0,0,0,252.46,272.728Zm-5.38,6.507-1.629.451.477-1.57,2.972-2.966,1.135,1.135ZM251.326,275l-.155.155-1.135-1.135.155-.155A.8.8,0,0,1,251.326,275Z"
+                          transform="translate(-235.164 -261.651)" fill="#fff" />
+                        <path d="M115.526,120h-8.264a.8.8,0,1,0,0,1.6h8.264a.8.8,0,0,0,0-1.6Z"
+                          transform="translate(-103.407 -115.323)" fill="#fff" />
+                      </g>
+                    </g>
+                  </g>
+                </svg>
+              </span> {{ localization['menustatement'] }}
+            </a>
+
+            <a class="drawer-link" href="javascript:void(0)" @click="$root.openWindow($root.rulesUrl)">
+              <span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                  <g transform="translate(-1255 -25)">
+                    <g id="question-mark" transform="translate(1256.447 30.71)">
+                      <path
+                        d="M8.323,0c1.632,0,3.238.751,3.238,2.549,0,1.658-1.9,2.295-2.307,2.894-.306.446-.2,1.072-1.045,1.072a.811.811,0,0,1-.816-.854c0-1.518,2.23-1.861,2.23-3.111,0-.688-.458-1.1-1.223-1.1-1.632,0-.995,1.682-2.23,1.682a.763.763,0,0,1-.829-.777C5.34,1.108,6.767,0,8.323,0ZM8.259,7.342A1.046,1.046,0,1,1,7.214,8.387,1.05,1.05,0,0,1,8.259,7.342Z"
+                        transform="translate(0)" fill="#fff" />
+                    </g>
+                    <g id="Ellipse_907" data-name="Ellipse 907" transform="translate(1255 25)" fill="none" stroke="#fff"
+                      stroke-width="1.5">
+                      <circle cx="10" cy="10" r="10" stroke="none" />
+                      <circle cx="10" cy="10" r="9.25" fill="none" />
+                    </g>
+                  </g>
+                </svg>
+              </span> {{ localization['menurules'] }}
+            </a>
+
+            <a class="drawer-link" href="javascript:void(0)" @click="$root.openWindow($root.notificationUrl)">
+              <span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="20" viewBox="0 0 16 20">
+                  <path id="Icon"
+                    d="M1409,39a1,1,0,0,1-1-1V33a5.687,5.687,0,0,0-5-5.921V26a1,1,0,1,0-2,0v1.079A5.687,5.687,0,0,0,1396,33v5a1,1,0,0,1-1,1,1,1,0,0,0,0,2h4v1a3,3,0,1,0,6,0V41h4a1,1,0,0,0,0-2Zm-6,3a1,1,0,1,1-2,0V41h2Zm3-3h-8V33a3.843,3.843,0,0,1,4-4h0a3.843,3.843,0,0,1,4,4Z"
+                    transform="translate(-1394 -25)" fill="#fff" />
+                </svg>
+              </span> {{ localization['menunotification'] }}
+            </a>
+
+            <div class="multiplechoices" v-on:click="toggleMobLanguage" v-bind:class="{ open: openLanguage}">
+              <div class="selected">{{ languages[lang_id] }}</div>
+              <div class="choices">
+                <div class="choice" v-for="(lang, key) in languages" :value="key" @click="setLocale(key)">{{ lang }}
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="bottom">
+            <div style="padding:10px; width: 100%;">
+              <a :class="['drawer-toggle', soundOn ? 'soundon':'soundoff'] " href="javascript:void(0)"
+                @click="toggleSound">
+                <span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="21.928" height="21.927" viewBox="0 0 21.928 21.927">
+                    <g transform="translate(-6534.5 -14643.5)">
+                      <g id="speaker" transform="translate(6535 14641.989)">
+                        <path
+                          d="M11.352,3.172a1.21,1.21,0,0,0-1.235.018.371.371,0,0,0-.052.037L4.65,7.808H.4a.4.4,0,0,0-.4.4V15.8a.4.4,0,0,0,.4.4l4.241,0,5.413,4.972a.39.39,0,0,0,.064.048,1.211,1.211,0,0,0,1.235.018,1.248,1.248,0,0,0,.638-1.1V4.273A1.249,1.249,0,0,0,11.352,3.172Zm-.161,16.964a.459.459,0,0,1-.231.406.419.419,0,0,1-.4.01L5.2,15.624V13.8a.4.4,0,1,0-.8,0v1.6l-3.6,0V8.607H4.4v1.6a.4.4,0,0,0,.8,0V8.393l5.358-4.532a.418.418,0,0,1,.406.007.458.458,0,0,1,.231.405Z"
+                          transform="translate(0 0)" fill="#fff" stroke="#fff" stroke-width="0.8" />
+                        <path
+                          d="M38,7.034a.4.4,0,0,0-.257.757,6.987,6.987,0,0,1,.009,13.232.4.4,0,0,0,.129.778.394.394,0,0,0,.129-.022A7.787,7.787,0,0,0,38,7.034Z"
+                          transform="translate(-22.497 -2.403)" fill="#fff" stroke="#fff" stroke-width="0.8" />
+                        <path
+                          d="M34.948,15.989a3.627,3.627,0,0,0-2.607-3.467.267.267,0,1,0-.148.514,3.073,3.073,0,0,1,0,5.905.267.267,0,0,0,.074.524.272.272,0,0,0,.074-.01A3.626,3.626,0,0,0,34.948,15.989Z"
+                          transform="translate(-18.21 -3.985)" fill="#fff" stroke="#fff" stroke-width="0.8" />
+                      </g>
+                      <path class="stroke" d="M9297.84,13967l-19.928,19.928" transform="translate(-2742.412 677.499)"
+                        fill="none" stroke="#00fdf3" stroke-linecap="round" stroke-width="2" />
+                    </g>
+                  </svg>
+                </span> {{ localization['menusfx'] }}: {{ soundOn ? localization['menuon']: localization['menuoff']}}
+              </a>
+            </div>
+
+            <a href="logout.php" class="drawerlogout">
+              {{ localization['menulogout'] }}
+            </a>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="filter-options">
+      <label><input type="radio" v-model="options.displayMode" value="normal"><em></em>{{ localization['menunormal']
+        }}</label>
+      <label><input type="radio" v-model="options.displayMode" value="simple"><em></em>{{ localization['menusimple']
+        }}</label>
+      <label class="menutrend"><input type="radio" v-model="options.displayMode" value="trend"><em></em>{{
+        localization['menutrend'] }}</label>
+    </div>
+
+    <div id="products" class="products grid-x" onclick="resetAudio.reset()">
+      <gamelot v-for="(product, key) in games" :key="product.productID" :product.sync="product"></gamelot>
+    </div>
+  </div>
+
+  <script>
+    if (document.readyState == "loading") {
+      document.querySelector("#logo-wrapper").style.visibility = "visible";
+
+    }
+    document.onreadystatechange = function () {
+      if (document.readyState !== "complete") {
+        document.querySelector("#app").style.visibility = "hidden";
+      } else {
+        document.querySelector("#logo-wrapper").style.display = "none";
+        document.querySelector("#app").style.visibility = "visible";
+      }
+    }; 
+  </script>
+
+  <script type="text/javascript">
+    function BufferLoader(context, urlList, callback) {
+      this.context = context;
+      this.urlList = urlList;
+      this.onload = callback;
+      this.bufferList = new Array();
+      this.loadCount = 0;
+    }
+
+    BufferLoader.prototype.loadBuffer = function (url, index) {
+      // Load buffer asynchronously
+      var request = new XMLHttpRequest();
+      request.open("GET", url, true);
+      request.responseType = "arraybuffer";
+
+      var loader = this;
+
+      request.onload = function () {
+        // Asynchronously decode the audio file data in request.response
+        loader.context.decodeAudioData(
+          request.response,
+          function (buffer) {
+            if (!buffer) {
+              alert('error decoding file data: ' + url);
+              return;
+            }
+            loader.bufferList[index] = buffer;
+            if (++loader.loadCount == loader.urlList.length)
+              loader.onload(loader.bufferList);
+          },
+          function (error) {
+            console.error('decodeAudioData error', error);
+          }
+        );
+      }
+
+      request.onerror = function () {
+        alert('BufferLoader: XHR error');
+      }
+
+      request.send();
+    }
+
+    BufferLoader.prototype.load = function () {
+      for (var i = 0; i < this.urlList.length; ++i)
+        this.loadBuffer(this.urlList[i], i);
+    }
+
+    // Keep track of all loaded buffers.
+    var BUFFERS = {};
+    // Page-wide audio context.
+    var context = null;
+
+    // An object to track the buffers to load {name: path}
+    var BUFFERS_TO_LOAD = {
+      win: 'assets/sound/win.mp3',
+      loss: 'assets/sound/loss.mpeg',
+    };
+
+    // Loads all sound samples into the buffers object.
+    function loadBuffers() {
+      // Array-ify
+      var names = [];
+      var paths = [];
+      for (var name in BUFFERS_TO_LOAD) {
+        var path = BUFFERS_TO_LOAD[name];
+        names.push(name);
+        paths.push(path);
+      }
+      bufferLoader = new BufferLoader(context, paths, function (bufferList) {
+        for (var i = 0; i < bufferList.length; i++) {
+          var buffer = bufferList[i];
+          var name = names[i];
+          BUFFERS[name] = buffer;
+        }
+      });
+      bufferLoader.load();
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      try {
+        // Fix up prefixing
+        window.AudioContext = window.AudioContext || window.webkitAudioContext;
+        context = new AudioContext();
+      }
+      catch (e) {
+        alert("Web Audio API is not supported in this browser");
+      }
+      loadBuffers();
+    });
+
+    var winAudio = {
+    };
+
+    winAudio.play = function () {
+      var source = context.createBufferSource();
+      source.buffer = BUFFERS.win;
+
+      source.connect(context.destination);
+      source.loop = false;
+
+      if (!source.start) {
+        source.start = source.noteOn;
+      }
+
+      source.start(0);
+      this.source = source;
+    };
+
+    var lossAudio = {
+    };
+
+    lossAudio.play = function () {
+      var source = context.createBufferSource();
+      source.buffer = BUFFERS.loss;
+
+      source.connect(context.destination);
+      source.loop = false;
+
+      if (!source.start) {
+        source.start = source.noteOn;
+      }
+
+      source.start(0);
+      this.source = source;
+    };
+
+    var resetAudio = {
+    };
+
+    resetAudio.gainNode = null;
+
+    resetAudio.reset = function () {
+      if (!context.createGain)
+        context.createGain = context.createGainNode;
+
+      if (this.gainNode == null) {
+        this.gainNode = context.createGain();
+        this.gainNode.gain.value = 0;
+        var source = context.createBufferSource();
+        source.buffer = BUFFERS.loss;
+
+        // Connect source to a gain node
+        source.connect(this.gainNode);
+        // Connect gain node to destination
+        this.gainNode.connect(context.destination);
+        // Start playback in a loop
+        source.loop = false;
+        if (!source.start)
+          source.start = source.noteOn;
+        source.start(0);
+        this.source = source;
+      }
+    };
+
+    var NumberInput = {
+        template:
+          '\n    <span :class="[id, \'number-input\']">\n      <a @click="reset"><svg class="icon-close"><use xlink:href="#icon-close"></use></svg></a>\n      <input type="tel" v-model="intValue" :id="id" :placeholder="placeholder" autocomplete="off" tabindex="1" @keydown="isNumber">\n    </span>\n  ',
+        props: ["value", "placeholder", "id"],
+        watch: {
+          value: function value(a) {
+            this.intValue = display_numeric(a);
+          },
+          intValue: function intValue(a) {
+            (this.intValue = display_numeric(a)), this.$emit("input", numeric(a));
+          }
+        },
+        data: function data() {
+          return { intValue: "" };
+        },
+        methods: {
+          isNumber: function isNumber(a) {
+            a = a ? a : window.event;
+            var b = a.which ? a.which : a.keyCode;
+
+            if (b === 27) {
+              this.$parent.$parent.popperHide();
+            }
+
+            return 31 < b && (48 > b || 57 < b) && (96 > b || 105 < b) && 46 !== b
+              ? void a.preventDefault()
+              : !0;
+          },
+          reset: function reset() {
+            (this.intValue = ""), this.$emit("input", ""), this.$emit("reset");
+          }
+        },
+        created: function created() {
+          this.intValue = this.value;
+        }
+      }, TrendLot = {
+        template:`<div>
+              <div class="trendlot-types grid-x small-up-6">
+                <div class="cell" v-for="type in trendlot_types">
+                  <span :title="$root.localization[type]" :class="trendlot_type == type ? 'selected' : ''" @click="setType(type)">{{ $root.localization[type+'_trend'] }}</span>
+                </div>
+              </div>
+              <div class="loading" v-if="!product.result.length">
+                <div class="loading-icon"></div>
+              </div>
+              <div v-if="product.stat" class="stats">
+                <span v-for="stat in stats[trendlot_type]"> {{ $root.localization[stat.type] }}
+                  <span>{{ stat.percent }}%</span>
+                </span>
+              </div>
+              <div class="grid-trendlot">
+                <div class="rol" v-for="rol in processedResult[trendlot_type]">
+                  <div :class="draw.type" v-for="draw in rol">
+                    <div v-if="openPopperID != draw.drawID" @click="openPopper(draw.drawID)" :class="['type', draw.type]" :title="$root.localization['DRAW_NO'] + ' ' + draw.trend.gCode + draw.trend.drawID + '' + draw.trend.resultTime + '\\Sum: ' + draw.trend.sum"> {{ $root.localization[draw.type+'_trend'] }} </div>
+                    <popper v-if="openPopperID == draw.drawID" :ref="'popper'+trendlot_type+draw.drawID" trigger="click" :options="popper_options" :boundaries-selector="'#gamecont-'+product.productID" :force-show="true" @documentClick="closePopper(draw.drawID)" @hide="popperHide(draw.drawID)">
+                      <div class="popper trend">
+                        <a class="close" @click="closePopper(draw.drawID)"></a>
+                        <div style="display: inline-block;width: 100%;">
+                          <div class="gametitle">{{ product.title }}</div>
+                          <div class="drawno">{{ $root.localization['DRAW_NO'] }} {{ product.gCode }}{{ draw.trend.drawID }}</div>
+                          <div class="drawtime">{{ draw.trend.resultTime }}</div>
+                        </div>
+                        <span class="sum">{{ draw.trend.sum }}</span>
+                        <div class="trendsnumber">
+                          <template v-for="(number,key) in draw.trend.result.slice(0,10)">
+                            <div :class="['tilecolumn']">
+                              <div :class="['tile']">
+                                <span :class="[(number>=41)?'lighter':'']">{{ number }}</span>
+                              </div>
+                              <div :class="['tile']"><span :class="[(draw.trend.result.slice(10+(key),10+(key+1))[0]>=41)?'lighter':'']">{{ draw.trend.result.slice(10+(key),10+(key+1))[0] }}</span>
+                              </div>
+                            </div>
+                          </template>
+                        </div>
+                        <div style="text-align: center;">
+                          <template v-for="(winner, index) in draw.trend.winners">
+                            <span :class="['trendstat', winner]">
+                              <span>{{ $root.localization[winner] }} </span>
+                            </span>
+                          </template>
+                        </div>
+                      </div>
+                      <div @click="closePopper(draw.drawID)" :class="['type', draw.type]" slot="reference" :title="$root.localization['DRAW_NO'] + ' ' + draw.trend.drawID + '' + draw.trend.resultTime + '\\Sum: ' + draw.trend.sum"> {{ $root.localization[draw.type+'_trend'] }} </div>
+                    </popper>
+                  </div>
+                </div>
+              </div>
+            </div>`,
+            props: ["product", "trendlot_type", "trendlot_types"],
+            components: { popper: VuePopper },
+            data: function data() {
+              return {
+                popper_options: {
+                  placement: "bottom",
+                  hide: true,
+                  modifiers: {
+                    flip: { behavior: ["bottom", "top"] },
+                    preventOverflow: { priority: ["left", "right"] }
+                  },
+                  removeOnDestroy: true
+                },
+                openPopperID: ""
+              };
+            },
+            watch: {},
+            computed: {
+              processedResult: function processedResult() {
+                return trendlotResult(this.product);
+              },
+              stats: function stats() {
+                var a = this.product.stat,
+                  b = {
+                    bs: [
+                      { type: "bs_b", percent: a.stat_bs_b },
+                      { type: "bs_s", percent: a.stat_bs_s }
+                    ],
+
+                    oe: [
+                      { type: "oe_o", percent: a.stat_oe_o },
+                      { type: "oe_e", percent: a.stat_oe_e }
+                    ],
+                    dt: [
+                      { type: "dt_d", percent: a.stat_dt_d },
+                      { type: "dt_tie", percent: a.stat_dt_tie },
+                      { type: "dt_t", percent: a.stat_dt_t }
+
+                    ],
+                    hl: [
+                      { type: "hl_h", percent: a.stat_hl_h },
+                      { type: "hl_t", percent: a.stat_hl_t },
+                      { type: "hl_l", percent: a.stat_hl_l }
+                    ],
+                    index: [
+                      { type: "index_b", percent: a.stat_index_b },
+                      { type: "index_tie", percent: a.stat_index_tie },
+                      { type: "index_s", percent: a.stat_index_s }
+                    ],
+                    fivee: [
+                      { type: "fivee_go", percent: a.stat_fivee_go },
+                      { type: "fivee_wo", percent: a.stat_fivee_wo },
+                      { type: "fivee_wa", percent: a.stat_fivee_wa },
+                      { type: "fivee_fi", percent: a.stat_fivee_fi },
+                      { type: "fivee_ea", percent: a.stat_fivee_ea }
+                    ],
+                  };
+                return b;
+              }
+            },
+            methods: {
+
+              setType: function setType(a) {
+                this.$emit("change", a);
+              },
+              openPopper: function openPopper(a) {
+                this.openPopperID = a;
+              },
+              closePopper: function closePopper(a) {
+                this.$refs["popper" + this.trendlot_type + a][0].doClose();
+              },
+              popperHide: function popperHide(a) {
+                this.$refs["popper" + this.trendlot_type + a][0].doDestroy(),
+                  this.openPopperID == a && (this.openPopperID = "");
+              }
+            },
+            mounted: function mounted() { },
+            beforeDestroy: function beforeDestroy() {
+              var a = this.$refs["popper" + this.trendlot_type + this.openPopperID][0];
+              a && (a.doClose(), a.doDestroy());
+            }
+          },
+          BetLot = {
+            template:`
+            <div class="cell betlot" :type="[type]">
+              <a v-if="!openPopperFlag" @click="openPopper" :class="[\'odd\', product.previousResult[type] ? \'winner\' : \'\']">
+                <div class="oddtxtbetname">{{ $root.localization[type] }}</div>
+                <span :class="[\'stake\', has_stake ? \'active\' : \'\']">{{ has_stake }}</span>
+                <div class="infobox">
+                  <span class="rangetxt" v-if="range">{{ range }}</span>
+                  <span class="oddtxt">{{ odd }}</span>
+                </div>
+              </a>
+              <popper v-if="openPopperFlag" ref="popper" trigger="click" :options="popper_options" :boundaries-selector="'#gamecont-'+product.productID" @show="beforePlaceBet" :force-show="true" @documentClick="closePopper" @hide="popperHide">
+                <div class="popper">
+                  <div class="popper-header" style="padding-bottom: 0;">
+                    <span class="counter">{{ $parent.$parent.displayCountDown }}</span>
+                    <b>{{ product.title }}</b>
+                    <br> {{ $root.localization['DRAW_NO'] }} {{ product.gCode }}{{ product.drawID }}
+                  </div>
+                  <form @submit.prevent="placeBet" style="padding-top: 0;">
+                    <div style="font-size: 10px;">{{ $root.localization[type+'group'] }}</div>
+                    <b>{{ $root.localization[type] }}</b> @ <span class="bet-odds">{{ odd }}</span>
+                    <div v-if="betting">
+                      <div class="result" v-if="placedResult">
+                        <span class="success" v-if="placedResult.errorCode=='PLACE_SUCCESS'">{{ $root.localization[placedResult.errorCode] }}
+                          <br />
+                          <small>[{{ $root.localization['REF'] }}: {{ placedResult.ticket }}]</small>
+                        </span>
+                        <template v-else>
+                          <span class="failed">{{ $root.localization[placedResult.errorCode] }} [{{ placedResult.error }}]</span>
+                          <span class="hints" v-html="$root.localization[placedResult.hints]"></span>
+                        </template>
+                      </div>
+                      <div class="loading" v-else>
+                        <div class="loading-icon"></div>
+                      </div>
+                    </div>
+                    <div v-else>
+                      <div>
+                        <template v-if="typeID == 3">
+                          <div class="inputs index-game">
+                            <div class="title">
+                              <span class="range">{{ $root.localization['range'] }}</span>
+                              <span class="point">{{ $root.localization['point'] }}</span>
+                            </div>
+                            <number_input v-model="pointrange" @reset="reset" :id="'input-range-'+product.drawID+'-'+detailID"></number_input>
+                            <number_input v-model="point" @reset="reset" :id="'input-point-'+product.drawID+'-'+detailID"></number_input>
+                            <div class="remarks">{{ product.index_range.min + ' ~ ' + product.index_range.max }}</div>
+                          </div>
+                          <div class="quickbet grid-x small-up-4">
+                            <div class="cell" v-for="point in []">
+                              <a @click="addPoint(point)">+{{ point }}</a>
+                            </div>
+                            <div class="cell">
+                              <a @click="setPoint(rules.maxbet)" class="max">Max</a>
+                            </div>
+                          </div>
+                        </template>
+                        <template v-else>
+                          <div class="inputs" :test="[typeID]">
+                            <number_input v-model="stake" @reset="reset" :id="'input-stake-'+product.drawID+'-'+detailID"></number_input>
+                          </div>
+                          <div class="quickbet grid-x small-up-4">
+                            <div class="cell" v-for="stake in [10,50,250,1250,6250]">
+                              <!-- <a @click="addStake(stake)">+{{ stake.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ",") }}</a> -->
+                              <a v-if="stake
+                                                  
+                                  <10000" @click="addStake(stake)">+{{ stake.toString().replace(/\\B(?=(\\d{3})+(?!\\d))/g, ",") }}
+                              </a>
+                              <a v-else-if="stake>=10000 && stake
+                                                    
+                                    <1000000" @click="addStake(stake)">+{{ parseInt(stake/1000)+'K'  }}
+                              </a>
+                              <a v-else-if="stake>=1000000" @click="addStake(stake)">+{{ parseInt(stake/1000000)+'M' }}</a>
+                            </div>
+                            <div class="cell">
+                              <a @click="setStake(rules.maxbet)" class="max">{{ $root.localization['MAX'] }}</a>
+                            </div>
+                          </div>
+                        </template>
+                      </div>
+                      <div v-if="rules" class="summary">
+                        <div class="error" v-if="error"> {{ $root.localization[error] }} </div>
+                        <template v-if="typeID!=3"> {{ $root.localization['PAYOUT'] }}: <span class="summary_value">{{ payout }}</span>
+                          <br>
+                        </template>
+                        <template v-else> {{ $root.localization['PREWIN'] }}: <span class="summary_value">{{ prewin }}</span>
+                          <br> {{ $root.localization['DEPOSIT'] }}: <span class="summary_value">{{ deposit }}</span>
+                          <br>
+                        </template> {{ $root.localization['MIN_TO'] }}: <span class="summary_value">{{ minbet }}</span>
+                        <br> {{ $root.localization['MAX_TO'] }}: <span class="summary_value">{{ maxbet }}</span>
+                        <br>
+                      </div>
+                      <div class="loading" v-else>
+                        <!-- <svg width="30" height="30"
+                                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-ripple"><circle cx="50" cy="50" r="27.8478" fill="none" stroke="#000" stroke-width="5"><animate attributeName="r" calcMode="spline" values="0;40" keyTimes="0;1" dur="1.3" keySplines="0 0.2 0.8 1" begin="-0.65s" repeatCount="indefinite"></animate><animate attributeName="opacity" calcMode="spline" values="1;0" keyTimes="0;1" dur="1.3" keySplines="0.2 0 0.8 1" begin="-0.65s" repeatCount="indefinite"></animate></circle><circle cx="50" cy="50" r="5.18325" fill="none" stroke="#000" stroke-width="5"><animate attributeName="r" calcMode="spline" values="0;40" keyTimes="0;1" dur="1.3" keySplines="0 0.2 0.8 1" begin="0s" repeatCount="indefinite"></animate><animate attributeName="opacity" calcMode="spline" values="1;0" keyTimes="0;1" dur="1.3" keySplines="0.2 0 0.8 1" begin="0s" repeatCount="indefinite"></animate></circle></svg> -->
+                        <div class="loading-icon"></div>
+                      </div>
+                    </div>
+                    <button v-if="placedResult" ref="ok_button" type="reset" @click="closePopper" class="ok-button">OK</button>
+                    <div v-else-if="!betting" class="bet-choices">
+                      <button ref="cancel_button" type="reset" @click="closePopper" class="cancel-button">{{ $root.localization['CANCEL'] }}</button>
+                      <button type="submit" class="bet-button">{{ $root.localization['BET'] }}</button>
+                    </div>
+                  </form>
+                </div>
+                <a @click="closePopper" :class="['odd', 'active', product.previousResult[type] ? 'winner' : '']" slot="reference">
+                  <div class="oddtxtbetname">{{ $root.localization[type] }}</div>
+                  <span :class="['stake', has_stake ? 'active' : '']">{{ has_stake }}</span>
+                  <div class="infobox">
+                    <span class="rangetxt" v-if="range">{{ range }}</span>
+                    <span class="oddtxt">{{ odd }}</span>
+                  </div>
+                </a>
+              </popper>
+            </div>`,
+        props: ["product", "type", "range"],
+        components: { popper: VuePopper, number_input: NumberInput },
+        data: function data() {
+          return {
+            stake: "",
+            point: "",
+            pointrange: "",
+            token: null,
+            rules: null,
+            betting: false,
+            error: null,
+            placedResult: null,
+            closePopperTimer: null,
+            errorTimer: null,
+            recomputed: 0,
+            popper_options: {
+              placement: "bottom",
+              hide: true,
+              modifiers: {
+                flip: { behavior: ["bottom"] },
+                preventOverflow: { priority: ["left", "right"] }
+              },
+              removeOnDestroy: true
+            },
+            openPopperID: "",
+            openPopperFlag: false
+          };
+        },
+        watch: {
+          "product.drawID": function productDrawID() {
+            this.$refs.popper && this.$refs.popper.doClose();
+            this.recomputed++;
+          },
+          "product.status": function productStatus() {
+            "start-betting" != this.product.status &&
+              !this.betting &&
+              this.$refs.popper &&
+              this.$refs.popper.doClose();
+          },
+          stake: function stake() {
+            this.preCheckStake();
+          },
+          point: function point() {
+            this.preCheckPoint();
+          },
+          pointrange: function pointrange() {
+            this.preCheckRange();
+          },
+          error: function error() {
+            this.updatePopper();
+          }
+        },
+        computed: {
+          has_stake: function has_stake() {
+            var a = this.product.betList
+              ? this.product.betList + this.recomputed
+              : 0 + this.recomputed,
+              b = checkStakeRecord(
+                this.product.gID,
+                this.type
+              );
+
+            return display_numeric(b, 0);
+          },
+          finalStake: function finalStake() {
+            return 3 == this.typeID ? this.point * this.pointrange : this.stake;
+          },
+          checkStake: function checkStake() {
+            return 3 == this.typeID ? this.point : this.stake;
+          },
+          odd: function odd() {
+            if (this.product.odds) return this.product.odds[this.type];
+          },
+          resetError: function resetError() {
+            (this.error = null), clearTimeout(this.errorTimer);
+          },
+          typeID: function typeID() {
+            return getGameTypeId(this.type);
+          },
+          detailID: function detailID() {
+            return getBetID(this.type);
+          },
+          minbet: function minbet() {
+            return display_numeric(this.rules.minbet, 0, true);
+          },
+          maxbet: function maxbet() {
+            return display_numeric(this.rules.maxbet, 0, true);
+          },
+          payout: function payout() {
+            return display_numeric(this.stake * this.odd, 2);
+          },
+          prewin: function prewin() {
+            return display_numeric(this.point * this.pointrange * this.odd, 0);
+          },
+          deposit: function deposit() {
+            return display_numeric(this.point * this.pointrange, 0);
+          }
+        },
+        methods: {
+          addStake: function addStake(a) {
+            (this.stake = parseInt(this.stake ? this.stake : 0) + parseInt(a)), ($(document).width() > 767) ? this.focusStake() : '';
+          },
+          setStake: function setStake(a) {
+            (this.stake = parseInt(a)), ($(document).width() > 767) ? this.focusStake() : '';
+          },
+          addPoint: function addPoint(a) {
+            (this.point = parseInt(this.point ? this.point : 0) + parseInt(a)),
+              this.focusPoint();
+          },
+          setPoint: function setPoint(a) {
+            (this.point = a), this.focusPoint();
+          },
+          setRange: function setRange(a) {
+            (this.pointrange = a), this.focusRange();
+          },
+          preCheckRange: function preCheckRange() {
+            var b = this;
+            this.pointrange > this.product.index_range.max &&
+              ((this.error = "ERROR_RANGE"),
+                setTimeout(function () {
+                  b.setRange(b.product.index_range.max);
+                }, 20),
+                (this.errorTimer = setTimeout(function () {
+                  b.error = null;
+                }, 3e3)));
+          },
+          preCheckPoint: function preCheckPoint() {
+            var b = this;
+            this.rules &&
+              this.point > this.rules.maxbet &&
+              ((this.error = "ERROR_MAX_TO"),
+                setTimeout(function () {
+                  b.setPoint(b.rules.maxbet);
+                }, 20),
+                (this.errorTimer = setTimeout(function () {
+                  b.error = null;
+                }, 3e3)));
+          },
+          preCheckStake: function preCheckStake() {
+            var b = this;
+            this.rules &&
+              this.stake > this.rules.maxbet &&
+              ((this.error = "ERROR_MAX_TO"),
+                setTimeout(function () {
+                  b.setStake(b.rules.maxbet);
+                }, 20),
+                (this.errorTimer = setTimeout(function () {
+                  b.error = null;
+                }, 3000)));
+          },
+          checkError: function checkError() {
+            var c = this;
+            this.error = null;
+            var a = false,
+              b = 3000;
+
+            return (
+              clearTimeout(this.errorTimer),
+              3 == this.typeID && this.pointrange < this.product.index_range.min
+                ? ((this.error = "ERROR_RANGE"),
+                  this.setRange(this.product.index_range.min),
+                  (this.errorTimer = setTimeout(function () {
+                    c.error = null;
+                  }, b)),
+                  (a = !0))
+                : 3 == this.typeID && this.pointrange > this.product.index_range.max
+                  ? ((this.error = "ERROR_RANGE"),
+                    this.setRange(this.product.index_range.max),
+                    (this.errorTimer = setTimeout(function () {
+                      c.error = null;
+                    }, b)),
+                    (a = !0))
+                  : 3 != this.typeID || this.finalStake
+                    ? this.finalStake
+                      ? 3 == this.typeID && this.checkStake < this.rules.minbet
+                        ? ((this.error = "ERROR_MIN_TO"),
+                          this.setPoint(this.rules.minbet),
+                          (this.errorTimer = setTimeout(function () {
+                            c.error = null;
+                          }, b)),
+                          (a = !0))
+                        : 3 == this.typeID && this.checkStake > this.rules.maxbet
+                          ? ((this.error = "ERROR_MAX_TO"),
+                            this.setPoint(this.rules.maxbet),
+                            (this.errorTimer = setTimeout(function () {
+                              c.error = null;
+                            }, b)),
+                            (a = !0))
+                          : this.checkStake < this.rules.minbet
+                            ? ((this.error = "ERROR_MIN_TO"),
+                              this.setStake(this.rules.minbet),
+                              (this.errorTimer = setTimeout(function () {
+                                c.error = null;
+                              }, b)),
+                              (a = !0))
+                            : this.checkStake > this.rules.maxbet
+                              ? ((this.error = "ERROR_MAX_TO"),
+                                this.setStake(this.rules.maxbet),
+                                (this.errorTimer = setTimeout(function () {
+                                  c.error = null;
+                                }, b)),
+                                (a = !0))
+                              : this.finalStake > this.rules.balance &&
+                              ((this.error = "ERROR_XAMOUNT"),
+                                (this.errorTimer = setTimeout(function () {
+                                  c.error = null;
+                                }, b)),
+                                (a = !0))
+                      : ((this.error = "ERROR_TO"),
+                        this.setStake(this.rules.minbet),
+                        (this.errorTimer = setTimeout(function () {
+                          c.error = null;
+                        }, b)),
+                        (a = !0))
+                    : ((this.error = "ERROR_TO"),
+                      this.setPoint(this.rules.minbet),
+                      (this.errorTimer = setTimeout(function () {
+                        c.error = null;
+                      }, b)),
+                      (a = !0)),
+              a
+            );
+          },
+          placeBet: function placeBet() {
+            var g = this;
+
+            if (this.rules && false == this.checkError()) {
+              (this.betting = true), (this.placedResult = null);
+              var a = new FormData();
+              a.append("productID", this.product.productID),
+                a.append("gID", this.product.gID),
+                a.append("drawID", this.product.drawID),
+                a.append("resultTime", this.product.resultTime),
+                a.append("betID", this.detailID),
+                a.append("odds", this.odd),
+                a.append("token", this.token),
+                a.append("stake", parseFloat(this.finalStake));
+              var c = this.product.gID,
+                d = this.type,
+                f = this.stake;
+              axios
+                .post(placeBetUrl, a)
+                .then(function (h) {
+                  var j = h.data;
+                  if (((g.placedResult = j), 0 == j.error))
+                    g.$root.setBalance(g.placedResult.data.k_available),
+                      (g.placedResult.errorCode = "PLACE_SUCCESS"),
+                      (g.$root.setLastStake(f)),
+                      setStakeRecord(c, d, f),
+                      setTimeout(function () {
+                        g.recomputed++;
+                      }, 250);
+                  else
+                    switch (parseInt(j.error)) {
+                      case 100:
+                        g.placedResult.errorCode = "ERROR_MIN_TO";
+                        break;
+                      case 101:
+                        g.placedResult.errorCode = "ERROR_MAX_TO";
+                        break;
+                      case 102:
+                        g.placedResult.errorCode = "ERROR_MAX_DR";
+                        break;
+                      case 103:
+                        g.placedResult.errorCode = "ERROR_MAX_BTDR";
+                        break;
+                      case 123:
+                        g.placedResult.errorCode = "ERROR_XAMOUNT";
+                        break;
+                      case 200:
+                        g.placedResult.errorCode = "ERROR_NMB";
+                        break;
+                      case 206:
+                        g.placedResult.errorCode = "ERROR_206";
+                        break;
+                      case 207:
+                        g.placedResult.errorCode = "ERROR_207";
+                        break;
+                      case 208:
+                        g.placedResult.errorCode = "ERROR_208";
+                        break;
+                      case 209:
+                        g.placedResult.errorCode = "ERROR_209";
+                        break;
+                      case 404:
+                        g.placedResult.errorCode = "ERROR_GAME_UA";
+                        break;
+                      default:
+                        g.placedResult.errorCode = "PLACE_FAIL";
+                    }
+                  g.betting &&
+                    g.$refs.popper &&
+                    g.$refs.popper.showPopper &&
+                    (setTimeout(function () {
+                      g.$refs.ok_button.focus();
+                    }, 25),
+                      (g.closePopperTimer = setTimeout(function () {
+                        g.closePopper();
+                      }, 5e3)),
+                      g.updatePopper());
+                })
+                .catch(function () { }),
+                this.updatePopper();
+            }
+          },
+          beforePlaceBet: function beforePlaceBet() {
+            var a = this;
+            (this.token = null),
+              (this.rules = null),
+              (this.betting = false),
+              (this.placedResult = null),
+              this.reset(),
+              clearTimeout(this.closePopperTimer),
+              clearTimeout(this.errorTimer),
+              axios
+                .get(
+                  apiCall(
+                    beforeBetUrl +
+                    "&betID=" +
+                    this.detailID +
+                    "&gID=" +
+                    this.product.gID
+                  )
+                )
+                .then(function (b) {
+                  var c = b.data;
+                  a.token = (c.token);
+                  0 == c.error
+                    ? ((a.rules = c.data), a.updatePopper())
+                    : a.$root.forceLogout(1, c.error);
+                  //a.focusStake()
+                })
+                .catch(function () { }),
+              setTimeout(function () {
+                var d = a.$root.getLastStake();
+                (isNaN(parseFloat(d)) ? a.setStake('') : a.setStake(d));
+                ($(document).width() > 767) ? (3 == a.typeID ? a.focusRange() : a.focusStake()) : '';
+              }, 25);
+          },
+          reset: function reset() {
+            (this.stake = ""),
+              (this.point = ""),
+              (this.pointrange = ""),
+              (this.error = null);
+          },
+          openPopper: function openPopper() {
+            "start-betting" == this.product.status &&
+              this.odd &&
+              0 != this.odd &&
+              (this.openPopperFlag = true);
+          },
+          closePopper: function closePopper() {
+            this.$refs.popper.doClose();
+          },
+          updatePopper: function updatePopper() {
+            this.$nextTick(function () {
+              this.$refs.popper && this.$refs.popper.updatePopper();
+            });
+          },
+          popperHide: function popperHide() {
+            this.$refs.popper.doDestroy(),
+              (this.openPopperFlag = false),
+              this.reset(),
+              clearTimeout(this.closePopperTimer),
+              clearTimeout(this.errorTimer);
+          },
+          focusStake: function focusStake() {
+            document
+              .getElementById(
+                "input-stake-" + this.product.drawID + "-" + this.detailID
+              )
+              .focus();
+          },
+          focusRange: function focusRange() {
+            document
+              .getElementById(
+                "input-range-" + this.product.drawID + "-" + this.detailID
+              )
+              .focus();
+          },
+          focusPoint: function focusPoint() {
+            document
+              .getElementById(
+                "input-point-" + this.product.drawID + "-" + this.detailID
+              )
+              .focus();
+          }
+        },
+        mounted: function mounted() { },
+        beforeDestroy: function beforeDestroy() {
+          this.$refs.popper &&
+            (this.$refs.popper.doClose(), this.$refs.popper.doDestroy()),
+            clearTimeout(this.closePopperTimer),
+            clearTimeout(this.errorTimer);
+        }
+      }, BetSection = {
+        template:
+          '<div>\n\n\n  <div :class="[\'betspace\']">\n\n    <div class="nomorebets">{{ $root.localization[\'NOMOREBETS\'] }}</div><div class="drawingresult">{{ $root.localization[\'DRAWING\'] }}</div>\n    <span class="nextdraw" v-if="product.status==\'waiting-result\'">            \n      <a @click="$parent.nextDraw">{{ $root.localization[\'NEXT_DRAW\'] }}</a>\n    </span>\n    <div :class="[\'grid-x\', \'small-up-2\', $root.options.displayMode != \'simple\' || curr_trendlot_1 == \'bs\' ? \'active\' : \'\']">\n      <betlot :product="product" type="o1" ref="o1" range="[811~1410]"></betlot>\n      <betlot :product="product" type="o2" ref="o2" range="[210~810]"></betlot>\n    </div>\n\n    <div :class="[\'grid-x\', \'small-up-2\', $root.options.displayMode != \'simple\' || curr_trendlot_1 == \'oe\' ? \'active\' : \'\']">\n      <betlot :product="product" type="o3" ref="o3"></betlot>\n      <betlot :product="product" type="o4" ref="o4"></betlot>\n    </div>\n\n    \n    <div :class="[\'grid-x\', \'small-up-3\', $root.options.displayMode != \'simple\' || curr_trendlot_1 == \'dt\' ? \'active\' : \'\']">\n      <betlot :product="product" type="o7" ref="o7"></betlot>\n      <betlot :product="product" type="o8" ref="o8"></betlot>\n      <betlot :product="product" type="o9" ref="o9"></betlot>\n    </div>\n\n    <div :class="[\'grid-x\', \'small-up-3\', $root.options.displayMode != \'simple\' || curr_trendlot_1 == \'hl\' ? \'active\' : \'\']">\n      <betlot :product="product" type="o10" ref="o10"></betlot>\n      <betlot :product="product" type="o11" ref="o11"></betlot>\n      <betlot :product="product" type="o12" ref="o12"></betlot>\n    </div>\n\n    <div :class="[\'grid-x\', \'small-up-4\', $root.options.displayMode != \'simple\' || curr_trendlot_1 == \'combo\' ? \'active\' : \'\']">\n      <betlot :product="product" type="o13" ref="o13"></betlot>\n      <betlot :product="product" type="o14" ref="o14"></betlot>\n      <betlot :product="product" type="o15" ref="o15"></betlot>\n      <betlot :product="product" type="o16" ref="o16"></betlot>\n    </div>\n\n    <div :class="[\'grid-x\', \'line3special\', \'small-up-5\', $root.options.displayMode != \'simple\' || curr_trendlot_1 == \'fivee\' ? \'active\' : \'\']">\n      <betlot :product="product" type="o17" ref="o17" range="[210~695]"></betlot>\n      <betlot :product="product" type="o18" ref="o18" range="[696~763]"></betlot>\n      <betlot :product="product" type="o19" ref="o19" range="[764~855]"></betlot>\n      <betlot :product="product" type="o20" ref="o20" range="[856~923]"></betlot>\n      <betlot :product="product" type="o21" ref="o21" range="[924~1410]"></betlot>\n    </div>\n\n  </div>\n\n\n\n  <div class="product-trendlot">\n    <trendlot :product="product" :trendlot_type="trendlot_type" :curr_trendlot_1="curr_trendlot_1"  :trendlot_types="trendlot_types" v-if="product.status != \'closed\'" @change="trendlotTypeChanged"></trendlot>\n  </div>\n\n\n</div>\n',
+        props: ["product", "betlot_type", "subbetlot_type"],
+        components: { betlot: BetLot, trendlot: TrendLot, popper: VuePopper },
+        data: function data() {
+          return {
+            bet_categories: ["btcb", "btrow"],
+
+
+            curr_trendlot_1: "bs",
+            curr_trendlot_2_1: "r1",
+            curr_trendlot_2_2: "r2",
+            curr_trendlot_2_3: "r3",
+            curr_trendlot_2_4: "r4",
+            curr_trendlot_2_5: "r5",
+            curr_trendlot_3_1: "bs",
+            curr_trendlot_3_2: "bs",
+
+            popper_options: {
+              placement: "bottom",
+              hide: true,
+              modifiers: {
+                flip: { behavior: ["bottom", "top"] },
+                preventOverflow: { priority: ["left", "right"] }
+              },
+              removeOnDestroy: true
+            },
+            openPopperID: "",
+            openPopperFlag: false
+          };
+        },
+        watch: {},
+        computed: {
+          processedResult: function processedResult() {
+            return trendlotResult(this.product);
+          },
+          currentType: function currentType() {
+            return this.betlot_type;
+          },
+
+          currentSubType: function currentSubType() {
+            return this.subbetlot_type;
+          },
+
+          btrow_sub_categories: function btrow_sub_categories() {
+
+            if (this.betlot_type == 'btcb') {
+              return [];
+            }
+            else if (this.betlot_type == 'btrow') {
+              return ["line1", "line2", "line3", "line4", "line5"];
+            }
+            else if (this.betlot_type == 'btpb') {
+              return ["combo2", "combo3"];
+            }
+            else
+              return [];
+
+          },
+          trendlot_type: function trendlot_type() {
+
+            if (this.betlot_type == 'btcb') {
+              return this.curr_trendlot_1;
+            }
+            if (this.betlot_type == 'btrow') {
+
+              if (this.subbetlot_type == 'line1') {
+                return this.curr_trendlot_2_1;
+              }
+              else if (this.subbetlot_type == 'line2') {
+                return this.curr_trendlot_2_2;
+              }
+              else if (this.subbetlot_type == 'line3') {
+                return this.curr_trendlot_2_3;
+              }
+              else if (this.subbetlot_type == 'line4') {
+                return this.curr_trendlot_2_4;
+              }
+              else if (this.subbetlot_type == 'line5') {
+                return this.curr_trendlot_2_5;
+              }
+
+
+
+            }
+
+            if (this.betlot_type == 'btpb') {
+              if (this.subbetlot_type == 'combo2')
+                return this.curr_trendlot_3_1;
+              else if (this.subbetlot_type == 'combo3')
+                return this.curr_trendlot_3_2;
+            }
+
+          },
+          trendlot_types: function trendlot_types() {
+            if (this.betlot_type == 'btcb') {
+              //"index",
+              return ["bs", "oe", "dt", "hl", "fivee"];
+            }
+          }
+        },
+        methods: {
+          trendlotTypeChanged: function trendlotTypeChanged(a) {
+            if (this.betlot_type == 'btcb') {
+              this.curr_trendlot_1 = a;
+            }
+            if (this.betlot_type == 'btrow') {
+              if (this.subbetlot_type == 'line1') {
+                this.curr_trendlot_2_1 = a;
+              }
+              else if (this.subbetlot_type == 'line2') {
+                this.curr_trendlot_2_2 = a;
+              }
+              else if (this.subbetlot_type == 'line3') {
+                this.curr_trendlot_2_3 = a;
+              }
+              else if (this.subbetlot_type == 'line4') {
+                this.curr_trendlot_2_4 = a;
+              }
+              else if (this.subbetlot_type == 'line5') {
+                this.curr_trendlot_2_5 = a;
+              }
+
+
+            }
+
+            if (this.betlot_type == 'btpb') {
+
+              if (this.subbetlot_type == 'combo2')
+                this.curr_trendlot_3_1 = a;
+              else if (this.subbetlot_type == 'combo3')
+                this.curr_trendlot_3_2 = a;
+
+            }
+
+          },
+          setBetType: function setBetType(a) {
+            this.$emit("change", a);
+          },
+          setBetSubType: function (a) {
+            this.$emit("subtype", a);
+          },
+          openPopper: function openPopper(a) {
+            this.openPopperID = a;
+          },
+          closePopper: function closePopper(a) {
+            this.$refs["popper" + this.betlot_type + a][0].doClose();
+          },
+          popperHide: function popperHide(a) {
+            this.$refs["popper" + this.betlot_type + a][0].doDestroy(),
+              this.openPopperID == a && (this.openPopperID = "");
+          },
+          showRange: (function (a) {
+            function b() {
+              return a.apply(this, arguments);
+            }
+            return (
+              (b.toString = function () {
+                return a.toString();
+              }),
+              b
+            );
+          })(function (a, b) {
+            return showRange(a, b);
+          }),
+        },
+        mounted: function mounted() { },
+        beforeDestroy: function beforeDestroy() {
+          var a = this.$refs["popper" + this.betlot_type + this.openPopperID][0];
+          a && (a.doClose(), a.doDestroy());
+        }
+      },
+      GameLot = {
+        template:
+          '<div :id="\'gamecont-\'+product.productID" :class="[\'theproduct\', \'cell\', \'large-4\', \'medium-6\', product.enabled ? \'active\' : \'\', collapsed ? \'collapsed\' : \'\', iamhidden?\'hidden\':\'\']">\n  \n  <div :class="[\'product\', product.status, (trendactive && $root.options.displayMode == \'trend\')? \'\' : $root.options.displayMode]">\n    <div class="fullscreencont" @click="$root.onlyyou(product.gID)">\n            <div class="fullscreen" :text="[$root.localization[\'menufullscreen\']]"></div>\n        </div>\n\n   <div :class="[\'gameheader\']" @click="headerclick">\n    <div style="float: left; line-height: 20px; padding: 5px 0 0;">\n        \n\n        <div class="gameheader-title">{{ product.title }}</div>\n        <div class="gameheader-drawno">\n            <template v-if="product.status==\'closed\'">{{ $root.localization[\'MARCLOSED\'] }}</template>\n            <template v-else>{{ $root.localization[\'DRAW_NO\'] }} {{ flippingDrawID }}</template>\n        </div>\n    </div>\n    <div class="minisum">{{ product.previousResult.sum }}</div>\n    <div class="countdowncont">\n\n      <template v-if="displayCountDown.substring(2,3) == \':\'">\n        <span class="cntdwncont">\n          {{ displayCountDown.substring(0,1) }}\n        </span>\n        <span class="cntdwncont">\n          {{ displayCountDown.substring(1,2) }}\n        </span>\n\n        <span class="cntdwncont thecolons">\n          {{ displayCountDown.substring(2,3) }}\n        </span>\n\n        <span class="cntdwncont">\n          {{ displayCountDown.substring(3,4) }}\n        </span>\n\n        <span class="cntdwncont">\n          {{ displayCountDown.substring(4,5) }}\n        </span>\n      </template>\n      <template v-if="displayCountDown.substring(3,4) == \':\'">\n\n        <span class="cntdwncont">\n          {{ displayCountDown.substring(0,1) }}\n        </span>\n        <span class="cntdwncont">\n          {{ displayCountDown.substring(1,2) }}\n        </span>\n\n        <span class="cntdwncont">\n          {{ displayCountDown.substring(2,3) }}\n        </span>\n\n        <span class="cntdwncont thecolons">\n          {{ displayCountDown.substring(3,4) }}\n        </span>\n\n        <span class="cntdwncont">\n          {{ displayCountDown.substring(4,5) }}\n        </span>\n\n        <span class="cntdwncont">\n          {{ displayCountDown.substring(5,6) }}\n        </span>\n\n        </template>\n    </div>\n  </div>\n\n  <div :class="[\'toppanel\']">\n    \n    <div class="draw-cont">\n      <div class="numtiles-cont">\n        <div class="numtiles-cont-space draw-result">\n          <template v-if="flippingResult.length > 0">\n            <template v-for="(number,key) in flippingResult.slice(0,10)">\n              <div :class="[\'tilecolumn\']">\n                <div :class="[\'tile\', (number > 0) ? \'active\' : \'\']">\n                <span>{{ number }}</span>\n                </div>\n\n                <div :class="[\'tile\', (flippingResult.slice(10+(key),10+(key+1))[0] > 0) ? \'active\' : \'\']">\n                <span>{{ flippingResult.slice(10+(key),10+(key+1))[0] }}</span>\n                </div>\n                \n              </div>\n            </template>\n          </template>\n          <template v-else>\n                          <div class="tilecolumn">\n                <div class="tile">\n                  <span></span>\n                </div>\n                <div class="tile">\n                  <span></span>\n                </div>\n              </div>\n                            <div class="tilecolumn">\n                <div class="tile">\n                  <span></span>\n                </div>\n                <div class="tile">\n                  <span></span>\n                </div>\n              </div>\n                            <div class="tilecolumn">\n                <div class="tile">\n                  <span></span>\n                </div>\n                <div class="tile">\n                  <span></span>\n                </div>\n              </div>\n                            <div class="tilecolumn">\n                <div class="tile">\n                  <span></span>\n                </div>\n                <div class="tile">\n                  <span></span>\n                </div>\n              </div>\n                            <div class="tilecolumn">\n                <div class="tile">\n                  <span></span>\n                </div>\n                <div class="tile">\n                  <span></span>\n                </div>\n              </div>\n                            <div class="tilecolumn">\n                <div class="tile">\n                  <span></span>\n                </div>\n                <div class="tile">\n                  <span></span>\n                </div>\n              </div>\n                            <div class="tilecolumn">\n                <div class="tile">\n                  <span></span>\n                </div>\n                <div class="tile">\n                  <span></span>\n                </div>\n              </div>\n                            <div class="tilecolumn">\n                <div class="tile">\n                  <span></span>\n                </div>\n                <div class="tile">\n                  <span></span>\n                </div>\n              </div>\n                            <div class="tilecolumn">\n                <div class="tile">\n                  <span></span>\n                </div>\n                <div class="tile">\n                  <span></span>\n                </div>\n              </div>\n                            <div class="tilecolumn">\n                <div class="tile">\n                  <span></span>\n                </div>\n                <div class="tile">\n                  <span></span>\n                </div>\n              </div>\n                        </template>\n          </div>\n        </div>\n\n        <div class="summaryspace">\n            \n            <div class="middlepanel">\n                \n\n              <div class="middlediv">\n                <div class="lr50 frow">\n                  <div>{{ $root.localization[\'o7_trend\'] }}</div><div>{{ $root.localization[\'o9_trend\'] }}</div></div>\n                <div class="lr50"><div :class="[(product.previousResult.o7?\'winner\':\'\')]">{{ product.previousResult.dcnt }}</div><div :class="[(product.previousResult.o9?\'winner\':\'\')]">{{ product.previousResult.tcnt }}</div></div>\n              </div>  \n\n              <div class="middlediv">\n                <div class="lr50 frow">\n                  <div>{{ $root.localization[\'o10_trend\'] }}</div><div>{{ $root.localization[\'o12_trend\'] }}\n                  </div>\n                </div>\n\n                <div class="lr50">\n                  <div :class="[(product.previousResult.o10?\'winner\':\'\')]">{{ product.previousResult.hcnt }}</div><div :class="[(product.previousResult.o12?\'winner\':\'\')]">{{ product.previousResult.lcnt }}</div>\n                </div>\n              </div>\n              \n              \n              <div class="sum-summary">\n                <div class="sum-cont">\n                  <div class="sum-txt">\n                    {{ $root.localization[\'SUM\'] }}\n                  </div>\n                  <div class="sum-amt">\n                    <template v-if="product.previousResult.sum > 0">\n                      {{ product.previousResult.sum }}  \n                    </template>\n                    <template v-else>-</template>\n                  </div>\n                </div>\n              </div>\n\n            </div>\n\n            \n          </div>\n    </div>\n\n\n      \n      <!-- <div class="timer"></div> -->\n      <!-- <div>{{ $root.localization[$root.localization_code[product.status]] }}</div> -->\n\n    </div>\n\n    <div class="viewhistorycont" @click="$root.openWindow($root.gamehistoryUrl+\'&ref=\'+product.refID)">\n    <div class="viewhistory" :text="[$root.localization[\'menuviewhistory\']]">{{ $root.localization[\'menuviewhistory\'] }}</div>  \n  </div>\n\n\n    <div :class="[\'bottompanel\']">\n        \n\n    <div class="rebetsection" @click="openPopper" >\n    <div v-if="!openPopperFlag" class="rebetbutton"><div></div></div>\n\n\n    \n    <popper v-if="openPopperFlag" ref="popper" trigger="click" :options="popper_options" :boundaries-selector="\'#gamecont-\'+product.productID" @show="beforeRebet" :force-show="true" @documentClick="closePopper" @hide="popperHide">\n\n      <div class="popper">\n\n        <div class="popper-header">\n\n          <span class="counter">{{ displayCountDown }}</span>\n\n          <b>{{ product.title }}</b><br>\n          {{ $root.localization[\'DRAW_NO\'] }} {{ product.gCode }}{{ product.drawID }}\n\n        </div>\n\n        <form @submit.prevent="replaceBet">\n          <div v-if="betting">\n            \n            <div class="result" v-if="placedResult">\n              <div class="summary">\n                <span class="success" v-if="placedResult.errorCode==\'PLACE_SUCCESS\'">{{ $root.localization[placedResult.errorCode] }}<br/><small>[{{ $root.localization[\'REF\'] }}: {{ placedResult.data.ticket }}]</small></span>\n                <template v-else>\n                  <span class="failed">{{ $root.localization[placedResult.errorCode] }} [{{ placedResult.error }}]</span>\n                  <span class="hints" v-html="$root.localization[placedResult.hints]"></span>\n                </template>\n              </div>\n\n            </div>\n\n            <div class="loading" v-else>\n                <div class="loading-icon"></div>\n            </div>\n\n          </div>\n          <div v-else>\n            \n            <div v-if="rebets">\n              <div>{{ $root.localization[\'LASTBETSFOR\'] }} {{ $root.localization[\'DRAW_NO\'] }} {{ product.gCode }}{{ rebets.drawid }}</div>\n              <div class="summary">\n              <div v-if="rebets.beton">\n\n                <div  v-for="a in rebets.beton">\n                  <span>{{ $root.localization[\'o\'+a.bet_type] }}</span><span class="amt">{{ a.amt }}</span>\n                </div>\n\n                <div class="gtotal" v-if="rebets.total">\n                  <span>{{ $root.localization[\'BETTOTAL\'] }}</span> <span class="amt">{{ rebets.total }}</span>\n                </div>\n\n                \n                </div>\n                <div class="error"  v-else>\n                  {{ $root.localization[\'NOREBETLAST\'] }}\n                </div>\n              </div>\n            </div>\n\n            <div class="loading" v-else>\n\n              <div class="loading-icon"></div>\n\n            </div>\n            \n          </div>\n\n          <button v-if="placedResult" ref="ok_button" type="reset" @click="closePopper" class="ok-button">OK</button>\n          <div class="rebet-choices" v-else-if="!betting">\n            \n            <template v-if="rebets">\n              <template v-if="rebets.beton">\n              <button class="bet-button" type="submit">{{ $root.localization[\'REBET\'] }}</button>\n              <button v-if="rebets.beton" ref="cancel_button" type="reset" @click="closePopper" class="cancel-button">{{ $root.localization[\'CANCEL\'] }}</button>\n              </template>\n              <button v-else ref="ok_button" type="reset" @click="closePopper" class="ok-button">OK</button>\n            </template>\n            <template v-else>\n              <button v-if="placedResult" ref="ok_button" type="reset" @click="closePopper" class="ok-button">OK</button>\n            </template>\n          </div>\n\n        </form>\n\n      </div>\n\n      \n      <div @click="closePopper" class="rebetbutton" slot="reference"><div></div></div>\n\n    </popper>\n\n    <div style="clear: both;display: block;"></div>\n  </div>\n  \n\n    \n    \n    <div class="product-betsection">\n      <betsection :product="product" :betlot_type="betlot_type" :subbetlot_type="subbetlot_type" v-if="product.status != \'closed\'" @change="betlotTypeChanged" @subtype="betlotSubTypeChanged" ref="betsection"></betsection>\n    </div>\n\n\n\n\n    </div>\n\n\n\n\n\n    <div style="clear: both;"></div>\n    <!-- END NEW -->\n\n\n  </div>\n  <div :class="[\'ui-snackbar-container\', snacking ? \'show\' : \'\', snacktype == 1 ? \'won\': \'lose\']">\n    <div class="ui-snackbar" transition="ui-snackbar-toggle">\n        <div class="ui-snackbar-text" v-html="snacktxt"></div>\n        <!-- <div class="ui-snackbar-action">\n            <button>CLOSE</button>\n        </div> -->\n    </div>\n  </div>\n</div>\n',
+        props: ["product"],
+        components: { popper: VuePopper, betlot: BetLot, betsection: BetSection },
+        data: function data() {
+          return {
+            snacking: false,
+            snacktxt: "",
+            snacktype: "",
+            betlot_type: "btcb",
+            subbetlot_type: "",
+            countDownTimer: null,
+            drawResultTimer: null,
+            flipResultTimer: null,
+            nextDrawTimer: null,
+            delayResultTimer: null,
+            closePopperTimer: null,
+            errorTimer: null,
+            flippingDrawID: null,
+            flippingResult: [],
+            collapsed: ($(document).width() <= 767) ? false : false,
+            trendactive: false,
+            popper_options: {
+              placement: "bottom",
+              hide: true,
+              modifiers: {
+                flip: { behavior: ["top", "bottom"] },
+                preventOverflow: { priority: ["left", "right"] }
+              },
+              removeOnDestroy: true
+            },
+            stake: "",
+            laststake: "",
+            rebets: null,
+            rebetstoken: null,
+            betting: false,
+            error: null,
+            placedResult: null,
+            openPopperID: "",
+            openPopperFlag: false
+          };
+        },
+        watch: {
+
+          "product.viewreset": function viewReset(a) {
+            if (a == 'simple') {
+              this.collapsed = false;
+            }
+            else if (a == 'normal') {
+              this.collapsed = false;
+            }
+            else if (a == 'trend') {
+              if ($(document).width() <= 767)
+                this.collapsed = true;
+              else
+                this.collapsed = false;
+              this.trendactive = false;
+            }
+
+          },
+          "product.countDown": function productCountDown() {
+
+            var a = this;
+            "closed" != this.product.status &&
+              (this.product.drawResult ? (this.product.status = "open-result")
+                : (clearInterval(this.countDownTimer),
+                  (this.countDownTimer = setInterval(function () {
+                    a.product.countDown--;
+                  }, 1000)),
+                  0 >= this.product.countDown
+                    ? ((this.product.status = "waiting-result"),
+                      0 == this.product.countDown && this.checkResult())
+                    : 0 >= this.product.countDown - this.product.closeInterval &&
+                    (this.product.status = "stop-betting")));
+          },
+          "product.previousRes": function productPreviousRes() {
+            if (this.product.previousRes != null) {
+              this.showPastResult();
+              this.product.previousRes = null;
+            }
+
+          },
+          "product.gID": function productGID(a, b) {
+
+          },
+
+          "product.drawID": function productDrawID(a, b) {
+            var c = this;
+            clearTimeout(this.delayResultTimer),
+              clearInterval(this.drawResultTimer),
+              "closed" != this.product.status &&
+              (this.flipDraw(0),
+                setTimeout(function () {
+                  c.$parent.checkTrendLot(c.product, b);
+
+                }, 2000));
+          },
+          "product.status": function productStatus(a) {
+            "start-betting" != this.product.status &&
+              !this.betting &&
+              this.$refs.popper &&
+              this.$refs.popper.doClose(),
+              "closed" == a &&
+              (clearInterval(this.countDownTimer),
+                clearTimeout(this.delayResultTimer),
+                clearInterval(this.drawResultTimer),
+                clearTimeout(this.nextDrawTimer),
+                clearTimeout(this.flipResultTimer));
+          },
+          flippingResult: function flippingResult() {
+
+            setWinner(this.product, this.flippingResult);
+          },
+          error: function error() {
+            console.log('error called');
+            this.updatePopper();
+          }
+        },
+        computed: {
+
+          iamhidden: function iamhidden() {
+            return this.product.hidden;
+          },
+          resultCountDown: function resultCountDown() {
+            return (
+              new Date(this.product.resultTime) - new Date(this.product.serverTime)
+            );
+          },
+          displayCountDown: function displayCountDown() {
+            var pad = "00";
+            var a = this.product.countDown,
+              b = "" + Math.floor(a / 60),
+              c = "" + (a - 60 * b);
+            return 0 < a
+              ? 0 < b
+                ? (pad.substring("0", pad.length - b.length) + b) + ":" + (pad.substring("0", pad.length - c.length) + c)
+                : "00:" + (pad.substring("0", pad.length - c.length) + c)
+              : "00:00";
+          },
+          showCounter: function showCounter() {
+            return (
+              "start-betting" == this.product.status ||
+              "stop-betting" == this.product.status ||
+              "waiting-result" == this.product.status
+            );
+          }
+        },
+        methods: {
+          headerclick: function headerclick() {
+            var a = this.$parent;
+            if ($(document).width() <= 767) {
+              this.collapsed = !this.collapsed;
+            }
+
+            if (a.options.displayMode == 'trend')
+              this.trendactive = !this.trendactive;
+
+          },
+          checkError: function checkError() {
+            var c = this;
+            this.error = null;
+            var a = false,
+              b = 3000;
+
+            clearTimeout(this.errorTimer);
+
+            return (
+              this.rebets.total
+                ? parseFloat(this.rebets.total) > parseFloat(this.rebets.balance)
+                  ?
+                  ((this.error = "ERROR_XAMOUNT"),
+                    (this.errorTimer = setTimeout(function () {
+                      c.error = null;
+                    }, b)),
+                    (a = !0))
+                  : a
+                : a
+            )
+          },
+          replaceBet: function replaceBet() {
+            var g = this;
+            if (this.rebets && this.rebetstoken) {
+              (g.betting = true && false == this.checkError()), (this.placedResult = null);
+              var a = new FormData();
+              a.append("productID", this.product.productID),
+                a.append("gID", this.product.gID),
+                a.append("drawID", this.product.drawID),
+                a.append("token", this.rebetstoken),
+                a.append("resultTime", this.product.resultTime);
+
+              var c = this.product.gID,
+                d = this.type,
+                f = this.stake;
+              axios
+                .post(replaceBetUrl, a)
+                .then(function (h) {
+                  var j = h.data;
+                  if (((g.placedResult = j), 0 == j.error)) {
+                    g.$root.setBalance(g.placedResult.data.k_available),
+                      (g.placedResult.errorCode = "PLACE_SUCCESS");
+                    for (var e = 0; e < g.placedResult.data.beton.length; e++) {
+                      var thetype = g.$refs.betsection.$refs[g.placedResult.data.beton[e].type];
+                      setStakeRecord(c, g.placedResult.data.beton[e].type, g.placedResult.data.beton[e].stake);
+                      thetype.recomputed++;
+                    }
+                  }
+                  else
+                    switch (parseInt(j.error)) {
+
+                      case 100:
+                        g.placedResult.errorCode = "ERROR_MIN_TO";
+                        break;
+
+                      case 101:
+                        g.placedResult.errorCode = "ERROR_MAX_TO";
+                        break;
+                      case 102:
+                        g.placedResult.errorCode = "ERROR_MAX_DR";
+                        break;
+                      case 103:
+                        g.placedResult.errorCode = "ERROR_MAX_BTDR";
+                        break;
+                      case 123:
+                        g.placedResult.errorCode = "ERROR_XAMOUNT";
+                        break;
+                      case 200:
+                        g.placedResult.errorCode = "ERROR_NMB";
+                        break;
+                      case 206:
+                        g.placedResult.errorCode = "ERROR_206";
+                        break;
+                      case 207:
+                        g.placedResult.errorCode = "ERROR_207";
+                        break;
+                      case 208:
+                        g.placedResult.errorCode = "ERROR_208";
+                        break;
+                      case 209:
+                        g.placedResult.errorCode = "ERROR_209";
+                        break;
+                      case 404:
+                        g.placedResult.errorCode = "ERROR_GAME_UA";
+                        break;
+                      case 405:
+                        g.placedResult.errorCode = "ERROR_REBET_DONE";
+                        break;
+                      default:
+                        g.placedResult.errorCode = "PLACE_FAIL";
+                    }
+                  g.betting &&
+                    g.$refs.popper &&
+                    g.$refs.popper.showPopper &&
+                    (setTimeout(function () {
+                      g.$refs.ok_button.focus();
+                    }, 25),
+                      (g.closePopperTimer = setTimeout(function () {
+                        g.closePopper();
+                      }, 5e3)),
+                      g.updatePopper());
+                })
+                .catch(function () { }),
+                this.updatePopper();
+            }
+          },
+          beforeRebet: function beforeRebet() {
+            var a = this;
+            (this.rebets = null),
+              (this.rebetstoken = null),
+              (this.betting = false),
+              (this.placedResult = null),
+              (this.error = null),
+              this.reset(),
+              clearTimeout(this.closePopperTimer),
+              clearTimeout(this.errorTimer),
+              axios
+                .get(
+                  apiCall(
+                    RebetUrl +
+                    "&drawID=" +
+                    this.product.previousDrawNo +
+                    "&gID=" +
+                    this.product.gID
+                  )
+                )
+                .then(function (b) {
+                  var c = b.data;
+                  a.rebetstoken = c.token;
+                  0 == c.error
+                    ? ((a.rebets = c.data))
+                    : a.$root.forceLogout(1, c.error);
+
+                })
+                .catch(function () { }),
+              setTimeout(function () {
+
+              }, 25);
+          },
+
+          reset: function reset() {
+            (this.stake = ""),
+              (this.rebets = null),
+              (this.error = null);
+          },
+          closePopper: function closePopper() {
+            this.$refs.popper.doClose();
+          },
+          updatePopper: function updatePopper() {
+            this.$nextTick(function () {
+              this.$refs.popper && this.$refs.popper.updatePopper();
+            });
+          },
+          popperHide: function popperHide() {
+            this.$refs.popper.doDestroy(),
+              (this.openPopperFlag = false),
+              this.reset(),
+              clearTimeout(this.closePopperTimer),
+              clearTimeout(this.errorTimer);
+          },
+          openPopper: function openPopper() {
+            "start-betting" == this.product.status && (this.openPopperFlag = true);
+          },
+          betlotTypeChanged: function trendlotTypeChanged(a) {
+            this.betlot_type = a;
+            if (this.betlot_type == 'btrow') {
+              this.subbetlot_type = 'line1';
+            }
+            else if (this.betlot_type == 'btpb') {
+              this.subbetlot_type = 'combo2';
+            }
+            else {
+              this.subbetlot_type = '';
+            }
+          },
+          betlotSubTypeChanged: function betlotSubTypeChanged(a) {
+            this.subbetlot_type = a;
+          },
+          showPastResult: function showPastResult() {
+            this.flippingResult = this.product.previousRes;//[1,2,1,2,1,3,1,4,1,2,3,1,2,3,3];
+          },
+          showRange: (function (a) {
+            function b() {
+              return a.apply(this, arguments);
+            }
+            return (
+              (b.toString = function () {
+                return a.toString();
+              }),
+              b
+            );
+          })(function (a, b) {
+            return showRange(a, b);
+          }),
+          checkResult: function checkResult() {
+            var a = this;
+            clearTimeout(this.delayResultTimer),
+              clearInterval(this.drawResultTimer),
+              (this.delayResultTimer = setTimeout(function () {
+                a.getResult(),
+                  (a.drawResultTimer = setInterval(function () {
+                    a.getResult();
+                  }, 3000));
+              }, this.product.dl));
+          },
+          getResult: function getResult() {
+
+            var a = this;
+            axios
+              .get(
+                apiCall(
+                  drawResultURL +
+                  "?gID=" +
+                  this.product.gID +
+                  "&drawID=" +
+                  this.product.drawID +
+                  "&ll=1690788408"
+                )
+              )
+              .then(function (b) {
+                var c = b.data;
+                a.snacktxt = c.winlose;
+                a.snacktype = c.snacktype;
+
+                0 == c.error &&
+                  c.data.drawID &&
+                  ((a.product.drawResult = c.data), a.showResult());
+
+                if (c.error > 0) {
+                  a.$root.forceLogout(2, c.error);
+                }
+
+              })
+              .catch(function () { });
+          },
+          showResult: function showResult() {
+            clearTimeout(this.delayResultTimer),
+              clearInterval(this.drawResultTimer),
+              (this.product.status = "open-result");
+            var c = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
+            var a = resultArray(this.product.drawResult, 20),
+              b = shuffleArray(c);
+
+            (this.product.drawResult.sorted = a),
+              (this.product.drawResult.shuffled = b),
+              this.flipResult();
+
+          },
+          flipResult: function flipResult() {
+            var j = this,
+              h = 0 < arguments.length && arguments[0] !== void 0 ? arguments[0] : 1;
+            if (this.product.drawResult) {
+              var a = this.product.drawResult.sorted.slice(0),
+                b = this.product.drawResult.shuffled.slice(0),
+                c = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
+              b = b.slice(0, h);
+              for (var f, d = a.length - 1; 0 <= d; d--) {
+                c[b[d]] = a[b[d]];
+
+              }
+
+              a = c;
+
+              if (((this.flippingResult = a), h < a.length))
+                this.flipResultTimer = setTimeout(function () {
+                  j.flipResult(h + 1);
+                }, 50);
+              else {
+                var g = checkStakeRecordTotal(
+                  this.product.gID
+                );
+                g && this.$root.checkBalance(),
+                  (this.nextDrawTimer = setTimeout(function () {
+
+                    if (j.snacktxt != '') {
+                      if (j.snacktype == '1') {
+                        j.$root.playWin();
+                      }
+                      else {
+                        j.$root.playLoss();
+                      }
+
+                      j.snacking = true, setTimeout(function () { j.snacktype = '', j.snacktxt = '', j.snacking = false; }, 3000)
+                    };
+
+                    j.nextDraw();
+                  }, 2000));
+              }
+            }
+          },
+          nextDraw: function nextDraw() {
+            clearStakeRecord(this.product.gID);
+            var a = this;
+            // a.games[this.product.gID].betList++;
+
+            "closed" != this.product.status &&
+              (clearInterval(this.countDownTimer),
+                clearTimeout(this.delayResultTimer),
+                clearInterval(this.drawResultTimer),
+                clearTimeout(this.nextDrawTimer),
+                clearTimeout(this.flipResultTimer),
+                axios
+                  .get(apiCall(nextDrawsUrl + "?gID=" + this.product.productID))
+                  .then(function (b) {
+
+                    // console.log(a.product.betList);
+                    a.product.betList++;
+                    // console.log(a.product.betList);
+
+                    var c = b.data;
+                    0 == c.error &&
+                      ((a.product.drawResult = null),
+                        (a.product.status = "start-betting"),
+                        (a.product.gID = c.data.gID),
+                        (a.product.gCode = c.data.gCode),
+                        (a.product.drawID = c.data.drawID),
+                        (a.product.previousDrawNo = (c.data.previousdrawno)),
+                        (a.product.closeInterval = c.data.closeInterval),
+                        (a.product.serverTime = c.data.serverTime),
+                        (a.product.resultTime = c.data.resultTime),
+                        (a.product.countDown = c.data.countDown),
+                        (a.product.previousRes = c.data.previous),
+                        (a.product.dl = c.data.dl),
+                        (a.product.odds = c.data.odds));
+                  })
+                  .catch(function () { }));
+          },
+          flipDraw: function flipDraw() {
+            var c = this,
+              b =
+                0 < arguments.length && arguments[0] !== void 0 ? arguments[0] : 0,
+              a = this.product.gCode + this.product.drawID;
+            (this.flippingDrawID = a.slice(0, b)),
+              b < a.length &&
+              setTimeout(function () {
+                c.flipDraw(b + 1);
+              }, 50);
+          }
+        },
+        mounted: function mounted() { },
+        beforeDestroy: function beforeDestroy() {
+
+          this.$refs.popper &&
+            (this.$refs.popper.doClose(), this.$refs.popper.doDestroy()),
+            clearTimeout(this.closePopperTimer),
+            clearTimeout(this.errorTimer),
+            clearInterval(this.countDownTimer),
+            clearInterval(this.drawResultTimer),
+            clearTimeout(this.flipResultTimer),
+            clearTimeout(this.nextDrawTimer),
+            clearTimeout(this.delayResultTimer);
+        }
+
+      },
+      app = new Vue({
+        el: '#app',
+        data: {
+          languages: languages,
+          betsUrl: betsUrl,
+          statementUrl: statementUrl,
+          gamehistoryUrl: gamehistoryUrl,
+          rulesUrl: rulesUrl,
+          notificationUrl: notificationUrl,
+          forceLogoutUrl: forceLogoutUrl,
+          intervals: { qUpdate: null, qBalance: null, qTime: null },
+          user: { username: null, balance: null, curr: null, checking: false },
+          lang_id: 0,
+          localization: lang_dict[0],
+          games: games,
+          current_time: "",
+          openLanguage: false,
+          openDrawer: false,
+          soundOn: true,
+          options: { fullScreen: false, displayMode: ($(document).width() > 767 ? "normal" : "normal") }
+
+        },
+        components: { gamelot: GameLot },
+
+        watch: {
+          "options.displayMode": function displayMode(a) {
+            {
+              for (var i = games.length - 1; i >= 0; i--) {
+                this.games[i].viewreset = a;
+              }
+            }
+
+          }
+        },
+
+        methods: {
+          formatPrice(value) {
+            let val = (value / 1).toFixed(2);
+            return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+          },
+          playWin() {
+            if (this.soundOn) {
+              winAudio.play();
+            }
+          },
+          playLoss() {
+            if (this.soundOn) {
+              lossAudio.play();
+            }
+          },
+          toggleSound: function () {
+            this.soundOn = !this.soundOn;
+          },
+          toggleMobDrawer: function () {
+            this.openDrawer = !this.openDrawer;
+          },
+          toggleMobLanguage: function () {
+            this.openLanguage = !this.openLanguage;
+          },
+          onlyyou: function onlyyou(a) {
+
+            var thestat = false;
+            var fullornot = false;
+
+            for (var i = games.length - 1; i >= 0; i--) {
+              // this.games[i].viewreset = a;
+              if (a != this.games[i].gID) {
+                thestat = this.games[i].hidden;
+              }
+              else {
+                fullornot = this.games[i].fullscreen;
+              }
+            }
+
+            for (var i = games.length - 1; i >= 0; i--) {
+              if (a != this.games[i].gID) {
+                if (!fullornot) {
+                  this.games[i].hidden = true;
+                }
+                else {
+                  this.games[i].hidden = false;
+                }
+              }
+              else {
+                this.games[i].fullscreen = !this.games[i].fullscreen;
+                this.$root.options.fullScreen = this.games[i].fullscreen;
+              }
+
+
+
+            }
+          },
+          popOut: function popOut(url) {
+            var left = window.screen.width / 2 - (800 / 2 + 10),
+              top = window.screen.height / 2 - (600 / 2 + 50),
+              popout = window.open(
+                url,
+                "kenowindow",
+                "height=600,width=800,top=" +
+                top +
+                ",left=" +
+                left +
+                ",toolbar=no,menubar=no,scrollbars=yes,resizable=no,location=no,directories=no,status=no"
+              );
+            popout.focus();
+          },
+          checkTime: function checkTime() {
+            var a = new Date();
+            a = new Date(a.toLocaleString("en-US", { timeZone: "America/La_Paz" }));
+            a.setTime(a.getTime() + 1000 * (60 * a.getTimezoneOffset()) + 28800000);
+            var b = a.getFullYear(),
+              c = a.getMonth(),
+              d = a.getDate(),
+              f = a.getHours(),
+              g = a.getMinutes(),
+              h = a.getSeconds(),
+              j = 12 > f ? "AM" : "PM",
+              m = 10 > g ? "0" + g : g,
+              n = 10 > h ? "0" + h : h,
+              ff = 10 > (f % 12) ? "0" + (f % 12) : f,
+              o;
+            0 === c
+              ? (o = "Jan")
+              : 1 === c
+                ? (o = "Feb")
+                : 2 === c
+                  ? (o = "Mar")
+                  : 3 === c
+                    ? (o = "Apr")
+                    : 4 === c
+                      ? (o = "May")
+                      : 5 === c
+                        ? (o = "Jun")
+                        : 6 === c
+                          ? (o = "Jul")
+                          : 7 === c
+                            ? (o = "Aug")
+                            : 8 === c
+                              ? (o = "Sep")
+                              : 9 === c
+                                ? (o = "Oct")
+                                : 10 === c
+                                  ? (o = "Nov")
+                                  : 11 === c
+                                    ? (o = "Dec")
+                                    : void 0;
+            this.current_time =
+              // (f % 12 || 12) +
+              ff +
+              ":" +
+              m +
+              ":" +
+              n +
+              " " +
+              j +
+              " " +
+              o +
+              " " +
+              d +
+              ", " +
+              b +
+              " (GMT-4)";
+          },
+          checkUser: function checkUser() {
+            var a = this;
+            axios
+              .get(apiCall(customerUrl))
+              .then(function (b) {
+                var c = b.data;
+                0 == c.error
+                  ? ((a.user.username = c.data.username),
+                    (a.user.balance = isNaN(parseFloat(c.data.balance))
+                      ? 0
+                      : parseFloat(c.data.balance)),
+                    (a.user.curr = c.data.curr),
+                    a.checkBalance())
+                  : a.$root.forceLogout(2, c.error);
+              })
+              .catch(function (b) {
+                a.$root.forceLogout(3, b);
+              });
+          },
+          checkBalance: function checkBalance() {
+            var a = this;
+            clearInterval(this.intervals.qBalance),
+              (this.user.checking = true),
+              axios
+                .get(apiCall(customerBalanceUrl))
+                .then(function (b) {
+                  setTimeout(function () {
+                    a.user.checking = false;
+                  }, 500);
+                  var c = b.data;
+                  0 == c.error
+                    ? (a.user.balance = isNaN(parseFloat(c.data.balance))
+                      ? 0
+                      : parseFloat(c.data.balance))
+                    : a.$root.forceLogout(4, c.error);
+
+                })
+                .catch(function (b) {
+                  a.$root.forceLogout(5, b);
+
+                }),
+              (this.intervals.qBalance = setInterval(function () {
+                a.checkBalance();
+              }, checkBalanceTimer));
+          },
+          setLastStake: function setLastStake(a) {
+            this.user.laststake = isNaN(parseFloat(a)) ? 0 : parseFloat(a);
+          },
+          getLastStake: function getLastStake() {
+            return isNaN(this.user.laststake) ? '' : parseFloat(this.user.laststake);
+          },
+          setBalance: function setBalance(a) {
+            this.user.balance = isNaN(parseFloat(a)) ? 0 : parseFloat(a);
+          },
+          checkTrendLot: function checkTrendLot(a) {
+            var c = this,
+              b =
+                1 < arguments.length && arguments[1] !== void 0
+                  ? arguments[1]
+                  : null;
+            "open-result" != a.status &&
+              axios
+                .get(apiCall(trendlotUrl + "?gID=" + a.gID + "&dID=" + a.drawID))
+                .then(function (d) {
+                  var f = d.data;
+
+                  if (0 != f.error) {
+                    c.$root.forceLogout(6, f.error);
+                  }
+                  else if (((a.result = f.data), (a.stat = f.stat), b)) {
+
+
+
+                    var g = f.data.map(function (j) {
+                      return parseInt(j.drawID);
+                    }),
+                      h = g.indexOf(parseInt(b));
+                    0 > h &&
+                      setTimeout(function () {
+                        c.checkTrendLot(a, b);
+                      }, 2000);
+                  }
+                })
+                .catch(function () { });
+          },
+          checkUpdate: function checkUpdate() {
+            var b = this,
+              a = 0 < arguments.length && arguments[0] !== void 0 && arguments[0];
+            clearInterval(this.intervals.qUpdate),
+              axios
+                .get(apiCall(drawsCheckUpdateUrl))
+                .then(function (c) {
+                  var d = c.data;
+
+                  if (0 == d.error)
+                    for (
+                      var j,
+                      f = d.data,
+                      g = f.map(function (l) {
+                        return parseInt(l.productID);
+                      }),
+                      h = b.games.length - 1;
+                      0 <= h;
+                      h--
+                    )
+                      (j = g.indexOf(parseInt(b.games[h].productID))), 0 <= j ? a || "closed" == b.games[h].status || (parseInt(b.games[h].countDown) < 0 - maxWaitResultTimer / 1000 && "waiting-result" == b.games[h].status)
+                        ? ((b.games[h].drawResult = null),
+                          (b.games[h].status = "start-betting"),
+                          (b.games[h].gID = f[j].gID),
+                          (b.games[h].gCode = f[j].gCode),
+                          (b.games[h].refID = f[j].refID),
+                          (b.games[h].drawID = f[j].drawID),
+                          (b.games[h].closeInterval = f[j].closeInterval),
+                          (b.games[h].serverTime = f[j].serverTime),
+                          (b.games[h].resultTime = f[j].resultTime),
+                          (b.games[h].countDown = f[j].countDown),
+                          (b.games[h].dl = f[j].dl),
+                          (b.games[h].odds = f[j].odds),
+                          (b.games[h].previousRes = f[j].previous),
+                          (b.games[h].previousDrawNo = f[j].previousdrawno))
+                        : "start-betting" == b.games[h].status &&
+                        ((b.games[h].countDown = f[j].countDown),
+                          (b.games[h].odds = f[j].odds))
+                        : "open-result" == b.games[h].status ||
+                        ("waiting-result" == b.games[h].status &&
+                          parseInt(b.games[h].countDown) >
+                          0 - maxWaitResultTimer / 1000) ||
+                        resetProduct(b.games[h]);
+                  else {
+                    b.$root.forceLogout(7, d.error);
+                  }
+                })
+                .catch(function (c) {
+                  b.$root.forceLogout(8, c);
+                }),
+              (this.intervals.qUpdate = setInterval(function () {
+                b.checkUpdate();
+              }, checkUpdateTimer));
+          },
+          checkBetList: function checkBetList() {
+            var a = this;
+
+            for (var i = a.games.length - 1; i >= 0; i--) {
+              clearStakeRecord(a.games[i].gID);
+            }
+
+            axios
+              .get(apiCall(custBetUrl))
+              .then(function (b) {
+                var c = b.data;
+                if (0 == c.error) {
+                  var d = c.data.map(function (g) {
+                    return {
+                      gID: parseInt(g.gID),
+                      type: getBetTypeCode(g.betID),
+                      stake: g.stake
+                    };
+                  });
+                  sessionStorage.setItem("stake-records", JSON.stringify(d));
+                  for (var f = 0; f < a.games.length; f++)
+                    a.games[f].betList = 1;
+                } else {
+                  a.$root.forceLogout(10, c.error);
+                }
+              })
+              .catch(function (b) {
+                a.$root.forceLogout(11, b);
+              });
+          },
+          setLocale: function setLocale(a) {
+            this.lang_id = a;
+            this.localization = lang_dict[a];
+
+            var b = new FormData();
+            b.append("lang_id", a);
+            axios
+              .post(apiCall(langUrl), b)
+              .then(function (h) {
+
+                // s
+                // var j = h.data;
+              });
+          },
+          openWindow: function openWindow(a) {
+            var b = a;
+            b =
+              0 < a.indexOf("?")
+                ? b + "&l=" + this.lang_id
+                : b + "?l=" + this.lang_id;
+            var c = window.screen.width / 2 - (openWindowSize[0] / 2 + 10),
+              d = window.screen.height / 2 - (openWindowSize[1] / 2 + 50),
+              f = window.open(
+                b,
+                "atomwindow",
+                "height=" +
+                openWindowSize[1] +
+                ",width=" +
+                openWindowSize[0] +
+                ",top=" +
+                d +
+                ",left=" +
+                c +
+                ",toolbar=no,menubar=no,scrollbars=yes,resizable=no,location=no,directories=no,status=no"
+              );
+            f.focus();
+          },
+          forceLogout: function forceLogout(a, b) {
+            //window.location.replace(forceLogoutUrl + "&c=" + a + "&e=" + b);
+            console.log('logout')
+          },
+          refreshPage: function refreshPage() {
+            console.log("refreshPage"), this.checkUpdate(true), this.checkBetList();
+          }
+        },
+        created: function created() {
+          var a = this;
+          this.checkUser(),
+            this.checkBetList(),
+            (this.intervals.qTime = setInterval(function () {
+              a.checkTime();
+            }, 1000));
+        },
+        mounted: function mounted() {
+          var c = this;
+          setTimeout(function () {
+
+            if ($(document).width() > 767) {
+              var el = document.getElementById("products"),
+                f = Sortable.create(el, {
+                  handle: ".gameheader",
+                  draggable: ".theproduct",
+                  ghostClass: "sortable-ghost",
+                  chosenClass: "sortable-chosen",
+                  dragClass: "sortable-drag",
+                  onChoose: function onChoose() {
+                    var g = document.getElementById("app");
+                    g.click();
+                  }
+                });
+            }
+
+          }, 2000),
+            this.checkUpdate();
+          var a = new Date().getTime(),
+            b = function () {
+              var d = new Date().getTime();
+              1.2e5 < d - a
+                ? window.location.reload()
+                : 5e3 < d - a && c.refreshPage(),
+                (a = d),
+                setTimeout(b, 1000);
+            };
+          b();
+        },
+        beforeDestroy: function beforeDestroy() {
+          clearInterval(this.intervals.qUpdate),
+            clearInterval(this.intervals.qBalance),
+            clearInterval(this.intervals.qTime);
+        }
+      });
+
+
+    $(window).on('beforeunload', function () {
+      $.ajax({
+        url: "logout.php?unload=1", cache: false, async: false,
+        success: function (data) {
+        }, dataType: "json"
+      });
+    });
+
+    $(window).on("unload", function () {
+      $.ajax({
+        url: "logout.php?unload=1", cache: false, async: false,
+        success: function (data) {
+        }, dataType: "json"
+      });
+    });
+
+
+  </script>
+  <script type="text/javascript">
+    function heartbeat() {
+      setTimeout(function () {
+        $.ajax({
+          url: "phb.json", cache: false,
+          success: function (data) {
+            heartbeat();
+          }, dataType: "json"
+        });
+      }, 15000);
+    }
+
+    $(document).ready(function () {
+      heartbeat();
+    });
+
+    document.addEventListener('visibilitychange', function () {
+      if (!document.hidden)
+        app.refreshPage();
+    });
+
+    var isNS = (navigator.appName == "Netscape") ? 1 : 0;
+
+    if (navigator.appName == "Netscape") document.captureEvents(Event.MOUSEDOWN || Event.MOUSEUP);
+
+    function mischandler() {
+      return false;
+    }
+
+    function mousehandler(e) {
+      var myevent = (isNS) ? e : event;
+      var eventbutton = (isNS) ? myevent.which : myevent.button;
+      if ((eventbutton == 2) || (eventbutton == 3)) return false;
+    }
+
+    document.oncontextmenu = mischandler;
+    document.onmousedown = mousehandler;
+    document.onmouseup = mousehandler;
+  </script>
